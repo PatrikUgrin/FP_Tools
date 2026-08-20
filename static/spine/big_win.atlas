@@ -1,0 +1,245 @@
+big_win.png
+	size: 2048, 2048
+	filter: Linear, Linear
+	scale: 0.8
+10_bass
+	bounds: 1877, 344, 131, 138
+	offsets: 27, 0, 205, 139
+1_bass
+	bounds: 626, 1476, 110, 131
+	offsets: 7, 7, 205, 139
+	rotate: 90
+5_bass
+	bounds: 1917, 1371, 195, 117
+	offsets: 2, 10, 205, 139
+	rotate: 90
+back_glow_vfx
+	bounds: 1965, 1652, 80, 70
+	offsets: 0, 5, 80, 80
+back_glow_vfx 2
+	bounds: 1965, 1724, 80, 80
+bigwin_titles/basscatchend
+	bounds: 1553, 1471, 98, 26
+bigwin_titles/boat_scene
+	bounds: 1553, 1528, 131, 38
+bigwin_titles/buck-stage_1b
+	bounds: 1752, 1480, 100, 26
+bigwin_titles/buck_crazy1
+	bounds: 810, 2001, 114, 22
+bigwin_titles/buck_react
+	bounds: 1553, 1499, 102, 27
+bigwin_titles/buck_stage_1a
+	bounds: 926, 1999, 103, 24
+bigwin_titles/buck_stage_2
+	bounds: 1820, 1980, 90, 22
+bigwin_titles/buck_sunset
+	bounds: 1775, 1537, 95, 29
+bigwin_titles/buckbass_end
+	bounds: 1775, 1508, 102, 27
+bigwin_titles/buckcrazy2
+	bounds: 1697, 2003, 121, 23
+bigwin_titles/buckstage_1c
+	bounds: 1424, 1978, 98, 24
+bigwin_titles/flyingbass
+	bounds: 1939, 2003, 105, 23
+bigwin_titles/flyingbass_buck
+	bounds: 1424, 2004, 138, 22
+bigwin_titles/low_win
+	bounds: 1115, 2000, 166, 26
+bigwin_titles/nobuck)_end
+	bounds: 1657, 1498, 93, 28
+bigwin_titles/shortpuill&buckend
+	bounds: 1564, 2003, 131, 23
+bigwin_titles/shortpullk&^buckandbass
+	bounds: 1283, 2001, 139, 25
+bigwin_titles/throw_catch_stage
+	bounds: 1820, 2004, 117, 22
+bigwin_titles/truck_scene
+	bounds: 1686, 1528, 87, 38
+boat_buck
+	bounds: 810, 1470, 741, 506
+buck_pose_01
+	bounds: 2, 113, 496, 611
+	offsets: 0, 26, 504, 643
+buck_pose_08
+	bounds: 626, 913, 556, 642
+	offsets: 2, 2, 560, 646
+	rotate: 90
+buck_pose_12
+	bounds: 1270, 916, 552, 645
+	offsets: 1, 8, 553, 659
+	rotate: 90
+buck_pose_13
+	bounds: 1270, 336, 578, 605
+	offsets: 1, 18, 579, 659
+	rotate: 90
+buck_pose_14
+	bounds: 2, 1369, 592, 622
+	offsets: 0, 22, 594, 659
+	rotate: 90
+buck_pose_16
+	bounds: 559, 338, 610, 573
+	offsets: 0, 0, 610, 579
+buck_pose_bleed_08
+	bounds: 2, 726, 555, 641
+	offsets: 6, 29, 567, 699
+container
+	bounds: 1059, 2022, 1, 1
+fill
+	bounds: 1031, 1997, 26, 26
+line
+	bounds: 810, 2025, 303, 1
+	offsets: 9, 0, 320, 1
+logo_heavy_pull
+	bounds: 1290, 22, 664, 312
+luckyboot
+	bounds: 1877, 484, 190, 160
+	offsets: 10, 0, 205, 160
+	rotate: 90
+particle_star_color
+	bounds: 390, 9, 102, 102
+react_bg_front
+	bounds: 1965, 1806, 74, 195
+	offsets: 14, 136, 100, 448
+speed_lines_02/speed_lines_02_08
+	bounds: 1553, 1568, 410, 410
+spray_swipe
+	bounds: 500, 5, 788, 329
+	offsets: 17, 31, 819, 410
+symbol_circle_glow
+	bounds: 1965, 1594, 72, 56
+text_win
+	bounds: 1877, 676, 238, 137
+	rotate: 90
+transition_01/transition_01_09
+	bounds: 196, 2, 192, 109
+transition_01/transition_01_10
+	bounds: 2, 2, 192, 109
+transition_01/transition_01_11
+	bounds: 1917, 983, 192, 109
+	rotate: 90
+transition_01/transition_01_12
+	bounds: 1917, 1177, 192, 109
+	rotate: 90
+transition_thick_speedlines/thick_line
+	bounds: 2, 1963, 806, 63
+transition_thick_speedlines/transition_thick_speedlines
+	bounds: 626, 1588, 373, 128
+	rotate: 90
+
+big_win_2.png
+	size: 2048, 2048
+	filter: Linear, Linear
+	scale: 0.8
+buck_pose_06
+	bounds: 565, 1454, 561, 589
+	offsets: 9, 5, 575, 646
+buck_pose_bleed_01
+	bounds: 2, 378, 454, 559
+buck_pose_bleed_02
+	bounds: 458, 38, 386, 557
+	rotate: 90
+buck_pose_bleed_06
+	bounds: 2, 1453, 561, 590
+	offsets: 4, 31, 567, 699
+end_screen
+	bounds: 1128, 1644, 788, 399
+	offsets: 17, 0, 819, 410
+glow_burst
+	bounds: 207, 78, 160, 160
+hauler_buck
+	bounds: 1593, 525, 603, 414
+	offsets: 11, 0, 614, 414
+	rotate: 90
+plus1spin_bg
+	bounds: 207, 240, 203, 136
+	offsets: 1, 2, 205, 139
+rays_3
+	bounds: 1642, 1242, 400, 400
+speed_lines_02/speed_lines_02_07
+	bounds: 1544, 113, 410, 410
+text_big
+	bounds: 2, 227, 203, 149
+transition_01/transition_01_01
+	bounds: 1738, 2, 192, 109
+transition_01/transition_01_02
+	bounds: 1544, 2, 192, 109
+transition_01/transition_01_03
+	bounds: 2, 5, 192, 109
+transition_01/transition_01_04
+	bounds: 1918, 1657, 192, 109
+	rotate: 90
+transition_01/transition_01_05
+	bounds: 1918, 1851, 192, 109
+	rotate: 90
+transition_01/transition_01_06
+	bounds: 2, 116, 192, 109
+transition_01/transition_01_07
+	bounds: 1836, 1131, 192, 109
+transition_01/transition_01_08
+	bounds: 1642, 1131, 192, 109
+transition_thick_speedlines/transition_thick_speedlines_08
+	bounds: 1030, 102, 512, 512
+transition_thick_speedlines/transition_thick_speedlines_09
+	bounds: 516, 426, 512, 512
+transition_thick_speedlines/transition_thick_speedlines_10
+	bounds: 1079, 616, 512, 512
+transition_thick_speedlines/transition_thick_speedlines_11
+	bounds: 2, 939, 512, 512
+transition_thick_speedlines/transition_thick_speedlines_12
+	bounds: 565, 940, 512, 512
+transition_thick_speedlines/transition_thick_speedlines_13
+	bounds: 1128, 1130, 512, 512
+
+big_win_3.png
+	size: 2048, 2048
+	filter: Linear, Linear
+	scale: 0.8
+100_bass
+	bounds: 1840, 985, 201, 139
+	offsets: 4, 0, 205, 139
+2_bass
+	bounds: 1840, 847, 120, 136
+	offsets: 18, 1, 205, 139
+buck_pose_02
+	bounds: 1544, 1126, 415, 598
+	offsets: 4, 17, 426, 645
+buck_pose_10
+	bounds: 2, 826, 384, 620
+	offsets: 11, 24, 399, 646
+	rotate: 90
+buck_pose_bleed_10
+	bounds: 624, 826, 384, 618
+	offsets: 0, 1, 384, 619
+	rotate: 90
+logo_big_haul
+	bounds: 1218, 84, 740, 216
+particle_star
+	bounds: 1840, 722, 121, 123
+	offsets: 15, 16, 154, 154
+rays_1
+	bounds: 816, 12, 400, 400
+rays_2
+	bounds: 414, 12, 400, 400
+speed_lines_02/speed_lines_02_01
+	bounds: 2, 2, 410, 410
+speed_lines_02/speed_lines_02_02
+	bounds: 1238, 302, 410, 410
+speed_lines_02/speed_lines_02_03
+	bounds: 826, 414, 410, 410
+speed_lines_02/speed_lines_02_04
+	bounds: 414, 414, 410, 410
+speed_lines_02/speed_lines_02_05
+	bounds: 2, 414, 410, 410
+speed_lines_02/speed_lines_02_06
+	bounds: 1244, 714, 410, 410
+spray
+	bounds: 1655, 563, 561, 183
+	offsets: 0, 60, 594, 296
+	rotate: 90
+transition_thick_speedlines/transition_thick_speedlines_05
+	bounds: 1030, 1212, 512, 512
+transition_thick_speedlines/transition_thick_speedlines_06
+	bounds: 516, 1212, 512, 512
+transition_thick_speedlines/transition_thick_speedlines_07
+	bounds: 2, 1212, 512, 512

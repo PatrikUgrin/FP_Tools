@@ -1,0 +1,139 @@
+buck_sym@0.5x.png
+	size: 608, 525
+	filter: Linear, Linear
+	scale: 0.5
+arm
+	bounds: 302, 9, 48, 63
+	offsets: 0, 2, 51, 65
+bg_fill
+	bounds: 401, 323, 122, 81
+	offsets: 3, 3, 128, 87
+blue_sym_focus-5
+	bounds: 527, 403, 120, 68
+	rotate: 90
+buck_sixpack_enjoy
+	bounds: 2, 374, 127, 149
+	offsets: 3, 0, 133, 150
+c_bg
+	bounds: 401, 240, 122, 81
+	offsets: 3, 3, 128, 87
+c_buck
+	bounds: 297, 168, 102, 98
+	offsets: 18, 35, 145, 153
+c_txt
+	bounds: 268, 2, 70, 32
+	offsets: 31, 3, 128, 38
+	rotate: 90
+c_txt_bg
+	bounds: 207, 116, 120, 40
+	offsets: 6, 0, 128, 40
+	rotate: 90
+c_txt_green
+	bounds: 291, 134, 105, 32
+	offsets: 12, 5, 128, 40
+c_txt_green_out
+	bounds: 291, 104, 102, 28
+	offsets: 13, 9, 128, 40
+c_txt_out
+	bounds: 387, 42, 74, 37
+	offsets: 28, 1, 128, 38
+cb_bg
+	bounds: 525, 279, 122, 81
+	offsets: 3, 3, 128, 87
+	rotate: 90
+cb_buck
+	bounds: 297, 268, 126, 102
+	offsets: 8, 37, 145, 153
+	rotate: 90
+cb_txt
+	bounds: 519, 88, 80, 29
+	offsets: 29, 4, 128, 38
+cb_txt_bg
+	bounds: 104, 92, 127, 40
+	offsets: 0, 0, 128, 40
+	rotate: 90
+cb_txt_green
+	bounds: 235, 18, 96, 31
+	offsets: 16, 6, 128, 40
+	rotate: 90
+cb_txt_green_out
+	bounds: 268, 74, 93, 28
+	offsets: 17, 9, 128, 40
+cb_txt_out
+	bounds: 519, 119, 84, 34
+	offsets: 26, 2, 128, 38
+ds_bg
+	bounds: 401, 157, 122, 81
+	offsets: 3, 3, 128, 87
+ds_buck
+	bounds: 391, 406, 134, 117
+	offsets: 11, 36, 145, 153
+ds_txt
+	bounds: 352, 6, 66, 33
+	offsets: 35, 2, 128, 38
+	rotate: 90
+ds_txt_bg
+	bounds: 249, 119, 123, 40
+	offsets: 4, 0, 128, 40
+	rotate: 90
+ds_txt_green
+	bounds: 172, 2, 77, 31
+	offsets: 27, 5, 128, 40
+	rotate: 90
+ds_txt_green_out
+	bounds: 525, 58, 74, 28
+	offsets: 28, 8, 128, 40
+ds_txt_out
+	bounds: 387, 2, 71, 38
+	offsets: 32, 0, 128, 38
+frame_dots
+	bounds: 131, 374, 98, 19
+frame_gold
+	bounds: 209, 244, 128, 86
+	offsets: 0, 1, 128, 87
+	rotate: 90
+frame_gold_in
+	bounds: 2, 7, 111, 70
+	offsets: 9, 9, 128, 87
+frame_outter_glow
+	bounds: 2, 221, 151, 109
+	offsets: 8, 3, 167, 114
+	rotate: 90
+fs_bg
+	bounds: 525, 155, 122, 81
+	offsets: 3, 3, 128, 87
+	rotate: 90
+fs_buck
+	bounds: 2, 79, 140, 100
+	offsets: 2, 37, 145, 153
+	rotate: 90
+fs_txt
+	bounds: 463, 45, 60, 34
+	offsets: 34, 1, 128, 38
+fs_txt_bg
+	bounds: 398, 115, 119, 40
+	offsets: 0, 0, 128, 40
+fs_txt_green
+	bounds: 395, 81, 109, 32
+	offsets: 10, 3, 128, 40
+fs_txt_green_out
+	bounds: 205, 8, 106, 28
+	offsets: 11, 6, 128, 40
+	rotate: 90
+fs_txt_out
+	bounds: 460, 2, 65, 38
+	offsets: 31, 0, 128, 38
+hand
+	bounds: 115, 2, 55, 77
+hand_beer
+	bounds: 146, 122, 59, 114
+	offsets: 3, 0, 62, 114
+light
+	bounds: 131, 395, 128, 128
+light2
+	bounds: 261, 396, 128, 127
+	offsets: 0, 1, 128, 128
+sweep2
+	bounds: 113, 238, 134, 94
+	offsets: 6, 5, 146, 104
+	rotate: 90

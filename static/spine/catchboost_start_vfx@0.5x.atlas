@@ -1,0 +1,15 @@
+catchboost_start_vfx@0.5x.png
+	size: 465, 98
+	filter: Linear, Linear
+	scale: 0.5
+symbol_afterglow_1
+	bounds: 2, 2, 140, 94
+	offsets: 0, 3, 140, 100
+symbol_afterglow_2
+	bounds: 144, 2, 140, 94
+	offsets: 0, 3, 140, 100
+symbol_afterglow_3
+	bounds: 286, 2, 140, 94
+	offsets: 0, 3, 140, 100
+symbol_light_swipe
+	bounds: 428, 52, 35, 44

@@ -1,0 +1,453 @@
+cash_sym@0.5x.png
+	size: 1508, 396
+	format: RGBA4444
+	filter: Linear, Linear
+	scale: 0.5
+bass_sorted/background/1000_b
+	bounds: 330, 2, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/100_b
+	bounds: 413, 135, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/10_b
+	bounds: 430, 266, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/1_b
+	bounds: 694, 270, 124, 82
+	offsets: 2, 2, 128, 87
+	rotate: 90
+bass_sorted/background/2000_b
+	bounds: 418, 5, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/250_b
+	bounds: 501, 136, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/25_b
+	bounds: 518, 266, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/2_b
+	bounds: 682, 10, 124, 82
+	offsets: 2, 2, 128, 87
+	rotate: 90
+bass_sorted/background/3_b
+	bounds: 758, 144, 124, 82
+	offsets: 2, 2, 128, 87
+	rotate: 90
+bass_sorted/background/500_b
+	bounds: 506, 6, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/50_b
+	bounds: 589, 136, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/background/5_b
+	bounds: 778, 270, 124, 82
+	offsets: 2, 2, 128, 87
+	rotate: 90
+bass_sorted/background/frame_gold_outer
+	bounds: 606, 266, 128, 86
+	offsets: 0, 0, 128, 87
+	rotate: 90
+bass_sorted/bass_fg/1000_bass
+	bounds: 242, 263, 131, 92
+	offsets: 3, 0, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/100_bass
+	bounds: 319, 132, 129, 92
+	offsets: 4, 0, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/10_bass
+	bounds: 31, 2, 105, 92
+	offsets: 0, 0, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/1_bass
+	bounds: 1086, 190, 77, 89
+	offsets: 2, 2, 135, 92
+bass_sorted/bass_fg/2000_bass
+	bounds: 766, 19, 123, 92
+	offsets: 12, 0, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/250_bass
+	bounds: 336, 265, 129, 92
+	offsets: 5, 0, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/25_bass
+	bounds: 860, 32, 115, 89
+	offsets: 6, 0, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/2_bass
+	bounds: 1039, 56, 83, 92
+	offsets: 13, 0, 135, 92
+bass_sorted/bass_fg/3_bass
+	bounds: 1030, 304, 78, 90
+	offsets: 6, 0, 135, 92
+bass_sorted/bass_fg/500_bass
+	bounds: 148, 117, 135, 87
+	offsets: 0, 5, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/50_bass
+	bounds: 125, 2, 108, 92
+	offsets: 17, 0, 135, 92
+	rotate: 90
+bass_sorted/bass_fg/5_bass
+	bounds: 237, 117, 135, 80
+	offsets: 0, 10, 135, 92
+	rotate: 90
+bass_sorted/text/1000_t_on
+	bounds: 219, 5, 110, 37
+	offsets: 6, 7, 128, 87
+	rotate: 90
+bass_sorted/text/100_t_on
+	bounds: 1238, 196, 84, 35
+	offsets: 15, 6, 128, 87
+	rotate: 90
+bass_sorted/text/10_t_on
+	bounds: 1220, 2, 62, 35
+	offsets: 27, 6, 128, 87
+	rotate: 90
+bass_sorted/text/1_t_on
+	bounds: 1405, 2, 36, 35
+	offsets: 76, 26, 128, 87
+bass_sorted/text/2000_t_on
+	bounds: 842, 149, 119, 37
+	offsets: 4, 7, 128, 87
+	rotate: 90
+bass_sorted/text/250_t_on
+	bounds: 951, 53, 95, 35
+	offsets: 10, 6, 128, 87
+	rotate: 90
+bass_sorted/text/25_t_on
+	bounds: 1312, 209, 73, 35
+	offsets: 20, 6, 128, 87
+	rotate: 90
+bass_sorted/text/2_t_on
+	bounds: 1386, 247, 48, 35
+	offsets: 72, 26, 128, 87
+bass_sorted/text/3_t_on
+	bounds: 1378, 99, 47, 35
+	offsets: 72, 26, 128, 87
+bass_sorted/text/500_t_on
+	bounds: 914, 179, 96, 37
+	offsets: 9, 7, 128, 87
+	rotate: 90
+bass_sorted/text/50_t_on
+	bounds: 1365, 321, 73, 35
+	offsets: 22, 6, 128, 87
+	rotate: 90
+bass_sorted/text/5_t_on
+	bounds: 1386, 210, 48, 35
+	offsets: 70, 26, 128, 87
+bass_sorted/text_off/1000_t_off
+	bounds: 258, 5, 110, 37
+	offsets: 6, 7, 128, 87
+	rotate: 90
+bass_sorted/text_off/100_t_off
+	bounds: 1275, 196, 84, 35
+	offsets: 15, 6, 128, 87
+	rotate: 90
+bass_sorted/text_off/10_t_off
+	bounds: 1257, 2, 62, 35
+	offsets: 27, 6, 128, 87
+	rotate: 90
+bass_sorted/text_off/1_t_off
+	bounds: 1457, 14, 36, 35
+	offsets: 76, 26, 128, 87
+	rotate: 90
+bass_sorted/text_off/2000_t_off
+	bounds: 862, 275, 119, 37
+	offsets: 4, 7, 128, 87
+	rotate: 90
+bass_sorted/text_off/250_t_off
+	bounds: 988, 53, 95, 35
+	offsets: 10, 6, 128, 87
+	rotate: 90
+bass_sorted/text_off/25_t_off
+	bounds: 1349, 209, 73, 35
+	offsets: 20, 6, 128, 87
+	rotate: 90
+bass_sorted/text_off/2_t_off
+	bounds: 1386, 173, 48, 35
+	offsets: 72, 26, 128, 87
+bass_sorted/text_off/3_t_off
+	bounds: 1378, 62, 47, 35
+	offsets: 72, 26, 128, 87
+bass_sorted/text_off/500_t_off
+	bounds: 953, 179, 96, 37
+	offsets: 9, 7, 128, 87
+	rotate: 90
+bass_sorted/text_off/50_t_off
+	bounds: 1367, 284, 73, 35
+	offsets: 22, 6, 128, 87
+bass_sorted/text_off/5_t_off
+	bounds: 1378, 136, 48, 35
+	offsets: 70, 26, 128, 87
+bass_sorted/trace/1000_t_trace
+	bounds: 887, 3, 84, 27
+	offsets: 27, 13, 128, 87
+bass_sorted/trace/100_t_trace
+	bounds: 1402, 321, 61, 27
+	offsets: 34, 11, 128, 87
+bass_sorted/trace/10_t_trace
+	bounds: 1064, 150, 37, 27
+	offsets: 48, 11, 128, 87
+	rotate: 90
+bass_sorted/trace/1_t_trace
+	bounds: 766, 3, 14, 27
+	offsets: 94, 31, 128, 87
+	rotate: 90
+bass_sorted/trace/2000_t_trace
+	bounds: 2, 3, 97, 27
+	offsets: 21, 13, 128, 87
+	rotate: 90
+bass_sorted/trace/250_t_trace
+	bounds: 915, 150, 73, 27
+	offsets: 27, 11, 128, 87
+bass_sorted/trace/25_t_trace
+	bounds: 973, 2, 49, 27
+	offsets: 39, 11, 128, 87
+	rotate: 90
+bass_sorted/trace/2_t_trace
+	bounds: 1338, 284, 26, 27
+	offsets: 89, 31, 128, 87
+	rotate: 90
+bass_sorted/trace/3_t_trace
+	bounds: 1465, 321, 26, 27
+	offsets: 89, 31, 128, 87
+bass_sorted/trace/500_t_trace
+	bounds: 990, 150, 72, 27
+	offsets: 27, 13, 128, 87
+bass_sorted/trace/50_t_trace
+	bounds: 1002, 2, 49, 27
+	offsets: 41, 11, 128, 87
+	rotate: 90
+bass_sorted/trace/5_t_trace
+	bounds: 1156, 281, 25, 27
+	offsets: 88, 31, 128, 87
+	rotate: 90
+bass_sorted/ts/1000_ts
+	bounds: 901, 277, 99, 12
+	offsets: 15, 67, 128, 87
+bass_sorted/ts/100_ts
+	bounds: 1002, 281, 90, 12
+	offsets: 20, 60, 128, 87
+bass_sorted/ts/10_ts
+	bounds: 873, 2, 28, 12
+	offsets: 52, 59, 128, 87
+	rotate: 90
+bass_sorted/ts/1_ts
+	bounds: 1427, 66, 30, 12
+	offsets: 50, 64, 128, 87
+	rotate: 90
+bass_sorted/ts/2000_ts
+	bounds: 901, 291, 103, 12
+	offsets: 14, 67, 128, 87
+	rotate: 90
+bass_sorted/ts/250_ts
+	bounds: 1110, 307, 87, 12
+	offsets: 22, 60, 128, 87
+	rotate: 90
+bass_sorted/ts/25_ts
+	bounds: 1124, 63, 85, 12
+	offsets: 23, 59, 128, 87
+	rotate: 90
+bass_sorted/ts/2_ts
+	bounds: 881, 154, 32, 13
+	offsets: 49, 8, 128, 87
+bass_sorted/ts/3_ts
+	bounds: 1443, 6, 44, 12
+	offsets: 43, 64, 128, 87
+	rotate: 90
+bass_sorted/ts/500_ts
+	bounds: 1025, 55, 93, 12
+	offsets: 18, 67, 128, 87
+	rotate: 90
+bass_sorted/ts/50_ts
+	bounds: 795, 4, 41, 13
+	offsets: 44, 59, 128, 87
+bass_sorted/ts/5_ts
+	bounds: 838, 4, 33, 13
+	offsets: 49, 8, 128, 87
+bg_glow
+	bounds: 915, 295, 99, 86
+	offsets: 0, 1, 128, 87
+	rotate: 90
+bubbles_1
+	bounds: 1094, 281, 60, 21
+	offsets: 0, 1, 60, 22
+bubbles_2
+	bounds: 1174, 2, 60, 21
+	offsets: 0, 1, 60, 22
+	rotate: 90
+bubbles_3
+	bounds: 1197, 2, 60, 21
+	offsets: 0, 1, 60, 22
+	rotate: 90
+bubbles_4
+	bounds: 1378, 39, 60, 21
+	offsets: 0, 1, 60, 22
+bubbles_5
+	bounds: 1443, 75, 60, 21
+	offsets: 0, 1, 60, 22
+bubbles_6
+	bounds: 1443, 52, 60, 21
+	offsets: 0, 1, 60, 22
+bubbles_7
+	bounds: 1277, 284, 59, 22
+	offsets: 1, 0, 60, 22
+bubbles_8
+	bounds: 1344, 8, 59, 22
+	offsets: 1, 0, 60, 22
+container
+	bounds: 52, 109, 1, 1
+frame_gold
+	bounds: 594, 6, 128, 86
+	offsets: 0, 1, 128, 87
+	rotate: 90
+symbol_afterglow_1
+	bounds: 50, 254, 140, 94
+	offsets: 0, 3, 140, 100
+	rotate: 90
+symbol_afterglow_2
+	bounds: 52, 112, 140, 94
+	offsets: 0, 3, 140, 100
+	rotate: 90
+symbol_afterglow_3
+	bounds: 146, 254, 140, 94
+	offsets: 0, 3, 140, 100
+	rotate: 90
+symbol_inner_glow
+	bounds: 1019, 189, 90, 65
+	rotate: 90
+symbol_inner_glow_thin
+	bounds: 1442, 350, 64, 44
+symbol_light_swipe
+	bounds: 1402, 350, 35, 44
+symbol_outer_glow
+	bounds: 1442, 275, 64, 44
+wd_01
+	bounds: 1124, 308, 71, 86
+	offsets: 0, 0, 72, 86
+wd_02
+	bounds: 1197, 308, 62, 86
+	offsets: 1, 0, 63, 86
+wd_03
+	bounds: 1101, 6, 48, 71
+	offsets: 0, 0, 48, 74
+	rotate: 90
+wd_04
+	bounds: 1093, 150, 38, 82
+	offsets: 10, 0, 59, 82
+	rotate: 90
+wd_05
+	bounds: 1138, 64, 69, 84
+wd_06
+	bounds: 1436, 163, 63, 72
+	offsets: 0, 0, 63, 73
+wd_bg_glow
+	bounds: 677, 136, 128, 79
+	rotate: 90
+wd_fg_01
+	bounds: 297, 11, 104, 31
+	rotate: 90
+wd_fg_02
+	bounds: 2, 249, 145, 19
+	offsets: 0, 0, 145, 27
+	rotate: 90
+wd_fg_03
+	bounds: 1280, 75, 78, 30
+	offsets: 0, 1, 78, 31
+	rotate: 90
+wd_fg_04
+	bounds: 1031, 2, 51, 33
+	offsets: 0, 1, 51, 34
+	rotate: 90
+wd_fg_05
+	bounds: 992, 184, 91, 25
+	offsets: 2, 0, 94, 28
+	rotate: 90
+wd_fg_06
+	bounds: 1185, 282, 44, 24
+wd_fg_fill_01
+	bounds: 881, 169, 104, 31
+	rotate: 90
+wd_fg_fill_02
+	bounds: 2, 102, 145, 19
+	offsets: 0, 0, 145, 27
+	rotate: 90
+wd_fg_fill_03
+	bounds: 1312, 78, 78, 30
+	offsets: 0, 1, 78, 31
+	rotate: 90
+wd_fg_fill_04
+	bounds: 1066, 3, 51, 33
+	offsets: 0, 1, 51, 34
+	rotate: 90
+wd_fg_fill_05
+	bounds: 1003, 303, 91, 25
+	offsets: 2, 0, 94, 28
+	rotate: 90
+wd_fg_fill_06
+	bounds: 1231, 282, 44, 24
+wd_fg_overlay
+	bounds: 23, 252, 142, 11
+	offsets: 1, 0, 145, 12
+	rotate: 90
+wd_fg_overlay2
+	bounds: 36, 253, 141, 12
+	offsets: 2, 5, 145, 24
+	rotate: 90
+wd_fg_overlay3
+	bounds: 38, 110, 141, 12
+	offsets: 2, 5, 145, 24
+	rotate: 90
+wd_fg_overlay4
+	bounds: 23, 109, 141, 13
+	offsets: 2, 5, 145, 24
+	rotate: 90
+wd_fill_01
+	bounds: 1165, 193, 71, 86
+	offsets: 0, 0, 72, 86
+wd_fill_02
+	bounds: 1261, 308, 62, 86
+	offsets: 1, 0, 63, 86
+wd_fill_03
+	bounds: 1294, 2, 48, 71
+	offsets: 0, 0, 48, 74
+wd_fill_04
+	bounds: 1325, 312, 38, 82
+	offsets: 10, 0, 59, 82
+wd_fill_05
+	bounds: 1209, 66, 69, 84
+wd_fill_06
+	bounds: 1428, 98, 63, 72
+	offsets: 0, 0, 63, 73
+	rotate: 90
+wd_fill_thin_01
+	bounds: 1177, 152, 39, 65
+	offsets: 0, 1, 39, 66
+	rotate: 90
+wd_fill_thin_02
+	bounds: 1311, 158, 36, 65
+	offsets: 2, 0, 39, 66
+	rotate: 90
+wd_fill_thin_03
+	bounds: 1344, 95, 32, 61
+	offsets: 4, 2, 39, 66
+wd_thin_01
+	bounds: 1244, 155, 39, 65
+	offsets: 0, 1, 39, 66
+	rotate: 90
+wd_thin_02
+	bounds: 1436, 237, 36, 65
+	offsets: 2, 0, 39, 66
+	rotate: 90
+wd_thin_03
+	bounds: 1344, 32, 32, 61
+	offsets: 4, 2, 39, 66

@@ -1,0 +1,66 @@
+luckyboot_sym@0.5x.png
+	size: 220, 749
+	filter: Linear, Linear
+	scale: 0.5
+bg_fill
+	bounds: 132, 200, 122, 81
+	offsets: 3, 3, 128, 87
+	rotate: 90
+blue_sym_focus-5
+	bounds: 2, 132, 120, 68
+frame_gold
+	bounds: 132, 364, 128, 86
+	offsets: 0, 1, 128, 87
+	rotate: 90
+frame_outter_glow
+	bounds: 2, 638, 151, 109
+	offsets: 8, 3, 167, 114
+light
+	bounds: 2, 412, 128, 128
+light2
+	bounds: 2, 283, 128, 127
+	offsets: 0, 1, 128, 128
+luckyboot
+	bounds: 124, 96, 102, 93
+	offsets: 0, 6, 105, 100
+	rotate: 90
+luckyboot_logo_bg
+	bounds: 155, 517, 122, 38
+	offsets: 0, 3, 128, 43
+	rotate: 90
+luckyboot_logo_lower
+	bounds: 109, 62, 77, 32
+	offsets: 26, 1, 128, 35
+luckyboot_logo_lower_out
+	bounds: 188, 20, 74, 28
+	offsets: 28, 3, 128, 32
+	rotate: 90
+luckyboot_logo_upper
+	bounds: 109, 25, 76, 35
+	offsets: 1, 0, 80, 35
+luckyboot_logo_upper_out
+	bounds: 2, 2, 72, 31
+	offsets: 3, 3, 80, 35
+luckyboot_outline
+	bounds: 2, 35, 105, 95
+	offsets: 0, 5, 105, 100
+sweep2
+	bounds: 2, 542, 134, 94
+	offsets: 6, 5, 146, 104
+wd_04
+	bounds: 132, 324, 38, 82
+	offsets: 10, 0, 59, 82
+	rotate: 90
+wd_06
+	bounds: 155, 675, 63, 72
+	offsets: 0, 0, 63, 73
+wd_bg_glow
+	bounds: 2, 202, 128, 79
+wd_fg_02
+	bounds: 195, 494, 145, 19
+	offsets: 0, 0, 145, 27
+	rotate: 90
+wd_thin_03
+	bounds: 155, 641, 32, 61
+	offsets: 4, 2, 39, 66
+	rotate: 90

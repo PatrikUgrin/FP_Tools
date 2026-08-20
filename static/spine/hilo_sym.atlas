@@ -1,0 +1,84 @@
+hilo_sym.png
+	size: 2048, 1024
+	filter: Linear, Linear
+	pma: true
+bl
+	bounds: 2, 443, 256, 174
+bubbles_1
+	bounds: 1780, 725, 120, 44
+	rotate: 90
+bubbles_2
+	bounds: 932, 536, 120, 44
+bubbles_3
+	bounds: 1062, 625, 120, 44
+bubbles_4
+	bounds: 1184, 625, 120, 44
+bubbles_5
+	bounds: 1306, 625, 120, 44
+bubbles_6
+	bounds: 1428, 625, 120, 44
+bubbles_7
+	bounds: 1598, 669, 120, 44
+bubbles_8
+	bounds: 932, 490, 120, 44
+h1
+	bounds: 284, 645, 256, 174
+h1_bg
+	bounds: 566, 847, 256, 174
+h1_glow
+	bounds: 2, 2, 128, 87
+h2
+	bounds: 2, 267, 256, 174
+h2_bg
+	bounds: 824, 847, 256, 174
+h2_glow
+	bounds: 132, 2, 128, 87
+h3
+	bounds: 2, 91, 256, 174
+h3_bg
+	bounds: 1082, 847, 256, 174
+h3_glow
+	bounds: 542, 582, 128, 87
+h4
+	bounds: 1340, 847, 256, 174
+h4_bg
+	bounds: 1598, 847, 256, 174
+h4_glow
+	bounds: 542, 493, 128, 87
+l1
+	bounds: 1856, 765, 256, 174
+	rotate: 90
+l1_bg
+	bounds: 284, 469, 256, 174
+l1_glow
+	bounds: 672, 582, 128, 87
+l2
+	bounds: 260, 293, 256, 174
+l2_bg
+	bounds: 260, 117, 256, 174
+l2_glow
+	bounds: 672, 493, 128, 87
+l3
+	bounds: 566, 671, 256, 174
+l3_bg
+	bounds: 824, 671, 256, 174
+l3_glow
+	bounds: 802, 582, 128, 87
+l4
+	bounds: 1082, 671, 256, 174
+l4_bg
+	bounds: 1340, 671, 256, 174
+l4_glow
+	bounds: 802, 493, 128, 87
+symbol_afterglow_1
+	bounds: 2, 821, 280, 200
+symbol_afterglow_2
+	bounds: 2, 619, 280, 200
+symbol_afterglow_3
+	bounds: 284, 821, 280, 200
+symbol_inner_glow
+	bounds: 1598, 715, 180, 130
+symbol_inner_glow_thin
+	bounds: 932, 582, 128, 87
+symbol_light_swipe
+	bounds: 262, 28, 70, 87

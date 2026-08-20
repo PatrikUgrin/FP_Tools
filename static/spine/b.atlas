@@ -1,0 +1,26 @@
+b.png
+	size: 1024, 512
+	filter: Linear, Linear
+	pma: true
+b_bg
+	bounds: 260, 297, 256, 83
+b_fg
+	bounds: 516, 402, 256, 100
+b_fg_add1
+	bounds: 2, 124, 254, 120
+b_fg_add2
+	bounds: 260, 382, 254, 120
+b_fg_add3
+	bounds: 2, 2, 254, 120
+b_ice
+	bounds: 518, 306, 142, 94
+container
+	bounds: 956, 492, 10, 10
+light
+	bounds: 2, 246, 256, 256
+symbol_circle_glow
+	bounds: 260, 225, 70, 70
+symbol_inner_glow
+	bounds: 774, 372, 180, 130
+symbol_light_swipe
+	bounds: 662, 313, 70, 87

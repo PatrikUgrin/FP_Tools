@@ -1,0 +1,190 @@
+bonus_info_slide.png
+	size: 1987, 1295
+	filter: Linear, Linear
+Screenshot 2026-08-05 at 18.12.32
+	bounds: 2, 679, 614, 614
+bmf_num_six_6
+	bounds: 1320, 618, 74, 100
+	offsets: 4, 1, 82, 102
+bonus_intro_info_bg
+	bounds: 1135, 8, 233, 299
+	offsets: 0, 28, 233, 327
+bonus_intro_info_big_bg
+	bounds: 2, 78, 599, 154
+	offsets: 1, 0, 600, 154
+	rotate: 90
+c_txt
+	bounds: 1396, 327, 138, 62
+	offsets: 63, 6, 256, 75
+	rotate: 90
+c_txt_bg
+	bounds: 1769, 21, 218, 69
+	offsets: 22, 4, 256, 80
+	rotate: 90
+c_txt_green
+	bounds: 1221, 702, 208, 63
+	offsets: 25, 11, 256, 80
+	rotate: 90
+cb_txt
+	bounds: 1928, 875, 158, 57
+	offsets: 59, 8, 256, 75
+	rotate: 90
+cb_txt_bg
+	bounds: 248, 2, 254, 79
+	offsets: 0, 1, 256, 80
+cb_txt_green
+	bounds: 1286, 720, 190, 62
+	offsets: 33, 12, 256, 80
+	rotate: 90
+ds_txt
+	bounds: 1460, 333, 132, 65
+	offsets: 70, 4, 256, 75
+	rotate: 90
+ds_txt_bg
+	bounds: 504, 2, 246, 79
+	offsets: 8, 0, 256, 80
+ds_txt_green
+	bounds: 1843, 421, 152, 61
+	offsets: 55, 11, 256, 80
+	rotate: 90
+fs_txt
+	bounds: 1911, 195, 120, 65
+	offsets: 68, 3, 256, 75
+	rotate: 90
+fs_txt_bg
+	bounds: 1350, 831, 237, 79
+	offsets: 0, 0, 256, 80
+fs_txt_green
+	bounds: 1017, 693, 217, 63
+	offsets: 20, 7, 256, 80
+	rotate: 90
+hauler_logo
+	bounds: 1082, 695, 215, 63
+	offsets: 26, 1, 256, 64
+	rotate: 90
+hauler_logo_bg
+	bounds: 2, 2, 244, 74
+	offsets: 0, 7, 256, 86
+info_txt_en_buckcollect
+	bounds: 1468, 11, 220, 74
+	offsets: 2, 13, 230, 90
+	rotate: 90
+info_txt_en_catchboost
+	bounds: 1544, 11, 220, 74
+	offsets: 2, 13, 230, 90
+	rotate: 90
+info_txt_en_dropshot
+	bounds: 1581, 241, 220, 74
+	offsets: 2, 13, 230, 90
+info_txt_en_fullsweep
+	bounds: 1620, 20, 219, 73
+	offsets: 2, 14, 230, 90
+	rotate: 90
+info_txt_en_grand_lunkers
+	bounds: 158, 83, 429, 124
+	offsets: 12, 0, 474, 128
+info_txt_en_hauler
+	bounds: 1147, 700, 210, 72
+	offsets: 2, 15, 230, 90
+	rotate: 90
+info_txt_en_lunker_wave
+	bounds: 299, 222, 455, 111
+	offsets: 13, 14, 474, 128
+	rotate: 90
+info_txt_en_plus1spin
+	bounds: 412, 212, 139, 45
+	offsets: 2, 32, 230, 90
+info_txt_en_runner
+	bounds: 1695, 20, 219, 72
+	offsets: 0, 15, 230, 90
+	rotate: 90
+info_txt_en_sixpack
+	bounds: 957, 693, 191, 58
+	offsets: 1, 32, 230, 90
+	rotate: 90
+light2
+	bounds: 1586, 318, 255, 255
+	offsets: 0, 1, 256, 256
+logo_catch_and_respin
+	bounds: 1587, 575, 317, 232
+	offsets: 0, 0, 337, 232
+logo_grand_lunker_symbols
+	bounds: 158, 209, 468, 139
+	offsets: 3, 1, 474, 140
+	rotate: 90
+logo_grand_lunkers
+	bounds: 1589, 809, 337, 224
+logo_lunker_wave
+	bounds: 618, 683, 337, 201
+	offsets: 0, 0, 337, 224
+luckyboot_logo_bg
+	bounds: 1906, 563, 244, 74
+	offsets: 0, 7, 256, 86
+	rotate: 90
+luckyboot_logo_lower
+	bounds: 1840, 163, 153, 62
+	offsets: 52, 3, 256, 69
+	rotate: 90
+luckyboot_logo_upper
+	bounds: 1840, 10, 151, 69
+	offsets: 3, 1, 160, 70
+	rotate: 90
+plus1spin_logo
+	bounds: 589, 98, 159, 84
+	offsets: 6, 21, 170, 106
+	rotate: 90
+plus1spin_logo_bg
+	bounds: 1320, 317, 244, 74
+	offsets: 0, 6, 256, 85
+	rotate: 90
+plus1spin_num
+	bounds: 1468, 233, 111, 98
+	offsets: 0, 1, 112, 100
+runner_logo
+	bounds: 1370, 33, 282, 96
+	rotate: 90
+runner_logo_bg
+	bounds: 1906, 317, 244, 74
+	offsets: 0, 7, 256, 86
+	rotate: 90
+sixpack_logo
+	bounds: 675, 99, 158, 73
+	offsets: 11, 7, 187, 84
+	rotate: 90
+sixpack_logo_bg
+	bounds: 1350, 736, 235, 93
+	offsets: 0, 2, 256, 95
+sweep3
+	bounds: 1396, 467, 267, 188
+	offsets: 13, 10, 292, 208
+	rotate: 90
+symbols_static_info/bo
+	bounds: 720, 298, 383, 284
+	offsets: 4, 60, 390, 375
+	rotate: 90
+symbols_static_info/c
+	bounds: 752, 2, 381, 294
+	offsets: 121, 207, 624, 666
+symbols_static_info/cb
+	bounds: 1006, 309, 382, 312
+	offsets: 120, 207, 624, 666
+	rotate: 90
+symbols_static_info/ctr
+	bounds: 1329, 912, 381, 258
+	offsets: 539, 269, 1460, 792
+	rotate: 90
+symbols_static_info/ds
+	bounds: 618, 886, 407, 356
+	offsets: 121, 207, 624, 666
+	rotate: 90
+symbols_static_info/fs
+	bounds: 412, 259, 418, 306
+	offsets: 102, 207, 624, 666
+	rotate: 90
+symbols_static_info/ob
+	bounds: 1589, 1035, 381, 258
+	offsets: 121, 89, 624, 432
+symbols_static_info/sp
+	bounds: 976, 912, 381, 351
+	offsets: 12, 203, 405, 660
+	rotate: 90

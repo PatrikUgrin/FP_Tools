@@ -1,0 +1,25 @@
+logo@0.5x.png
+	size: 1598, 254
+	filter: Linear, Linear
+	scale: 0.5
+logo_bass_bg_tr
+	bounds: 1077, 38, 250, 118
+logo_bass_stroke_tr
+	bounds: 1496, 20, 232, 100
+	rotate: 90
+logo_bass_tr
+	bounds: 1381, 7, 245, 113
+	rotate: 90
+logo_bg_tr
+	bounds: 2, 19, 405, 233
+logo_buck_bg_tr
+	bounds: 746, 130, 329, 122
+logo_buck_stroke_tr
+	bounds: 746, 22, 313, 106
+	offsets: 1, 2, 315, 110
+logo_buck_tr
+	bounds: 1077, 158, 302, 94
+logo_lunker_tr
+	bounds: 409, 2, 335, 250
+symbol_light_swipe
+	bounds: 1329, 112, 35, 44

@@ -1,0 +1,1481 @@
+{
+"skeleton": {
+	"hash": "BUmEBdgXiCg",
+	"spine": "4.1-from-4.2.43",
+	"x": -128,
+	"y": -87,
+	"width": 256,
+	"height": 174,
+	"images": "../../Texture pecker/symbols/high_low_symbols/",
+	"audio": "/Users/matijamlekuz/Library/CloudStorage/Dropbox/GG - BASS BUCK™/spine/simboli/l1"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "symbol_holder", "parent": "root" },
+	{ "name": "symbol_inner_glow", "parent": "root", "scaleX": 2.5, "scaleY": 2.5 },
+	{ "name": "container_bg", "parent": "root" },
+	{ "name": "symbol_light_swipe", "parent": "root", "scaleX": 2, "scaleY": 2 },
+	{ "name": "point_end", "parent": "root", "x": 250.18, "y": 0.09 },
+	{ "name": "point_start", "parent": "root" },
+	{ "name": "y_position", "parent": "symbol_holder" },
+	{ "name": "afterglow", "parent": "container_bg" },
+	{ "name": "sym_outer_blow", "parent": "root", "scaleX": 2, "scaleY": 2 },
+	{ "name": "sym_glow", "parent": "y_position", "scaleX": 2, "scaleY": 2 },
+	{ "name": "bubbles", "parent": "root" },
+	{ "name": "bubbles_1", "parent": "bubbles", "x": -2.97, "y": -48.99, "scaleX": 2.1, "scaleY": 2.5 },
+	{ "name": "bubbles_2", "parent": "bubbles", "x": -2.97, "y": 38.39, "scaleX": -2.1, "scaleY": -2.5 }
+],
+"slots": [
+	{ "name": "sym_background", "bone": "container_bg", "color": "ffffff95", "attachment": "sym_background" },
+	{ "name": "sym_background_2", "bone": "container_bg", "color": "ffffff00", "attachment": "sym_background_2", "blend": "additive" },
+	{ "name": "sym_background_3", "bone": "container_bg", "color": "ffffff00", "attachment": "sym_background_2", "blend": "additive" },
+	{ "name": "bubbles_1", "bone": "bubbles_1", "blend": "additive" },
+	{ "name": "bubbles_2", "bone": "bubbles_2", "blend": "additive" },
+	{ "name": "sym_main", "bone": "y_position", "attachment": "sym_main" },
+	{ "name": "sym_main_2", "bone": "y_position", "color": "ffffff00", "attachment": "sym_main_2", "blend": "additive" },
+	{ "name": "symbol_outer_glow", "bone": "sym_outer_blow", "color": "ffffff00", "attachment": "symbol_outer_glow", "blend": "additive" },
+	{ "name": "symbol_inner_glow", "bone": "symbol_inner_glow", "color": "ffffff00", "attachment": "symbol_inner_glow_", "blend": "additive" },
+	{ "name": "sym_glow", "bone": "sym_glow", "color": "ffffff00", "attachment": "sym_glow", "blend": "additive" },
+	{ "name": "symbol_light_swipe", "bone": "symbol_light_swipe", "color": "ffffff00", "attachment": "symbol_light_swipe_", "blend": "additive" },
+	{ "name": "path", "bone": "root", "attachment": "path" },
+	{ "name": "symbol_afterglow_1", "bone": "afterglow", "color": "ffffff00", "attachment": "symbol_afterglow_1", "blend": "additive" },
+	{ "name": "symbol_afterglow_2", "bone": "afterglow", "color": "ffffff00", "attachment": "symbol_afterglow_2_", "blend": "additive" },
+	{ "name": "symbol_afterglow_3", "bone": "afterglow", "color": "ffffff00", "attachment": "symbol_afterglow_3_", "blend": "additive" },
+	{ "name": "blank_holder", "bone": "symbol_holder", "color": "ffffff00", "attachment": "bl" }
+],
+"path": [
+	{
+		"name": "path",
+		"bones": [ "symbol_holder" ],
+		"target": "path",
+		"mixRotate": 0,
+		"mixX": 0
+	}
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"blank_holder": {
+				"bl": { "width": 256, "height": 174 }
+			},
+			"path": {
+				"path": {
+					"type": "path",
+					"lengths": [ 313.02, 596.24 ],
+					"vertexCount": 6,
+					"vertices": [ 1, 6, -0.22, -74.63, 1, 1, 6, 0, 0, 1, 1, 6, 0.3, 100.17, 1, 1, 5, 0.56, 99.96, 1, 1, 5, 0.02, 0.27, 1, 1, 6, 249.87, -60.69, 1 ]
+				}
+			}
+		}
+	},
+	{ "name": "blank", "color": "000000ff" },
+	{
+		"name": "h1",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "ffe254ff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "ffe254ff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "ffe254ff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "fda920ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "fda920ff", "scaleX": 0.925, "scaleY": 0.85, "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "fda920ff", "scaleX": 0.925, "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "fda920ff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "fda920ff", "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "fc961aff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "h1_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "h1_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "h1_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "h1_glow", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "h1", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "h1", "width": 256, "height": 174 }
+			}
+		}
+	},
+	{
+		"name": "h2",
+		"color": "079d0fff",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "46ff54ff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "46ff54ff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "46ff54ff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "059211ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "059211ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "059211ff", "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "0aa70eff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "0aa70eff", "y": 0.25, "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "059211ff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "h2_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "h2_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "h2_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "h2_glow", "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "h2", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "h2", "width": 256, "height": 174 }
+			}
+		}
+	},
+	{
+		"name": "h3",
+		"color": "14a8b9ff",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "4df7ffff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "4df7ffff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "4df7ffff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "1ac0b7ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "1ac0b7ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "1ac0b7ff", "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "1da2c4ff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "1da2c4ff", "y": 0.25, "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "1ac0b7ff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "h3_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "h3_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "h3_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "h3_glow", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "h3", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "h3", "width": 256, "height": 174 }
+			}
+		}
+	},
+	{
+		"name": "h4",
+		"color": "9c2fbdff",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "f552ffff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "f552ffff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "f552ffff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "d200afff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "d200afff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "d200afff", "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "9929f1ff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "9929f1ff", "y": 0.25, "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "d200afff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "h4_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "h4_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "h4_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "h4_glow", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "h4", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "h4", "width": 256, "height": 174 }
+			}
+		}
+	},
+	{
+		"name": "l1",
+		"color": "722f80ff",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "a04effff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "a04effff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "a04effff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "6f1984ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "6f1984ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "6f1984ff", "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "601a70ff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "601a70ff", "y": 0.25, "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "6f1984ff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "l1_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "l1_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "l1_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "l1_glow", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "l1", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "l1", "width": 256, "height": 174 }
+			}
+		}
+	},
+	{
+		"name": "l2",
+		"color": "15501eff",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "4effbfff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "4effbfff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "4effbfff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "0a4d0aff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "0a4d0aff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "0a4d0aff", "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "0c4b14ff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "0c4b14ff", "y": 0.25, "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "0a4d0aff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "l2_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "l2_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "l2_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "l2_glow", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "l2", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "l2", "width": 256, "height": 174 }
+			}
+		}
+	},
+	{
+		"name": "l3",
+		"color": "2a3795ff",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "4295ffff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "4295ffff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "4295ffff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "154391ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "154391ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "154391ff", "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "131350ff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "131350ff", "y": 0.25, "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "154391ff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "l3_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "l3_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "l3_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "l3_glow", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "l3", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "l3", "width": 256, "height": 174 }
+			}
+		}
+	},
+	{
+		"name": "l4",
+		"color": "601616ff",
+		"attachments": {
+			"bubbles_1": {
+				"bubbles_1": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "ff3c3cff", "width": 120, "height": 44 }
+			},
+			"bubbles_2": {
+				"bubbles_1": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_2": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_3": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_4": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_5": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_6": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_7": { "color": "ff3c3cff", "width": 120, "height": 44 },
+				"bubbles_8": { "color": "ff3c3cff", "width": 120, "height": 44 }
+			},
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "501010ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2_": { "name": "symbol_afterglow_2", "color": "501010ff", "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3_": { "name": "symbol_afterglow_3", "color": "501010ff", "width": 280, "height": 200 }
+			},
+			"symbol_inner_glow": {
+				"symbol_inner_glow_": { "name": "symbol_inner_glow", "color": "3d0707ff", "width": 180, "height": 130 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe_": { "name": "symbol_light_swipe", "color": "3d0707ff", "y": 0.25, "width": 70, "height": 87 }
+			},
+			"symbol_outer_glow": {
+				"symbol_outer_glow": { "name": "symbol_inner_glow_thin", "color": "501010ff", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_background": {
+				"sym_background": { "name": "l4_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_2": {
+				"sym_background_2": { "name": "l4_bg", "width": 256, "height": 174 }
+			},
+			"sym_background_3": {
+				"sym_background_2": { "name": "l4_bg", "width": 256, "height": 174 }
+			},
+			"sym_glow": {
+				"sym_glow": { "name": "l4_glow", "y": 0.5, "width": 128, "height": 87 }
+			},
+			"sym_main": {
+				"sym_main": { "name": "l4", "width": 256, "height": 174 }
+			},
+			"sym_main_2": {
+				"sym_main_2": { "name": "l4", "width": 256, "height": 174 }
+			}
+		}
+	}
+],
+"events": {
+	"func_move_to_front": {}
+},
+"animations": {
+	"appear": {
+		"slots": {
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.0667, "color": "ffffffff" }
+				]
+			},
+			"sym_background_2": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{
+						"time": 0.0667,
+						"color": "ffffffff",
+						"curve": [ 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 0 ]
+					},
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"sym_background_3": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{
+						"time": 0.0667,
+						"color": "ffffffff",
+						"curve": [ 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 0 ]
+					},
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"sym_main_2": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{
+						"time": 0.0667,
+						"color": "ffffffff",
+						"curve": [ 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 1, 0.211, 1, 0.356, 0 ]
+					},
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"y_position": {
+				"translate": [
+					{},
+					{ "time": 0.0333, "y": -13.14 },
+					{ "time": 0.1, "y": 5 },
+					{ "time": 0.1667 }
+				]
+			}
+		}
+	},
+	"convert_to_blank": {
+		"slots": {
+			"blank_holder": {
+				"rgba": [
+					{ "time": 0.2, "color": "ffffff00" },
+					{ "time": 0.3333, "color": "ffffffff" }
+				]
+			},
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.0667, "color": "ffffffff" },
+					{ "time": 0.3, "color": "ffffff00" }
+				]
+			},
+			"sym_main": {
+				"rgba": [
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.4667, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"symbol_holder": {
+				"scale": [
+					{
+						"curve": [ 0.071, 1.096, 0.087, 1.05, 0.071, 1.096, 0.087, 1.05 ]
+					},
+					{
+						"time": 0.1667,
+						"x": 1.05,
+						"y": 1.05,
+						"curve": [ 0.217, 1.05, 0.25, 0.964, 0.217, 1.05, 0.25, 0.964 ]
+					},
+					{
+						"time": 0.3,
+						"x": 0.9,
+						"y": 0.9,
+						"curve": [ 0.334, 0.856, 0.399, 1.01, 0.334, 0.856, 0.399, 1.01 ]
+					},
+					{ "time": 0.4333 }
+				]
+			}
+		},
+		"events": [
+			{ "time": 0.2667, "name": "func_move_to_front" }
+		]
+	},
+	"move": {
+		"slots": {
+			"bubbles_1": {
+				"rgba": [
+					{ "color": "00000000" },
+					{ "time": 0.0667, "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.1667,
+						"color": "ffffffff",
+						"curve": [ 0.333, 1, 0.7, 0, 0.333, 1, 0.7, 0, 0.333, 1, 0.7, 0, 0.333, 1, 0.7, 0 ]
+					},
+					{ "time": 0.8667, "color": "00000000" }
+				],
+				"attachment": [
+					{ "name": "bubbles_1" },
+					{ "time": 0.0333, "name": "bubbles_2" },
+					{ "time": 0.0667, "name": "bubbles_3" },
+					{ "time": 0.1, "name": "bubbles_4" },
+					{ "time": 0.1333, "name": "bubbles_5" },
+					{ "time": 0.1667, "name": "bubbles_6" },
+					{ "time": 0.2, "name": "bubbles_7" },
+					{ "time": 0.2333, "name": "bubbles_8" },
+					{ "time": 0.2667, "name": "bubbles_7" },
+					{ "time": 0.3, "name": "bubbles_6" },
+					{ "time": 0.3333, "name": "bubbles_5" },
+					{ "time": 0.3667, "name": "bubbles_4" },
+					{ "time": 0.4, "name": "bubbles_3" },
+					{ "time": 0.4333, "name": "bubbles_2" },
+					{ "time": 0.4667, "name": "bubbles_1" },
+					{ "time": 0.5, "name": "bubbles_2" },
+					{ "time": 0.5333, "name": "bubbles_3" },
+					{ "time": 0.5667, "name": "bubbles_4" },
+					{ "time": 0.6, "name": "bubbles_5" },
+					{ "time": 0.6333, "name": "bubbles_6" },
+					{ "time": 0.6667, "name": "bubbles_7" },
+					{ "time": 0.7, "name": "bubbles_8" },
+					{ "time": 0.7333, "name": "bubbles_7" },
+					{ "time": 0.7667, "name": "bubbles_6" },
+					{ "time": 0.8, "name": "bubbles_5" },
+					{ "time": 0.8333, "name": "bubbles_4" },
+					{ "time": 0.8667, "name": "bubbles_3" }
+				]
+			},
+			"bubbles_2": {
+				"rgba": [
+					{ "color": "00000000" },
+					{ "time": 0.0667, "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.3667,
+						"color": "ffffffff",
+						"curve": [ 0.533, 1, 0.833, 0, 0.533, 1, 0.833, 0, 0.533, 1, 0.833, 0, 0.533, 1, 0.833, 0 ]
+					},
+					{ "time": 1, "color": "00000000" }
+				],
+				"attachment": [
+					{ "name": "bubbles_1" },
+					{ "time": 0.0667, "name": "bubbles_2" },
+					{ "time": 0.1333, "name": "bubbles_3" },
+					{ "time": 0.2, "name": "bubbles_4" },
+					{ "time": 0.2667, "name": "bubbles_5" },
+					{ "time": 0.3333, "name": "bubbles_6" },
+					{ "time": 0.4, "name": "bubbles_7" },
+					{ "time": 0.4667, "name": "bubbles_8" },
+					{ "time": 0.5333, "name": "bubbles_7" },
+					{ "time": 0.6, "name": "bubbles_6" },
+					{ "time": 0.6667, "name": "bubbles_5" },
+					{ "time": 0.7333, "name": "bubbles_4" },
+					{ "time": 0.8, "name": "bubbles_3" },
+					{ "time": 0.8667, "name": "bubbles_2" },
+					{ "time": 0.9333, "name": "bubbles_1" },
+					{ "time": 1, "name": "bubbles_2" }
+				]
+			},
+			"symbol_afterglow_1": {
+				"alpha": [
+					{ "value": 0 },
+					{ "time": 0.1333, "value": 1 },
+					{ "time": 0.3333, "value": 0, "curve": "stepped" },
+					{ "time": 0.5, "value": 0 },
+					{ "time": 0.6333, "value": 0.6287214 },
+					{ "time": 0.8333, "value": 0 }
+				]
+			},
+			"symbol_afterglow_2": {
+				"alpha": [
+					{ "time": 0.1, "value": 0 },
+					{ "time": 0.2333, "value": 1 },
+					{ "time": 0.4333, "value": 0, "curve": "stepped" },
+					{ "time": 0.6, "value": 0 },
+					{ "time": 0.7333, "value": 0.4344254 },
+					{ "time": 0.9333, "value": 0 }
+				]
+			},
+			"symbol_afterglow_3": {
+				"alpha": [
+					{ "time": 0.2, "value": 0 },
+					{ "time": 0.3333, "value": 0.83648354 },
+					{ "time": 0.5333, "value": 0, "curve": "stepped" },
+					{ "time": 0.7, "value": 0 },
+					{ "time": 0.8333, "value": 0.14586686 },
+					{ "time": 1, "value": 0 }
+				]
+			},
+			"symbol_inner_glow": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{
+						"time": 0.1667,
+						"color": "ffffff83",
+						"curve": [ 0.444, 1, 0.722, 1, 0.444, 1, 0.722, 1, 0.444, 1, 0.722, 1, 0.343, 0.51, 0.399, 0 ]
+					},
+					{ "time": 1, "color": "ffffff00" }
+				]
+			},
+			"symbol_light_swipe": {
+				"rgba": [
+					{
+						"color": "ffffff00",
+						"curve": [ 0.056, 1, 0.011, 1, 0.056, 1, 0.011, 1, 0.056, 1, 0.011, 1, 0.056, 0.33, 0.011, 0.78 ]
+					},
+					{ "time": 0.0667, "color": "ffffffc8", "curve": "stepped" },
+					{
+						"time": 0.1667,
+						"color": "ffffffc8",
+						"curve": [ 0.278, 1, 0.389, 1, 0.278, 1, 0.389, 1, 0.278, 1, 0.389, 1, 0.278, 0.78, 0.389, 0.33 ]
+					},
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"symbol_outer_glow": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.0333, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			},
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.1667,
+						"color": "ffffffff",
+						"curve": [ 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 0 ]
+					},
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			},
+			"sym_background_2": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"sym_glow": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.4, "color": "ffffffff" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"sym_main": {
+				"rgba": [
+					{ "time": 0.4, "color": "ffffffff" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"sym_main_2": {
+				"rgba": [
+					{ "color": "ffffff32" },
+					{ "time": 0.4, "color": "ffffffff" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"symbol_holder": {
+				"translate": [
+					{
+						"time": 0.3333,
+						"curve": [ 0.611, 0, 0.722, 0, 0.611, 0, 0.722, 10 ]
+					},
+					{ "time": 1, "y": 10 }
+				]
+			},
+			"symbol_light_swipe": {
+				"translate": [
+					{
+						"x": -135,
+						"curve": [ 0.045, -106.19, 0.116, -25.98, 0.011, 0, 0.122, 0 ]
+					},
+					{
+						"time": 0.1667,
+						"curve": [ 0.222, 28.11, 0.445, 85.13, 0.222, 0, 0.444, 0 ]
+					},
+					{ "time": 0.5, "x": 105 }
+				],
+				"scale": [
+					{
+						"x": 0.25,
+						"curve": [ 0.078, 0.268, 0.035, 1.5, 0.056, 1, 0.111, 1 ]
+					},
+					{
+						"time": 0.1667,
+						"x": 1.5,
+						"curve": [ 0.332, 1.5, 0.444, 0.717, 0.222, 1, 0.444, 1 ]
+					},
+					{ "time": 0.5, "x": 0.25 }
+				],
+				"shear": [
+					{
+						"curve": [ 0.056, 0, 0.111, 0, 0.062, -0.09, 0.111, -17.8 ]
+					},
+					{
+						"time": 0.1667,
+						"y": -17.8,
+						"curve": [ 0.278, 0, 0.189, 0, 0.247, -17.8, 0.234, -8.86 ]
+					},
+					{ "time": 0.3 }
+				]
+			},
+			"y_position": {
+				"scale": [
+					{},
+					{ "time": 0.1667, "x": 1.1, "y": 1.1 },
+					{ "time": 0.5, "x": 0.85, "y": 0.85 }
+				]
+			},
+			"afterglow": {
+				"translate": [
+					{
+						"y": -25.97,
+						"curve": [ 0.333, 0, 0.667, 0, 0.125, 1.02, 0.667, 33.27 ]
+					},
+					{ "time": 1, "y": 33.27 }
+				],
+				"scale": [
+					{ "y": 0.5 },
+					{ "time": 0.1667 },
+					{ "time": 0.5667, "y": 1.403 },
+					{ "time": 1 }
+				]
+			},
+			"symbol_inner_glow": {
+				"scale": [
+					{
+						"x": 0.5,
+						"y": 0.5,
+						"curve": [ 0, 1.071, 0.839, 1.206, 0, 1.071, 0.839, 1.206 ]
+					},
+					{ "time": 1, "x": 1.206, "y": 1.206 }
+				]
+			},
+			"bubbles_1": {
+				"translate": [
+					{},
+					{ "time": 1, "y": 21.89 }
+				]
+			},
+			"bubbles_2": {
+				"translate": [
+					{},
+					{ "time": 1, "y": 11.38 }
+				]
+			},
+			"bubbles": {
+				"scale": [
+					{
+						"curve": [ 0.119, 1.098, 0.993, 1.142, 0.119, 1.098, 0.993, 1.142 ]
+					},
+					{ "time": 1, "x": 1.142, "y": 1.142 }
+				]
+			}
+		},
+		"path": {
+			"path": {
+				"position": [
+					{},
+					{ "time": 0.5, "value": 1 }
+				],
+				"mix": [
+					{ "mixRotate": 0, "mixX": 0 },
+					{ "time": 0.0667, "mixRotate": 0 }
+				]
+			}
+		}
+	},
+	"remove": {
+		"slots": {
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffffff" },
+					{ "time": 0.8333, "color": "ffffff00" }
+				]
+			},
+			"sym_main": {
+				"rgba": [
+					{ "time": 0.6667, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"symbol_holder": {
+				"rotate": [
+					{
+						"time": 0.6667,
+						"curve": [ 0.861, 0, 1, 90 ]
+					},
+					{ "time": 1, "value": 90 }
+				],
+				"scale": [
+					{
+						"time": 0.5,
+						"curve": [ 0.55, 1.067, 0.611, 1.05, 0.55, 1.067, 0.611, 1.05 ]
+					},
+					{
+						"time": 0.6667,
+						"x": 1.05,
+						"y": 1.05,
+						"curve": [ 0.778, 1.05, 0.889, 0.783, 0.778, 1.05, 0.889, 0.783 ]
+					},
+					{ "time": 1, "x": 0.75, "y": 0.75 }
+				]
+			}
+		}
+	},
+	"static_appear": {
+		"slots": {
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffff00" }
+				]
+			}
+		}
+	},
+	"static_spin": {
+		"slots": {
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffffff" }
+				]
+			}
+		}
+	},
+	"win": {
+		"slots": {
+			"bubbles_1": {
+				"rgba": [
+					{ "color": "00000000" },
+					{ "time": 0.0667, "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.5,
+						"color": "ffffffff",
+						"curve": [ 0.616, 1, 0.8, 0, 0.616, 1, 0.8, 0, 0.616, 1, 0.8, 0, 0.7, 1, 0.739, 0 ]
+					},
+					{ "time": 0.9667, "color": "00000000" }
+				],
+				"attachment": [
+					{ "name": "bubbles_1" },
+					{ "time": 0.0333, "name": "bubbles_2" },
+					{ "time": 0.0667, "name": "bubbles_3" },
+					{ "time": 0.1, "name": "bubbles_4" },
+					{ "time": 0.1333, "name": "bubbles_5" },
+					{ "time": 0.1667, "name": "bubbles_6" },
+					{ "time": 0.2, "name": "bubbles_7" },
+					{ "time": 0.2333, "name": "bubbles_8" },
+					{ "time": 0.2667, "name": "bubbles_7" },
+					{ "time": 0.3, "name": "bubbles_6" },
+					{ "time": 0.3333, "name": "bubbles_5" },
+					{ "time": 0.3667, "name": "bubbles_4" },
+					{ "time": 0.4, "name": "bubbles_3" },
+					{ "time": 0.4333, "name": "bubbles_2" },
+					{ "time": 0.4667, "name": "bubbles_1" },
+					{ "time": 0.5, "name": "bubbles_2" },
+					{ "time": 0.5333, "name": "bubbles_3" },
+					{ "time": 0.5667, "name": "bubbles_4" },
+					{ "time": 0.6, "name": "bubbles_5" },
+					{ "time": 0.6333, "name": "bubbles_6" },
+					{ "time": 0.6667, "name": "bubbles_7" },
+					{ "time": 0.7, "name": "bubbles_8" },
+					{ "time": 0.7333, "name": "bubbles_7" },
+					{ "time": 0.7667, "name": "bubbles_6" },
+					{ "time": 0.8, "name": "bubbles_5" },
+					{ "time": 0.8333, "name": "bubbles_4" },
+					{ "time": 0.8667, "name": "bubbles_3" }
+				]
+			},
+			"bubbles_2": {
+				"rgba": [
+					{ "color": "00000000" },
+					{ "time": 0.0667, "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.3333,
+						"color": "ffffffff",
+						"curve": [ 0.5, 1, 0.833, 0, 0.5, 1, 0.833, 0, 0.5, 1, 0.833, 0, 0.803, 1, 0.833, 0 ]
+					},
+					{ "time": 1, "color": "00000000" }
+				],
+				"attachment": [
+					{ "name": "bubbles_1" },
+					{ "time": 0.0667, "name": "bubbles_2" },
+					{ "time": 0.1333, "name": "bubbles_3" },
+					{ "time": 0.2, "name": "bubbles_4" },
+					{ "time": 0.2667, "name": "bubbles_5" },
+					{ "time": 0.3333, "name": "bubbles_6" },
+					{ "time": 0.4, "name": "bubbles_7" },
+					{ "time": 0.4667, "name": "bubbles_8" },
+					{ "time": 0.5333, "name": "bubbles_7" },
+					{ "time": 0.6, "name": "bubbles_6" },
+					{ "time": 0.6667, "name": "bubbles_5" },
+					{ "time": 0.7333, "name": "bubbles_4" },
+					{ "time": 0.8, "name": "bubbles_3" },
+					{ "time": 0.8667, "name": "bubbles_2" },
+					{ "time": 0.9333, "name": "bubbles_1" },
+					{ "time": 1, "name": "bubbles_2" }
+				]
+			},
+			"symbol_afterglow_1": {
+				"alpha": [
+					{ "value": 0 },
+					{ "time": 0.1333, "value": 1 },
+					{ "time": 0.3333, "value": 0, "curve": "stepped" },
+					{ "time": 0.5, "value": 0 },
+					{ "time": 0.6333, "value": 0.6287214 },
+					{ "time": 0.8333, "value": 0 }
+				]
+			},
+			"symbol_afterglow_2": {
+				"alpha": [
+					{ "time": 0.1, "value": 0 },
+					{ "time": 0.2333, "value": 1 },
+					{ "time": 0.4333, "value": 0, "curve": "stepped" },
+					{ "time": 0.6, "value": 0 },
+					{ "time": 0.7333, "value": 0.4344254 },
+					{ "time": 0.9333, "value": 0 }
+				]
+			},
+			"symbol_afterglow_3": {
+				"alpha": [
+					{ "time": 0.2, "value": 0 },
+					{ "time": 0.3333, "value": 0.83648354 },
+					{ "time": 0.5333, "value": 0, "curve": "stepped" },
+					{ "time": 0.7, "value": 0 },
+					{ "time": 0.8333, "value": 0.14586686 },
+					{ "time": 1, "value": 0 }
+				]
+			},
+			"symbol_inner_glow": {
+				"alpha": [
+					{ "value": 0 },
+					{
+						"time": 0.1667,
+						"value": 0.51461375,
+						"curve": [ 0.343, 0.51, 0.399, 0 ]
+					},
+					{ "time": 1, "value": 0 }
+				]
+			},
+			"symbol_light_swipe": {
+				"alpha": [
+					{
+						"value": 0,
+						"curve": [ 0.056, 0.33, 0.011, 0.78 ]
+					},
+					{ "time": 0.0667, "value": 0.78429997, "curve": "stepped" },
+					{
+						"time": 0.1667,
+						"value": 0.78429997,
+						"curve": [ 0.278, 0.78, 0.389, 0.33 ]
+					},
+					{ "time": 0.5, "value": 0 }
+				]
+			},
+			"symbol_outer_glow": {
+				"alpha": [
+					{ "value": 0 },
+					{ "time": 0.0333, "value": 1, "curve": "stepped" },
+					{ "time": 0.1333, "value": 1 },
+					{ "time": 0.2667, "value": 0 }
+				]
+			},
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.1667,
+						"color": "ffffffff",
+						"curve": [ 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 0 ]
+					},
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			},
+			"sym_background_2": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"sym_glow": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			},
+			"sym_main": {
+				"rgba": [
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				]
+			},
+			"sym_main_2": {
+				"rgba": [
+					{ "color": "ffffff32" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 1, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"symbol_holder": {
+				"scale": [
+					{
+						"curve": [ 0.056, 1.067, 0.111, 1.2, 0.056, 1.067, 0.111, 1.2 ]
+					},
+					{
+						"time": 0.1667,
+						"x": 1.2,
+						"y": 1.2,
+						"curve": [ 0.278, 1.2, 0.389, 1.067, 0.278, 1.2, 0.389, 1.067 ]
+					},
+					{ "time": 0.5 }
+				]
+			},
+			"symbol_light_swipe": {
+				"translate": [
+					{
+						"x": -135,
+						"curve": [ 0.045, -106.19, 0.116, -25.98, 0.011, 0, 0.122, 0 ]
+					},
+					{
+						"time": 0.1667,
+						"curve": [ 0.222, 28.11, 0.445, 85.13, 0.222, 0, 0.444, 0 ]
+					},
+					{ "time": 0.5, "x": 105 }
+				],
+				"scale": [
+					{
+						"x": 0.25,
+						"curve": [ 0.078, 0.268, 0.035, 1.5, 0.056, 1, 0.111, 1 ]
+					},
+					{
+						"time": 0.1667,
+						"x": 1.5,
+						"curve": [ 0.332, 1.5, 0.444, 0.717, 0.222, 1, 0.444, 1 ]
+					},
+					{ "time": 0.5, "x": 0.25 }
+				],
+				"shear": [
+					{
+						"curve": [ 0.056, 0, 0.111, 0, 0.062, -0.09, 0.111, -17.8 ]
+					},
+					{
+						"time": 0.1667,
+						"y": -17.8,
+						"curve": [ 0.278, 0, 0.189, 0, 0.247, -17.8, 0.234, -8.86 ]
+					},
+					{ "time": 0.3 }
+				]
+			},
+			"y_position": {
+				"translate": [
+					{
+						"time": 0.5,
+						"curve": [ 0.667, 0, 0.833, 0, 0.667, 0, 0.833, 20 ]
+					},
+					{ "time": 1, "y": 20 }
+				]
+			},
+			"afterglow": {
+				"translate": [
+					{
+						"y": -25.97,
+						"curve": [ 0.333, 0, 0.667, 0, 0.125, 1.02, 0.667, 33.27 ]
+					},
+					{ "time": 1, "y": 33.27 }
+				],
+				"scale": [
+					{ "y": 0.5 },
+					{ "time": 0.1667 },
+					{ "time": 0.5667, "y": 1.403 },
+					{ "time": 1 }
+				]
+			},
+			"symbol_inner_glow": {
+				"scale": [
+					{
+						"x": 0.5,
+						"y": 0.5,
+						"curve": [ 0, 1.071, 0.839, 1.206, 0, 1.071, 0.839, 1.206 ]
+					},
+					{ "time": 1, "x": 1.206, "y": 1.206 }
+				]
+			},
+			"bubbles_1": {
+				"translate": [
+					{},
+					{ "time": 1, "y": 21.89 }
+				]
+			},
+			"bubbles_2": {
+				"translate": [
+					{},
+					{ "time": 1, "y": 29.75 }
+				]
+			},
+			"bubbles": {
+				"scale": [
+					{
+						"curve": [ 0.119, 1.098, 0.993, 1.142, 0.119, 1.098, 0.993, 1.142 ]
+					},
+					{ "time": 1, "x": 1.142, "y": 1.142 }
+				]
+			}
+		}
+	},
+	"win_force_stop": {
+		"slots": {
+			"bubbles_1": {
+				"rgba": [
+					{ "color": "00000000" },
+					{
+						"time": 0.0667,
+						"color": "ffffffff",
+						"curve": [ 0.167, 1, 0.267, 0, 0.167, 1, 0.267, 0, 0.167, 1, 0.267, 0, 0.167, 1, 0.267, 0 ]
+					},
+					{ "time": 0.3667, "color": "00000000" }
+				],
+				"attachment": [
+					{ "name": "bubbles_1" },
+					{ "time": 0.0333, "name": "bubbles_2" },
+					{ "time": 0.0667, "name": "bubbles_3" },
+					{ "time": 0.1, "name": "bubbles_4" },
+					{ "time": 0.1333, "name": "bubbles_5" },
+					{ "time": 0.1667, "name": "bubbles_6" },
+					{ "time": 0.2, "name": "bubbles_7" },
+					{ "time": 0.2333, "name": "bubbles_8" },
+					{ "time": 0.2667, "name": "bubbles_7" },
+					{ "time": 0.3, "name": "bubbles_6" },
+					{ "time": 0.3333, "name": "bubbles_5" },
+					{ "time": 0.3667, "name": "bubbles_4" },
+					{ "time": 0.4, "name": "bubbles_3" },
+					{ "time": 0.4333, "name": "bubbles_2" },
+					{ "time": 0.4667, "name": "bubbles_1" },
+					{ "time": 0.5, "name": "bubbles_2" }
+				]
+			},
+			"bubbles_2": {
+				"rgba": [
+					{ "color": "00000000" },
+					{ "time": 0.0667, "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.2333,
+						"color": "ffffffff",
+						"curve": [ 0.322, 1, 0.411, 0.33, 0.322, 1, 0.411, 0.33, 0.322, 1, 0.411, 0.33, 0.322, 1, 0.411, 0.33 ]
+					},
+					{ "time": 0.5, "color": "00000000" }
+				],
+				"attachment": [
+					{ "name": "bubbles_1" },
+					{ "time": 0.0667, "name": "bubbles_2" },
+					{ "time": 0.1333, "name": "bubbles_3" },
+					{ "time": 0.2, "name": "bubbles_4" },
+					{ "time": 0.2667, "name": "bubbles_5" },
+					{ "time": 0.3333, "name": "bubbles_6" },
+					{ "time": 0.4, "name": "bubbles_7" },
+					{ "time": 0.4667, "name": "bubbles_8" }
+				]
+			},
+			"symbol_afterglow_1": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.3, "color": "ffffff00" }
+				]
+			},
+			"symbol_afterglow_2": {
+				"rgba": [
+					{ "time": 0.1, "color": "ffffff00" },
+					{ "time": 0.2333, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"symbol_afterglow_3": {
+				"rgba": [
+					{ "time": 0.2, "color": "ffffff00" },
+					{ "time": 0.3333, "color": "ffffffff" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"symbol_inner_glow": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffff83" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"symbol_outer_glow": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.0333, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.1333, "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			},
+			"sym_background": {
+				"rgba": [
+					{ "color": "ffffffff", "curve": "stepped" },
+					{
+						"time": 0.1667,
+						"color": "ffffffff",
+						"curve": [ 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 1, 0.2, 1, 0.3, 0 ]
+					},
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			},
+			"sym_background_2": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.5, "color": "ffffff00" }
+				]
+			},
+			"sym_glow": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			},
+			"sym_main": {
+				"rgba": [
+					{ "color": "ffffffff" },
+					{ "time": 0.1667, "color": "ffffff00" }
+				]
+			},
+			"sym_main_2": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.0333, "color": "ffffffff" },
+					{ "time": 0.3333, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"symbol_inner_glow": {
+				"scale": [
+					{
+						"x": 0.5,
+						"y": 0.5,
+						"curve": [ 0, 0.957, 0.339, 1.206, 0, 0.957, 0.339, 1.206 ]
+					},
+					{ "time": 0.5, "x": 1.206, "y": 1.206 }
+				]
+			},
+			"y_position": {
+				"translate": [
+					{
+						"curve": [ 0.167, 0, 0.333, 0, 0.167, 0, 0.333, 20 ]
+					},
+					{ "time": 0.5, "y": 20 }
+				]
+			},
+			"afterglow": {
+				"scale": [
+					{},
+					{ "time": 0.1333, "y": 1.2 },
+					{ "time": 0.5, "y": 0.75 }
+				]
+			},
+			"bubbles_1": {
+				"translate": [
+					{},
+					{ "time": 0.5, "y": 21.89 }
+				]
+			},
+			"bubbles_2": {
+				"translate": [
+					{},
+					{ "time": 0.5, "y": 11.38 }
+				]
+			},
+			"bubbles": {
+				"scale": [
+					{
+						"curve": [ 0.119, 1.098, 0.493, 1.142, 0.119, 1.098, 0.493, 1.142 ]
+					},
+					{ "time": 0.5, "x": 1.142, "y": 1.142 }
+				]
+			}
+		}
+	}
+}
+}

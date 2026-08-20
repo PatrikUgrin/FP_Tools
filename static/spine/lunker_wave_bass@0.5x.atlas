@@ -1,0 +1,14 @@
+lunker_wave_bass@0.5x.png
+	size: 572, 131
+	filter: Linear, Linear
+	scale: 0.5
+bubbles_1
+	bounds: 353, 30, 150, 99
+fish_bubble
+	bounds: 2, 2, 349, 127
+symbol_inner_glow
+	bounds: 505, 39, 90, 65
+	rotate: 90
+symbol_light_swipe
+	bounds: 505, 2, 35, 44
+	rotate: 90

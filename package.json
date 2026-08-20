@@ -1,0 +1,23 @@
+{
+	"name": "fp-tools",
+	"private": true,
+	"scripts": {
+		"start": "webpack-dev-server --mode=development",
+		"build": "webpack --mode=production"
+	},
+	"dependencies": {
+		"express": "^4.19.2",
+		"pixi-filters": "^4.2.0",
+		"pixi-spine": "^3.1.2",
+		"pixi.js": "^6.5.1"
+	},
+	"devDependencies": {
+		"copy-webpack-plugin": "^11.0.0",
+		"html-webpack-plugin": "^5.5.0",
+		"ts-loader": "^9.3.1",
+		"typescript": "^4.7.4",
+		"webpack": "^5.74.0",
+		"webpack-cli": "^4.10.0",
+		"webpack-dev-server": "^4.9.3"
+	}
+}

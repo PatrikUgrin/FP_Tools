@@ -1,0 +1,41 @@
+bo.png
+	size: 515, 512
+	filter: Linear, Linear
+boat
+	bounds: 286, 185, 245, 173
+	offsets: 11, 0, 256, 173
+	rotate: 90
+container
+	bounds: 496, 509, 1, 1
+runner_2_off
+	bounds: 2, 308, 271, 49
+	offsets: 5, 7, 280, 64
+runner_2_out
+	bounds: 2, 178, 166, 39
+	offsets: 7, 11, 280, 64
+runner_2_txt
+	bounds: 2, 359, 276, 53
+	offsets: 2, 5, 280, 64
+runner_3_off
+	bounds: 258, 125, 250, 48
+	offsets: 17, 8, 280, 64
+runner_3_out
+	bounds: 258, 8, 145, 39
+	offsets: 20, 11, 280, 64
+runner_3_txt
+	bounds: 461, 175, 255, 52
+	offsets: 14, 6, 280, 64
+	rotate: 90
+runner_bg
+	bounds: 2, 2, 254, 171
+	offsets: 1, 2, 256, 174
+runner_glow
+	bounds: 286, 432, 208, 78
+runner_logo
+	bounds: 2, 414, 282, 96
+runner_logo_bg
+	bounds: 258, 49, 244, 74
+	offsets: 0, 7, 256, 86
+runner_logo_out
+	bounds: 2, 219, 270, 87
+	offsets: 2, 5, 282, 96

@@ -1,0 +1,11 @@
+wlines.png
+size:1024,256
+filter:Linear,Linear
+pma:true
+line_color
+bounds:2,2,292,208
+line_white
+bounds:296,2,292,208
+symbol_inner_glow
+bounds:590,30,180,130
+rotate:90

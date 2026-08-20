@@ -1,0 +1,66 @@
+bonus_info_title_scenes@0.5x.png
+	size: 1042, 522
+	filter: Linear, Linear
+	scale: 0.5
+02
+	bounds: 357, 58, 150, 69
+boat
+	bounds: 912, 7, 128, 63
+	offsets: 0, 10, 128, 87
+boat trail
+	bounds: 509, 57, 77, 9
+	offsets: 2, 1, 80, 12
+	rotate: 90
+buck_pose_title
+	bounds: 2, 52, 353, 468
+	offsets: 0, 0, 359, 474
+container
+	bounds: 2, 5, 1, 1
+light2
+	bounds: 530, 6, 128, 127
+	offsets: 0, 1, 128, 128
+	rotate: 90
+logo_catch_and_respin
+	bounds: 912, 72, 159, 116
+	offsets: 0, 0, 169, 116
+	rotate: 90
+sea_glitter1
+	bounds: 659, 2, 138, 109
+	offsets: 1, 0, 141, 109
+	rotate: 90
+sea_glitter2
+	bounds: 691, 144, 87, 106
+	offsets: 30, 2, 141, 109
+	rotate: 90
+sea_glitter3
+	bounds: 770, 2, 140, 109
+	offsets: 1, 0, 141, 109
+	rotate: 90
+splash
+	bounds: 691, 233, 287, 277
+	rotate: 90
+txt_bonusawarded
+	bounds: 249, 10, 279, 40
+	offsets: 0, 1, 280, 45
+txt_catch_and_respin_big
+	bounds: 970, 249, 271, 40
+	offsets: 0, 1, 280, 45
+	rotate: 90
+txt_congratulations
+	bounds: 357, 129, 391, 78
+	offsets: 4, 0, 395, 87
+	rotate: 90
+txt_congratulations_highlight
+	bounds: 623, 142, 378, 66
+	offsets: 9, 7, 395, 87
+	rotate: 90
+ui_btn
+	bounds: 2, 8, 245, 42
+	offsets: 0, 1, 245, 45
+ui_btn_txt
+	bounds: 881, 10, 221, 29
+	offsets: 13, 8, 245, 45
+	rotate: 90
+wave3
+	bounds: 437, 136, 384, 184
+	rotate: 90

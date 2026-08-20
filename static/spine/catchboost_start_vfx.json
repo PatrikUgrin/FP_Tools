@@ -1,0 +1,111 @@
+{
+"skeleton": {
+	"hash": "WuNBHUoclVI",
+	"spine": "4.1-from-4.2.43",
+	"x": -140,
+	"y": -129.17,
+	"width": 280,
+	"height": 200,
+	"images": "../../Texture pecker/symbols/main/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "symbol_afterglow_1", "parent": "root", "y": -87.51 },
+	{ "name": "bone", "parent": "root", "y": -84.13 }
+],
+"slots": [
+	{ "name": "symbol_afterglow_1", "bone": "symbol_afterglow_1", "attachment": "symbol_afterglow_1", "blend": "additive" },
+	{ "name": "symbol_afterglow_2", "bone": "symbol_afterglow_1", "attachment": "symbol_afterglow_2", "blend": "additive" },
+	{ "name": "symbol_afterglow_3", "bone": "symbol_afterglow_1", "attachment": "symbol_afterglow_3", "blend": "additive" },
+	{ "name": "symbol_light_swipe", "bone": "bone", "color": "ffffff00", "attachment": "symbol_light_swipe", "blend": "additive" },
+	{ "name": "symbol_light_swipe2", "bone": "bone", "color": "ffffff00", "attachment": "symbol_light_swipe", "blend": "additive" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"symbol_afterglow_1": {
+				"symbol_afterglow_1": { "color": "8ffffcff", "y": 58.34, "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_2": {
+				"symbol_afterglow_2": { "color": "8ffffcff", "y": 58.34, "width": 280, "height": 200 }
+			},
+			"symbol_afterglow_3": {
+				"symbol_afterglow_3": { "color": "8ffffcff", "y": 58.34, "width": 280, "height": 200 }
+			},
+			"symbol_light_swipe": {
+				"symbol_light_swipe": { "y": 26.11, "scaleY": 3.135, "rotation": -90, "width": 70, "height": 87 }
+			},
+			"symbol_light_swipe2": {
+				"symbol_light_swipe": { "y": 49.38, "scaleX": 1.95, "scaleY": 3.135, "rotation": -90, "width": 70, "height": 87 }
+			}
+		}
+	}
+],
+"animations": {
+	"overlay_catcboost_effect": {
+		"slots": {
+			"symbol_afterglow_1": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				]
+			},
+			"symbol_afterglow_2": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				]
+			},
+			"symbol_afterglow_3": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.1667, "color": "ffffffff" },
+					{ "time": 0.6667, "color": "ffffff00" }
+				]
+			},
+			"symbol_light_swipe": {
+				"rgba": [
+					{ "color": "ffffff00" },
+					{ "time": 0.0667, "color": "ffffffff", "curve": "stepped" },
+					{ "time": 0.2333, "color": "ffffffff" },
+					{ "time": 0.5667, "color": "ffffff00" }
+				]
+			},
+			"symbol_light_swipe2": {
+				"rgba": [
+					{ "color": "00b7ff00" },
+					{ "time": 0.0667, "color": "00b7ffff", "curve": "stepped" },
+					{ "time": 0.2333, "color": "00b7ffff" },
+					{ "time": 0.5667, "color": "00b7ff00" }
+				]
+			}
+		},
+		"bones": {
+			"symbol_afterglow_1": {
+				"translate": [
+					{},
+					{ "time": 0.6667, "y": 67.43 }
+				],
+				"scale": [
+					{
+						"curve": [ 0.189, 1, 0.478, 1, 0.189, 1, 0.478, 1.682 ]
+					},
+					{ "time": 0.6667, "y": 1.682 }
+				]
+			},
+			"bone": {
+				"scale": [
+					{
+						"curve": [ 0.189, 1, 0.378, 1, 0.189, 1, 0.378, 2.807 ]
+					},
+					{ "time": 0.5667, "y": 2.807 }
+				]
+			}
+		}
+	}
+}
+}

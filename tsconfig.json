@@ -1,0 +1,28 @@
+{
+	"compilerOptions": {
+		"outDir": "./dist/",
+		"sourceMap": true,
+		"inlineSources": true,
+		"target": "es2015",
+		"module": "ES6",
+		"strict": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noUnusedParameters": false,
+		"noUnusedLocals": false,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitOverride": true,
+		"moduleResolution": "node",
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"strictPropertyInitialization": false
+	},
+	"include": [
+		"./src/**/*"
+	],
+	"exclude": [
+		"./src/bassbuck-src/**/*"
+	]
+}

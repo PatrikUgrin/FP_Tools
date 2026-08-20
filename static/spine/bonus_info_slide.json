@@ -1,0 +1,588 @@
+{
+"skeleton": {
+	"hash": "Apsv/XGuxCg",
+	"spine": "4.1-from-4.2.43",
+	"x": -568.5,
+	"y": -234.04,
+	"width": 868.5,
+	"height": 368.16,
+	"images": "",
+	"audio": "./audio"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "light front", "parent": "root", "scaleX": 2, "scaleY": 3, "color": "ffffffff" },
+	{ "name": "swipe_bone", "parent": "root", "color": "ffffffbf" },
+	{ "name": "logo_bone", "parent": "root", "y": -80 },
+	{ "name": "logo_txt_top_position", "parent": "logo_bone", "y": 25 },
+	{ "name": "logo_txt_bottom_positon", "parent": "logo_bone", "y": -25 },
+	{ "name": "backgroundBone", "parent": "root" }
+],
+"slots": [
+	{ "name": "symbol_info_bg_slot", "bone": "backgroundBone", "attachment": "symbol_info_bg_slot" },
+	{ "name": "mask_slot", "bone": "backgroundBone", "attachment": "mask_bg" },
+	{ "name": "swipe_slot", "bone": "swipe_bone", "attachment": "sweep3", "blend": "additive" },
+	{ "name": "symbol_info_txt_slot", "bone": "backgroundBone", "attachment": "symbol_info_bg_slot" },
+	{ "name": "light2", "bone": "light front", "blend": "additive" },
+	{ "name": "symbol_gfx_slot", "bone": "root", "attachment": "info_grandlunkers_logo" },
+	{ "name": "logo_background", "bone": "logo_bone", "attachment": "logo_background" },
+	{ "name": "bottom", "bone": "logo_txt_bottom_positon", "attachment": "bottom" },
+	{ "name": "top", "bone": "logo_txt_top_position", "attachment": "top" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"light2": {
+				"light2": { "width": 256, "height": 256 }
+			},
+			"logo_background": {
+				"luckyboot_logo_bg": { "width": 256, "height": 86 },
+				"luckyboot_logo_lower": { "width": 256, "height": 69 },
+				"luckyboot_logo_upper": { "width": 160, "height": 70 }
+			},
+			"mask_slot": {
+				"mask_bg": {
+					"type": "clipping",
+					"end": "swipe_slot",
+					"vertexCount": 8,
+					"vertices": [ 113.46, -229.46, 111.69, -232.15, 109.56, -233.97, -109.27, -234.04, -112.2, -232.45, -113.48, -229.24, -113.51, 32.85, 113.55, 33.03 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"swipe_slot": {
+				"sweep3": { "x": -245.3, "y": -113.62, "scaleY": 1.5, "width": 292, "height": 208 }
+			}
+		}
+	},
+	{
+		"name": "catchboost",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "cb_txt_green", "width": 256, "height": 80 }
+			},
+			"logo_background": {
+				"logo_background": { "name": "cb_txt_bg", "width": 256, "height": 80 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/cb", "scaleX": 0.65, "scaleY": 0.65, "width": 624, "height": 666 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "bc10ffff", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_catchboost", "x": 4, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "cb_txt", "width": 256, "height": 75 }
+			}
+		}
+	},
+	{
+		"name": "collector",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "c_txt_green", "width": 256, "height": 80 }
+			},
+			"logo_background": {
+				"logo_background": { "name": "c_txt_bg", "width": 256, "height": 80 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/c", "scaleX": 0.65, "scaleY": 0.65, "width": 624, "height": 666 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "ff0606ff", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_buckcollect", "x": 4, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "c_txt", "width": 256, "height": 75 }
+			}
+		}
+	},
+	{
+		"name": "dropshot",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "ds_txt_green", "width": 256, "height": 80 }
+			},
+			"logo_background": {
+				"logo_background": { "name": "ds_txt_bg", "width": 256, "height": 80 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/ds", "scaleX": 0.65, "scaleY": 0.65, "width": 624, "height": 666 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "00ff04ff", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_dropshot", "x": 4, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "ds_txt", "width": 256, "height": 75 }
+			}
+		}
+	},
+	{
+		"name": "fullsweep",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "fs_txt_green", "width": 256, "height": 80 }
+			},
+			"logo_background": {
+				"logo_background": { "name": "fs_txt_bg", "x": 13.5, "width": 256, "height": 80 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/fs", "scaleX": 0.65, "scaleY": 0.65, "width": 624, "height": 666 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "1300ffff", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_fullsweep", "x": 4, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "fs_txt", "width": 256, "height": 75 }
+			}
+		}
+	},
+	{
+		"name": "grand_lunkers",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "logo_grand_lunker_symbols", "y": 25.13, "scaleX": 0.8, "scaleY": 0.8, "width": 474, "height": 140 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "logo_grand_lunkers", "y": 30, "width": 337, "height": 224 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "y": -160, "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_grand_lunkers", "y": -190, "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "hauler",
+		"attachments": {
+			"logo_background": {
+				"logo_background": { "name": "hauler_logo_bg", "width": 256, "height": 86 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/ctr", "scaleX": 0.65, "scaleY": 0.65, "width": 1460, "height": 792 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "9e9e9eb2", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_hauler", "x": 4, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "hauler_logo", "y": -25, "width": 256, "height": 64 }
+			}
+		}
+	},
+	{
+		"name": "lunker_wave",
+		"attachments": {
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "logo_lunker_wave", "y": 30, "width": 337, "height": 224 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "y": -160, "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_lunker_wave", "y": -160, "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "plusonespin",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "plus1spin_num", "x": -80, "y": 35, "width": 112, "height": 100 }
+			},
+			"logo_background": {
+				"logo_background": { "name": "plus1spin_logo_bg", "width": 256, "height": 85 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/ob", "scaleX": 0.65, "scaleY": 0.65, "width": 624, "height": 432 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "9e9e9eb2", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_plus1spin", "x": 34, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "plus1spin_logo", "x": 35, "y": -25, "width": 170, "height": 106 }
+			}
+		}
+	},
+	{
+		"name": "runner",
+		"attachments": {
+			"logo_background": {
+				"logo_background": { "name": "runner_logo_bg", "width": 256, "height": 86 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/bo", "scaleX": 0.65, "scaleY": 0.65, "width": 390, "height": 375 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "9e9e9eb2", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_runner", "x": 4, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "runner_logo", "y": -25, "width": 282, "height": 96 }
+			}
+		}
+	},
+	{
+		"name": "sixpack",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "bmf_num_six_6", "x": -82.83, "y": 33.05, "width": 82, "height": 102 }
+			},
+			"logo_background": {
+				"logo_background": { "name": "sixpack_logo_bg", "width": 256, "height": 95 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "symbols_static_info/sp", "scaleX": 0.65, "scaleY": 0.65, "width": 405, "height": 660 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_bg", "color": "9e9e9eb2", "y": -100, "width": 233, "height": 274 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_sixpack", "x": 34, "y": -180, "width": 230, "height": 90 }
+			},
+			"top": {
+				"top": { "name": "sixpack_logo", "x": 34.68, "y": -25, "width": 187, "height": 84 }
+			}
+		}
+	},
+	{
+		"name": "title_8ways combos_horizontal",
+		"attachments": {
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "Screenshot 2026-08-05 at 18.12.32", "x": -345.62, "scaleX": 0.3, "scaleY": 0.3, "width": 614, "height": 614 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_lunker_wave", "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "title_8ways combos_vertical",
+		"attachments": {
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "Screenshot 2026-08-05 at 18.12.32", "y": 154.25, "scaleX": 0.25, "scaleY": 0.25, "width": 614, "height": 614 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_lunker_wave", "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "title_bonus_game_horizontal",
+		"attachments": {
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "logo_catch_and_respin", "x": -400, "y": 30, "width": 337, "height": 232 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_lunker_wave", "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "title_bonus_game_vertical",
+		"attachments": {
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "logo_catch_and_respin", "y": 150, "scaleX": 0.7, "scaleY": 0.7, "width": 337, "height": 232 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_lunker_wave", "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "title_grand_lunkers_horizontal",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "logo_grand_lunker_symbols", "y": 190, "scaleX": 0.7, "scaleY": 0.7, "width": 474, "height": 140 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "logo_grand_lunkers", "x": -400, "y": 20, "width": 337, "height": 224 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_grand_lunkers", "y": -25, "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "title_grand_lunkers_vertical",
+		"attachments": {
+			"bottom": {
+				"bottom": { "name": "logo_grand_lunker_symbols", "y": 190, "scaleX": 0.7, "scaleY": 0.7, "width": 474, "height": 140 }
+			},
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": {
+					"name": "logo_grand_lunkers",
+					"y": 189,
+					"scaleX": 0.7,
+					"scaleY": 0.7,
+					"rotation": 0.06,
+					"width": 337,
+					"height": 224
+				}
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_grand_lunkers", "y": -25, "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "title_lunker_wave_horizontal",
+		"attachments": {
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "logo_lunker_wave", "x": -400, "y": 22.13, "width": 337, "height": 224 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_lunker_wave", "width": 474, "height": 128 }
+			}
+		}
+	},
+	{
+		"name": "title_lunker_wave_vertical",
+		"attachments": {
+			"symbol_gfx_slot": {
+				"info_grandlunkers_logo": { "name": "logo_lunker_wave", "y": 160, "scaleX": 0.7, "scaleY": 0.7, "width": 337, "height": 224 }
+			},
+			"symbol_info_bg_slot": {
+				"symbol_info_bg_slot": { "name": "bonus_intro_info_big_bg", "width": 600, "height": 154 }
+			},
+			"symbol_info_txt_slot": {
+				"symbol_info_bg_slot": { "name": "info_txt_en_lunker_wave", "width": 474, "height": 128 }
+			}
+		}
+	}
+],
+"events": {
+	"animation_play": {},
+	"audio": {},
+	"comment": {}
+},
+"animations": {
+	"appear": {
+		"slots": {
+			"bottom": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffff00" },
+					{ "time": 0.7, "color": "ffffffff" }
+				]
+			},
+			"logo_background": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffff00" },
+					{ "time": 0.7, "color": "ffffffff" }
+				]
+			},
+			"symbol_gfx_slot": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.3333, "color": "ffffff00" },
+					{ "time": 0.6, "color": "ffffffff" }
+				]
+			},
+			"symbol_info_bg_slot": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.4, "color": "ffffff00" },
+					{ "time": 0.7, "color": "ffffffff" }
+				]
+			},
+			"symbol_info_txt_slot": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.4, "color": "ffffff00" },
+					{ "time": 0.7, "color": "ffffffff" }
+				]
+			},
+			"top": {
+				"rgba": [
+					{ "color": "ffffff00", "curve": "stepped" },
+					{ "time": 0.5, "color": "ffffff00" },
+					{ "time": 0.7, "color": "ffffffff" }
+				]
+			}
+		},
+		"bones": {
+			"root": {
+				"translate": [
+					{ "x": 151.83 },
+					{ "time": 0.5667 }
+				]
+			},
+			"logo_bone": {
+				"translate": [
+					{ "x": 30.67 },
+					{ "time": 0.7 }
+				]
+			},
+			"logo_txt_top_position": {
+				"translate": [
+					{ "time": 0.1333, "x": 19.94 },
+					{ "time": 0.7333 }
+				]
+			},
+			"logo_txt_bottom_positon": {
+				"translate": [
+					{ "time": 0.3333, "x": 20.96 },
+					{ "time": 0.8 }
+				]
+			}
+		}
+	},
+	"bonus_info_slide": {
+		"slots": {
+			"light2": {
+				"alpha": [
+					{ "value": 0, "curve": "stepped" },
+					{ "time": 0.6333, "value": 0 },
+					{ "time": 1.1333, "value": 0.9989, "curve": "stepped" },
+					{ "time": 2.3333, "value": 0.9989 },
+					{ "time": 3, "value": 0 }
+				],
+				"attachment": [
+					{ "time": 0.6333, "name": "light2" }
+				]
+			},
+			"swipe_slot": {
+				"alpha": [
+					{ "value": 0 },
+					{ "time": 0.4333, "value": 1 },
+					{ "time": 1.3333, "value": 0.2583 },
+					{ "time": 2, "value": 0 },
+					{ "time": 2.3333, "value": 0.18161824 },
+					{ "time": 3.8333, "value": 0.9989 },
+					{ "time": 4, "value": 0 }
+				]
+			}
+		},
+		"bones": {
+			"swipe_bone": {
+				"translate": [
+					{ "x": 190.87, "y": 205.55 },
+					{ "time": 4, "x": 994.38, "y": 0.87 }
+				],
+				"scale": [
+					{ "x": 3, "y": 8 }
+				]
+			}
+		}
+	},
+	"bonus_info_static": {
+		"slots": {
+			"symbol_info_txt_slot": {
+				"attachment": [
+					{ "name": "symbol_info_bg_slot" }
+				]
+			}
+		}
+	},
+	"remove": {
+		"slots": {
+			"bottom": {
+				"rgba": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3, "color": "ffffff00" }
+				]
+			},
+			"logo_background": {
+				"rgba": [
+					{ "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"symbol_gfx_slot": {
+				"rgba": [
+					{ "time": 0.0667, "color": "ffffffff" },
+					{ "time": 0.4, "color": "ffffff00" }
+				]
+			},
+			"symbol_info_bg_slot": {
+				"rgba": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3, "color": "ffffff00" }
+				]
+			},
+			"symbol_info_txt_slot": {
+				"rgba": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3, "color": "ffffff00" }
+				]
+			},
+			"top": {
+				"rgba": [
+					{ "color": "ffffffff" },
+					{ "time": 0.3, "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"logo_bone": {
+				"shear": [
+					{},
+					{ "time": 0.4667, "y": 11.25 }
+				]
+			},
+			"root": {
+				"translate": [
+					{},
+					{ "time": 0.5333, "x": -75.8 }
+				]
+			}
+		}
+	},
+	"timeline": {
+		"bones": {
+			"root": {
+				"translate": [
+					{ "x": 80, "y": -350 },
+					{ "time": 1, "y": -600 }
+				],
+				"scale": [
+					{ "x": 1.8, "y": 1.8 },
+					{ "time": 1, "x": 2, "y": 2 }
+				]
+			}
+		}
+	}
+}
+}

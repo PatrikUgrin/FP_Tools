@@ -1,0 +1,17 @@
+counter_total_win@0.5x.png
+size:512,128
+filter:Linear,Linear
+pma:true
+scale:0.5
+sweep2
+bounds:2,2,134,94
+offsets:6,5,146,104
+ui_bonus_counter_bg
+bounds:138,19,77,138
+offsets:9,0,95,147
+rotate:90
+ui_bonus_counter_bg_vertical
+bounds:278,19,137,77
+ui_bonus_total
+bounds:417,31,91,65
+offsets:2,2,95,70

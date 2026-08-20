@@ -1,0 +1,62 @@
+bonus_info_ui.png
+	size: 1750, 90
+	filter: Linear, Linear
+bonus_info_btn_horizontal
+	bounds: 300, 38, 298, 26
+	offsets: 1, 2, 300, 30
+bonus_info_btn_horizontal_anim
+	bounds: 2, 40, 296, 24
+	offsets: 2, 3, 300, 30
+bonus_info_btn_horizontal_off
+	bounds: 600, 38, 298, 26
+	offsets: 1, 2, 300, 30
+bonus_info_btn_vertical
+	bounds: 900, 38, 160, 26
+	offsets: 1, 3, 161, 30
+bonus_info_btn_vertical_anim
+	bounds: 1590, 64, 158, 24
+	offsets: 2, 4, 162, 30
+bonus_info_btn_vertical_off
+	bounds: 1062, 38, 57, 26
+	offsets: 1, 3, 59, 30
+bonus_info_txt_horizontal_1
+	bounds: 5, 66, 249, 22
+	offsets: 26, 5, 300, 30
+bonus_info_txt_horizontal_2
+	bounds: 256, 66, 130, 22
+	offsets: 85, 5, 300, 30
+bonus_info_txt_horizontal_3
+	bounds: 388, 66, 160, 22
+	offsets: 70, 5, 300, 30
+bonus_info_txt_vertical_1
+	bounds: 550, 66, 97, 22
+	offsets: 32, 5, 161, 30
+bonus_info_txt_vertical_2
+	bounds: 649, 66, 132, 22
+	offsets: 14, 5, 161, 30
+bonus_info_txt_vertical_3
+	bounds: 783, 66, 140, 22
+	offsets: 10, 5, 161, 30
+bonus_info_txt_vertical_4
+	bounds: 925, 66, 144, 22
+	offsets: 8, 5, 162, 30
+bonus_info_txt_vertical_5
+	bounds: 1071, 66, 136, 22
+	offsets: 13, 5, 162, 30
+bonus_info_txt_vertical_6
+	bounds: 1209, 66, 139, 22
+	offsets: 10, 5, 162, 30
+bonus_info_txt_vertical_7
+	bounds: 1350, 66, 105, 22
+	offsets: 29, 7, 162, 32
+bonus_info_txt_vertical_8
+	bounds: 1457, 66, 131, 22
+	offsets: 16, 7, 162, 32
+container
+	bounds: 2, 87, 1, 1
+txt_catchandrespin
+	bounds: 1121, 7, 560, 55
+	offsets: 6, 2, 566, 60
+txt_eachnewbass
+	bounds: 2, 2, 1057, 34
+	offsets: 2, 0, 1059, 34

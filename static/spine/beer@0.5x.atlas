@@ -1,0 +1,23 @@
+beer@0.5x.png
+	size: 228, 196
+	filter: Linear, Linear
+	scale: 0.5
+boat
+	bounds: 2, 3, 123, 87
+	offsets: 5, 0, 128, 87
+luckyboot
+	bounds: 2, 92, 102, 93
+	offsets: 0, 6, 105, 100
+	rotate: 90
+plus1spin_jerrycan
+	bounds: 97, 112, 82, 112
+	offsets: 0, 3, 82, 115
+	rotate: 90
+sixpack_beer
+	bounds: 127, 2, 32, 99
+	offsets: 1, 2, 35, 102
+	rotate: 90
+symbol_glow
+	bounds: 127, 36, 74, 73
+	offsets: 0, 0, 74, 74
+	rotate: 90

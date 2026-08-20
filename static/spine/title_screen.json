@@ -1,0 +1,145 @@
+{
+"skeleton": {
+	"hash": "zi9fK0Guq+s",
+	"spine": "4.1-from-4.2.43",
+	"x": -350,
+	"y": -472.8,
+	"width": 700,
+	"height": 945.6,
+	"images": "../../Texture pecker/images/",
+	"audio": ""
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "buck_bone", "parent": "root" },
+	{ "name": "bg_bone", "parent": "root" },
+	{ "name": "effects_bone", "parent": "bg_bone" }
+],
+"slots": [
+	{ "name": "BG PREVIEW img background_bonus  jpg", "bone": "bg_bone", "attachment": "container" },
+	{ "name": "BG PREVIEW img background_bonus_portrait jpg", "bone": "bg_bone", "attachment": "container" },
+	{ "name": "bg_effects_slot", "bone": "effects_bone", "attachment": "coingg/coinsgg_frames/coingg_000" },
+	{ "name": "_buck_pose_title", "bone": "buck_bone", "attachment": "buck/buck_pose_title" },
+	{ "name": "screens", "bone": "root" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"BG PREVIEW img background_bonus  jpg": {
+				"container": { "width": 10, "height": 10 }
+			},
+			"BG PREVIEW img background_bonus_portrait jpg": {
+				"container": { "width": 10, "height": 10 }
+			},
+			"bg_effects_slot": {
+				"coingg/coinsgg_frames/coingg_000": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_001": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_002": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_003": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_004": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_005": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_006": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_007": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_008": { "width": 150, "height": 150 },
+				"coingg/coinsgg_frames/coingg_009": { "width": 150, "height": 150 }
+			},
+			"_buck_pose_title": {
+				"buck/buck_pose_title": { "scaleX": 0.8, "scaleY": 0.8, "width": 718, "height": 947 }
+			}
+		}
+	}
+],
+"animations": {
+	"effects": {
+		"slots": {
+			"bg_effects_slot": {
+				"attachment": [
+					{ "time": 0.0667, "name": "coingg/coinsgg_frames/coingg_001" },
+					{ "time": 0.1333, "name": "coingg/coinsgg_frames/coingg_002" },
+					{ "time": 0.2, "name": "coingg/coinsgg_frames/coingg_003" },
+					{ "time": 0.2667, "name": "coingg/coinsgg_frames/coingg_004" },
+					{ "time": 0.3333, "name": "coingg/coinsgg_frames/coingg_005" },
+					{ "time": 0.4, "name": "coingg/coinsgg_frames/coingg_006" },
+					{ "time": 0.4667, "name": "coingg/coinsgg_frames/coingg_007" },
+					{ "time": 0.5333, "name": "coingg/coinsgg_frames/coingg_008" },
+					{ "time": 0.6333, "name": "coingg/coinsgg_frames/coingg_009" }
+				]
+			}
+		}
+	},
+	"horizontal": {
+		"slots": {
+			"BG PREVIEW img background_bonus_portrait jpg": {
+				"rgba": [
+					{ "color": "ffffff00" }
+				]
+			}
+		},
+		"bones": {
+			"bg_bone": {
+				"translate": [
+					{ "y": -170 },
+					{ "time": 1, "x": -720, "y": -40 }
+				]
+			},
+			"buck_bone": {
+				"translate": [
+					{ "x": -700, "y": -183 },
+					{ "time": 1, "x": -300, "y": -140 }
+				],
+				"scale": [
+					{ "x": 1.5, "y": 1.5 },
+					{ "time": 1 }
+				]
+			},
+			"effects_bone": {
+				"translate": [
+					{ "x": -296.71, "y": -55.01 },
+					{ "time": 1, "x": 185.61, "y": -180.83 }
+				]
+			}
+		}
+	},
+	"vertical": {
+		"slots": {
+			"BG PREVIEW img background_bonus  jpg": {
+				"rgba": [
+					{ "color": "ffffff00" }
+				],
+				"attachment": [
+					{ "time": 0.2667 }
+				]
+			}
+		},
+		"bones": {
+			"buck_bone": {
+				"translate": [
+					{ "x": -300, "y": -140 },
+					{ "time": 1, "y": -321.37 }
+				],
+				"scale": [
+					{},
+					{ "time": 1, "x": 1.6, "y": 1.6 }
+				]
+			},
+			"bg_bone": {
+				"translate": [
+					{ "y": -610 },
+					{ "time": 1, "x": 250, "y": -1000 }
+				],
+				"scale": [
+					{},
+					{ "time": 1, "x": 1.5, "y": 1.5 }
+				]
+			},
+			"effects_bone": {
+				"translate": [
+					{ "x": -193.48, "y": 540.29 },
+					{ "time": 1, "x": 81.97, "y": 481.4 }
+				]
+			}
+		}
+	}
+}
+}

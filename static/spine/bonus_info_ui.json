@@ -1,0 +1,1971 @@
+{
+"skeleton": {
+	"hash": "nFIV1u4AtxE",
+	"spine": "4.1-from-4.2.43",
+	"x": -529.5,
+	"y": -16,
+	"width": 1059,
+	"height": 554.91,
+	"images": "../../Texture pecker/symbols/main/info_ui/",
+	"audio": "./audio"
+},
+"bones": [
+	{ "name": "root" },
+	{ "name": "vertical_static_bone", "parent": "root" },
+	{ "name": "vertical_active_bone", "parent": "root" },
+	{ "name": "vertical_txt_bone", "parent": "root" },
+	{ "name": "horizontal_active_bone", "parent": "root" },
+	{ "name": "horizontal_static_bone", "parent": "root" },
+	{ "name": "horizontal_txt_bone", "parent": "root" },
+	{ "name": "animation_bar_bone", "parent": "root", "color": "ffe203ff" },
+	{ "name": "maskbone", "parent": "root" },
+	{ "name": "txt_catch_respin_bone", "parent": "root", "y": -200 },
+	{ "name": "txt_each_bass_bone", "parent": "root", "y": -200 }
+],
+"slots": [
+	{ "name": "bonus_info_btn_vertical_off_1", "bone": "vertical_static_bone", "attachment": "bonus_info_btn_vertical_off" },
+	{ "name": "bonus_info_btn_vertical_off_2", "bone": "vertical_static_bone", "attachment": "bonus_info_btn_vertical_off" },
+	{ "name": "bonus_info_btn_vertical_off_3", "bone": "vertical_static_bone", "attachment": "bonus_info_btn_vertical_off" },
+	{ "name": "bonus_info_btn_vertical_off_4", "bone": "vertical_static_bone", "attachment": "bonus_info_btn_vertical_off" },
+	{ "name": "bonus_info_btn_vertical_off_5", "bone": "vertical_static_bone", "attachment": "bonus_info_btn_vertical_off" },
+	{ "name": "bonus_info_btn_vertical_off_6", "bone": "vertical_static_bone", "attachment": "bonus_info_btn_vertical_off" },
+	{ "name": "bonus_info_btn_vertical_off_7", "bone": "vertical_static_bone", "attachment": "bonus_info_btn_vertical_off" },
+	{ "name": "bonus_info_btn_vertical_slot", "bone": "vertical_active_bone", "attachment": "bonus_info_btn_vertical" },
+	{ "name": "bonus_info_btn_horizontal_1", "bone": "horizontal_static_bone" },
+	{ "name": "bonus_info_btn_horizontal_2", "bone": "horizontal_static_bone" },
+	{ "name": "bonus_info_btn_horizontal_3", "bone": "horizontal_static_bone" },
+	{ "name": "horizontal_active_slot", "bone": "horizontal_active_bone" },
+	{ "name": "maskbone", "bone": "maskbone" },
+	{ "name": "vertical_slot", "bone": "animation_bar_bone", "attachment": "vertical_slot" },
+	{ "name": "horizontal_slot", "bone": "animation_bar_bone", "attachment": "horizontal_slot" },
+	{ "name": "bonus_info_txt_vertical_1", "bone": "vertical_txt_bone", "attachment": "bonus_info_txt_vertical_1" },
+	{ "name": "bonus_info_txt_vertical_2", "bone": "vertical_txt_bone", "attachment": "bonus_info_txt_vertical_2" },
+	{ "name": "bonus_info_txt_vertical_3", "bone": "vertical_txt_bone", "attachment": "bonus_info_txt_vertical_7" },
+	{ "name": "bonus_info_txt_vertical_4", "bone": "vertical_txt_bone", "attachment": "bonus_info_txt_vertical_8" },
+	{ "name": "bonus_info_txt_vertical_5", "bone": "vertical_txt_bone", "attachment": "bonus_info_txt_vertical_5" },
+	{ "name": "bonus_info_txt_vertical_6", "bone": "vertical_txt_bone", "attachment": "bonus_info_txt_vertical_6" },
+	{ "name": "horizontal_txt_1", "bone": "horizontal_txt_bone" },
+	{ "name": "horizontal_txt_2", "bone": "horizontal_txt_bone" },
+	{ "name": "horizontal_txt_3", "bone": "horizontal_txt_bone" },
+	{ "name": "txt_catchandrespin_slot", "bone": "txt_catch_respin_bone", "attachment": "txt_catchandrespin" },
+	{ "name": "txt_eachnewbass_slot", "bone": "txt_each_bass_bone", "attachment": "txt_eachnewbass" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"bonus_info_btn_horizontal_1": {
+				"bonus_info_btn_horizontal_off": { "x": -320, "width": 300, "height": 30 }
+			},
+			"bonus_info_btn_horizontal_2": {
+				"bonus_info_btn_horizontal_off": { "width": 300, "height": 30 }
+			},
+			"bonus_info_btn_horizontal_3": {
+				"bonus_info_btn_horizontal_off": { "x": 320, "width": 300, "height": 30 }
+			},
+			"bonus_info_btn_vertical_off_1": {
+				"bonus_info_btn_vertical_off": { "x": -240, "width": 59, "height": 30 }
+			},
+			"bonus_info_btn_vertical_off_2": {
+				"bonus_info_btn_vertical_off": { "x": -160, "width": 59, "height": 30 }
+			},
+			"bonus_info_btn_vertical_off_3": {
+				"bonus_info_btn_vertical_off": { "x": -80, "width": 59, "height": 30 }
+			},
+			"bonus_info_btn_vertical_off_4": {
+				"bonus_info_btn_vertical_off": { "width": 59, "height": 30 }
+			},
+			"bonus_info_btn_vertical_off_5": {
+				"bonus_info_btn_vertical_off": { "x": 80, "width": 59, "height": 30 }
+			},
+			"bonus_info_btn_vertical_off_6": {
+				"bonus_info_btn_vertical_off": { "x": 160, "width": 59, "height": 30 }
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"bonus_info_btn_vertical_off": { "x": 240, "width": 59, "height": 30 }
+			},
+			"bonus_info_btn_vertical_slot": {
+				"bonus_info_btn_vertical": { "x": -40, "width": 161, "height": 30 }
+			},
+			"bonus_info_txt_vertical_1": {
+				"bonus_info_txt_vertical_1": { "x": -200, "width": 161, "height": 30 }
+			},
+			"bonus_info_txt_vertical_2": {
+				"bonus_info_txt_vertical_2": { "x": -120, "width": 161, "height": 30 }
+			},
+			"bonus_info_txt_vertical_3": {
+				"bonus_info_txt_vertical_3": { "x": -40, "width": 161, "height": 30 },
+				"bonus_info_txt_vertical_7": { "width": 162, "height": 32 }
+			},
+			"bonus_info_txt_vertical_4": {
+				"bonus_info_txt_vertical_4": { "x": 40, "width": 162, "height": 30 },
+				"bonus_info_txt_vertical_8": { "width": 162, "height": 32 }
+			},
+			"bonus_info_txt_vertical_5": {
+				"bonus_info_txt_vertical_5": { "x": 120, "width": 162, "height": 30 }
+			},
+			"bonus_info_txt_vertical_6": {
+				"bonus_info_txt_vertical_6": { "x": 200, "width": 162, "height": 30 }
+			},
+			"horizontal_active_slot": {
+				"bonus_info_btn_horizontal": { "width": 300, "height": 30 }
+			},
+			"horizontal_txt_1": {
+				"bonus_info_txt_horizontal_1": { "x": -320, "width": 300, "height": 30 }
+			},
+			"horizontal_txt_2": {
+				"bonus_info_txt_horizontal_2": { "width": 300, "height": 30 }
+			},
+			"horizontal_txt_3": {
+				"bonus_info_txt_horizontal_3": { "x": 320, "width": 300, "height": 30 }
+			},
+			"maskbone": {
+				"maska": {
+					"type": "clipping",
+					"end": "horizontal_slot",
+					"vertexCount": 4,
+					"vertices": [ -199.96, 50.01, -200.01, -50.06, -147.91, -47.6, -150.37, 49.73 ],
+					"color": "ce3a3aff"
+				}
+			},
+			"txt_catchandrespin_slot": {
+				"txt_catchandrespin": { "y": 706.88, "rotation": 0.41, "width": 566, "height": 60 }
+			},
+			"txt_eachnewbass_slot": {
+				"txt_eachnewbass": { "y": 648, "width": 1059, "height": 34 }
+			}
+		}
+	},
+	{
+		"name": "counter",
+		"attachments": {
+			"horizontal_slot": {
+				"horizontal_slot": { "name": "bonus_info_btn_horizontal_anim", "width": 300, "height": 30 }
+			},
+			"vertical_slot": {
+				"vertical_slot": { "name": "bonus_info_btn_vertical_anim", "x": -40, "width": 162, "height": 30 }
+			}
+		}
+	},
+	{
+		"name": "nocounter",
+		"attachments": {
+			"horizontal_slot": {
+				"horizontal_slot": { "name": "container", "width": 10, "height": 10 }
+			},
+			"vertical_slot": {
+				"vertical_slot": { "name": "container", "width": 10, "height": 10 }
+			}
+		}
+	}
+],
+"animations": {
+	"horizontal_1": {
+		"slots": {
+			"bonus_info_btn_horizontal_1": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_2": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_3": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_vertical_off_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_active_slot": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal" }
+				]
+			},
+			"horizontal_txt_1": {
+				"attachment": [
+					{ "name": "bonus_info_txt_horizontal_1" }
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			},
+			"vertical_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -320 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -320 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -276.45267, 2.45372, -276.45267, 2.45372, -318.9839, 1.63582, -318.9839, 1.63582 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ -274.81686, 2.45373, -274.81686, 2.45373 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"horizontal_2": {
+		"slots": {
+			"bonus_info_btn_horizontal_1": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_2": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_3": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_vertical_off_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_active_slot": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal" }
+				]
+			},
+			"horizontal_txt_2": {
+				"attachment": [
+					{ "name": "bonus_info_txt_horizontal_2" }
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			},
+			"vertical_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 31.89838, 2.45373, 31.89838, 2.45373 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 45.8028, 9.81491, 45.8028, 9.81491, 298.53613, 4.90746, 298.53613, 4.90746 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"horizontal_3": {
+		"slots": {
+			"bonus_info_btn_horizontal_1": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_2": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_3": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_vertical_off_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_active_slot": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal" }
+				]
+			},
+			"horizontal_txt_3": {
+				"attachment": [
+					{ "name": "bonus_info_txt_horizontal_3" }
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			},
+			"vertical_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": 320 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": 320 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 355.7897, 3.27164, 355.7897, 3.27164, 317.34805, 2.45373, 317.34805, 2.45373 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 367.24045, 5.72536, 367.24045, 5.72536, 621.60944, 4.90746, 621.60944, 4.90746 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"horizontal_appear": {
+		"slots": {
+			"bonus_info_btn_horizontal_1": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_2": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_horizontal_3": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal_off" }
+				]
+			},
+			"bonus_info_btn_vertical_off_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_active_slot": {
+				"attachment": [
+					{ "name": "bonus_info_btn_horizontal" }
+				]
+			},
+			"horizontal_txt_1": {
+				"attachment": [
+					{ "name": "bonus_info_txt_horizontal_1" }
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" }
+				]
+			},
+			"vertical_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -320 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -320 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "x": 1200 },
+					{ "time": 0.6667 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 60 }
+				],
+				"scale": [
+					{ "x": 0.9, "y": 0.9 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -276.45267, 2.45372, -276.45267, 2.45372, -318.9839, 1.63582, -318.9839, 1.63582 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"title_1": {
+		"slots": {
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			},
+			"txt_catchandrespin_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"txt_eachnewbass_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "x": 80 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -87.06691, -2.53809, -87.06691, -2.53809, -132.17831, -4.43248, -132.17831, -4.43248 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ -83.23726, 0.02181, -83.23726, 0.02181, 33.51617, 3.14077, 33.51617, 3.14077 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"title_2": {
+		"slots": {
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			},
+			"txt_catchandrespin_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"txt_eachnewbass_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -80 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -80 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -80 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "x": 80 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -6.91196, 1.37724, -6.91196, 1.37724, -52.28192, 1.97876, -52.28192, 1.97876 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ -1.21413, 3.45903, -1.21413, 3.45903, 111.86778, 4.07547, 111.86778, 4.07547 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"title_3": {
+		"slots": {
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			},
+			"txt_catchandrespin_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"txt_eachnewbass_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_txt_bone": {
+				"translate": [
+					{ "x": -40 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "x": 80 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 76.03965, -1.33506, 76.03965, -1.33506, 29.59327, -3.31381, 29.59327, -3.31381 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 80.10964, 2.373, 80.10964, 2.373, 190.94704, 2.55985, 190.94704, 2.55985 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"title_4": {
+		"slots": {
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			},
+			"txt_catchandrespin_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"txt_eachnewbass_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": 80 }
+				]
+			},
+			"vertical_txt_bone": {
+				"translate": [
+					{ "x": 40 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": 80 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": 80 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "x": 80 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 158.17148, 5.00913, 158.17148, 5.00913, 110.93887, 7.1621, 110.93887, 7.1621 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 160.32172, 6.61452, 160.32172, 6.61452, 271.15393, 2.71355, 271.15393, 2.71355 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"title_appear": {
+		"slots": {
+			"bonus_info_btn_vertical_off_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_btn_vertical_off_7": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" }
+				]
+			},
+			"txt_catchandrespin_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"txt_eachnewbass_slot": {
+				"attachment": [
+					{}
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "x": 1200 },
+					{ "time": 0.6667 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -87.06691, -2.53809, -87.06691, -2.53809, -132.17831, -4.43248, -132.17831, -4.43248 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"vertical_1": {
+		"slots": {
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -87.06691, -2.53809, -87.06691, -2.53809, -132.17831, -4.43248, -132.17831, -4.43248 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ -83.23726, 0.02181, -83.23726, 0.02181, 33.51617, 3.14077, 33.51617, 3.14077 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"vertical_2": {
+		"slots": {
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -80 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -80 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -80 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -6.91196, 1.37724, -6.91196, 1.37724, -52.28192, 1.97876, -52.28192, 1.97876 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ -1.21413, 3.45903, -1.21413, 3.45903, 111.86778, 4.07547, 111.86778, 4.07547 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"vertical_3": {
+		"slots": {
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{ "name": "bonus_info_txt_vertical_3" }
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			}
+		},
+		"bones": {
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 76.03965, -1.33506, 76.03965, -1.33506, 29.59327, -3.31381, 29.59327, -3.31381 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 80.10964, 2.373, 80.10964, 2.373, 190.94704, 2.55985, 190.94704, 2.55985 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"vertical_4": {
+		"slots": {
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{ "name": "bonus_info_txt_vertical_4" }
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": 80 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": 80 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": 80 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 158.17148, 5.00913, 158.17148, 5.00913, 110.93887, 7.1621, 110.93887, 7.1621 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 160.32172, 6.61452, 160.32172, 6.61452, 271.15393, 2.71355, 271.15393, 2.71355 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"vertical_5": {
+		"slots": {
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": 160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": 160 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": 160 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 235.48938, 5.50896, 235.48938, 5.50896, 189.04297, 1.8944, 189.04297, 1.8944 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 235.65453, 3.08652, 235.65453, 3.08652, 352.0854, 1.69062, 352.0854, 1.69062 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"vertical_6": {
+		"slots": {
+			"bonus_info_txt_vertical_1": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" },
+					{ "time": 5 }
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": 240 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": 240 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": 240 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ 314.82013, 1.16183, 314.82013, 1.16183, 269.11835, 1.24032, 269.11835, 1.24032 ]
+							},
+							{
+								"time": 5,
+								"vertices": [ 317.7351, 4.68245, 317.7351, 4.68245, 431.12112, 1.68626, 431.12112, 1.68626 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	},
+	"vertical_appear": {
+		"slots": {
+			"bonus_info_txt_vertical_2": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_3": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_4": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_5": {
+				"attachment": [
+					{}
+				]
+			},
+			"bonus_info_txt_vertical_6": {
+				"attachment": [
+					{}
+				]
+			},
+			"horizontal_slot": {
+				"attachment": [
+					{}
+				]
+			},
+			"maskbone": {
+				"attachment": [
+					{ "name": "maska" }
+				]
+			}
+		},
+		"bones": {
+			"vertical_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"horizontal_active_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"animation_bar_bone": {
+				"translate": [
+					{ "x": -160 }
+				]
+			},
+			"root": {
+				"translate": [
+					{ "x": 1200 },
+					{ "time": 0.6667 }
+				]
+			},
+			"txt_each_bass_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			},
+			"txt_catch_respin_bone": {
+				"translate": [
+					{ "y": 230 }
+				],
+				"scale": [
+					{ "x": 0.6, "y": 0.6 }
+				]
+			}
+		},
+		"attachments": {
+			"default": {
+				"maskbone": {
+					"maska": {
+						"deform": [
+							{
+								"vertices": [ -87.06691, -2.53809, -87.06691, -2.53809, -132.17831, -4.43248, -132.17831, -4.43248 ]
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+}
+}

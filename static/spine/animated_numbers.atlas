@@ -1,0 +1,17 @@
+animated_numbers.png
+	size: 1198, 142
+	filter: Linear, Linear
+buck_collect_text
+	bounds: 428, 15, 416, 125
+	offsets: 22, 0, 450, 224
+buck_text
+	bounds: 846, 14, 278, 126
+	offsets: 97, 96, 450, 224
+container
+	bounds: 428, 12, 1, 1
+spray
+	bounds: 2, 2, 424, 138
+	offsets: 0, 46, 450, 224
+symbol_circle_glow
+	bounds: 1126, 50, 90, 70
+	rotate: 90

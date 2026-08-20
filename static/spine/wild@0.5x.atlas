@@ -1,0 +1,37 @@
+wild@0.5x.png
+	size: 1024, 256
+	filter: Linear, Linear
+	scale: 0.5
+bl
+	bounds: 297, 167, 128, 87
+c_bg
+	bounds: 427, 167, 128, 87
+c_buck
+	bounds: 2, 101, 145, 153
+c_buck_1
+	bounds: 2, 2, 66, 97
+c_buck_2
+	bounds: 70, 2, 59, 97
+c_txt
+	bounds: 297, 127, 128, 38
+c_txt_green
+	bounds: 149, 108, 128, 40
+frame_gold
+	bounds: 557, 167, 128, 87
+frame_gold_in
+	bounds: 687, 167, 128, 87
+lines_new_patented_thin
+	bounds: 149, 150, 146, 104
+symbol_glow
+	bounds: 427, 91, 74, 74
+symbol_inner_glow
+	bounds: 947, 164, 90, 65
+	rotate: 90
+symbol_inner_glow_thin
+	bounds: 503, 121, 64, 44
+symbol_light_swipe
+	bounds: 635, 121, 35, 44
+symbol_outer_glow
+	bounds: 569, 121, 64, 44
+w
+	bounds: 817, 167, 128, 87

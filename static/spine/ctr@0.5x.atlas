@@ -1,0 +1,37 @@
+ctr@0.5x.png
+	size: 134, 552
+	filter: Linear, Linear
+	scale: 0.5
+frame_gold
+	bounds: 2, 464, 128, 86
+	offsets: 0, 1, 128, 87
+hauler_bg
+	bounds: 2, 376, 128, 86
+	offsets: 0, 1, 128, 87
+hauler_logo
+	bounds: 2, 2, 108, 32
+	offsets: 13, 0, 128, 32
+	rotate: 90
+hauler_logo_bg
+	bounds: 94, 130, 122, 38
+	offsets: 0, 3, 128, 43
+	rotate: 90
+hauler_logo_out
+	bounds: 36, 8, 102, 27
+	offsets: 15, 4, 128, 32
+	rotate: 90
+hauler_truck
+	bounds: 2, 315, 114, 59
+	offsets: 8, 16, 128, 87
+hauler_truck_glow
+	bounds: 2, 254, 114, 59
+	offsets: 8, 16, 128, 87
+smoke
+	bounds: 78, 18, 110, 46
+	offsets: 6, 4, 123, 55
+	rotate: 90
+symbol_glow
+	bounds: 2, 112, 74, 73
+	offsets: 0, 0, 74, 74
+symbol_inner_glow
+	bounds: 2, 187, 90, 65

@@ -1,0 +1,61 @@
+lunker_wave_scene@0.5x.png
+	size: 1337, 524
+	filter: Linear, Linear
+	pma: true
+	scale: 0.5
+BG_edge_A
+	bounds: 1300, 473, 49, 35
+	rotate: 90
+BG_gradient
+	bounds: 189, 110, 125, 3
+Wave4
+	bounds: 710, 2, 256, 136
+	offsets: 0, 4, 256, 143
+bubble
+	bounds: 558, 3, 13, 10
+bubbles_1
+	bounds: 558, 15, 150, 99
+bubbles_2
+	bounds: 1281, 308, 139, 53
+	rotate: 90
+container
+	bounds: 2, 2, 1, 1
+fish_bubble
+	bounds: 968, 12, 349, 127
+logo-LW
+	bounds: 2, 106, 416, 185
+	offsets: 14, 26, 450, 300
+	rotate: 90
+logo-bg
+	bounds: 304, 116, 406, 255
+	offsets: 28, 23, 450, 300
+	rotate: 90
+logo-bg-front
+	bounds: 236, 2, 320, 106
+	offsets: 65, 172, 450, 300
+logo-lunker
+	bounds: 189, 115, 407, 113
+	offsets: 7, 106, 450, 300
+	rotate: 90
+logo-wave
+	bounds: 2, 5, 232, 99
+	offsets: 190, 34, 450, 300
+symbol_glow
+	bounds: 1224, 449, 74, 73
+	offsets: 0, 0, 74, 74
+wave_1
+	bounds: 1019, 142, 380, 203
+	offsets: 2, 0, 382, 203
+	rotate: 90
+wave_2
+	bounds: 827, 141, 381, 190
+	offsets: 0, 1, 381, 191
+	rotate: 90
+wave_3
+	bounds: 561, 140, 382, 264
+	offsets: 0, 2, 382, 268
+	rotate: 90
+wave_top
+	bounds: 1224, 214, 233, 55
+	offsets: 0, 3, 233, 58
+	rotate: 90

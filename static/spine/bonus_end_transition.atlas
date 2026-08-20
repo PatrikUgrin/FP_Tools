@@ -1,0 +1,13 @@
+bonus_end_transition.png
+	size: 512, 256
+	format: RGBA4444
+	filter: Linear, Linear
+	scale: 0.75
+bit
+	bounds: 402, 77, 31, 140
+shape1
+	bounds: 2, 25, 192, 398
+	rotate: 90
+shape_chroma
+	bounds: 2, 2, 21, 396
+	rotate: 90
