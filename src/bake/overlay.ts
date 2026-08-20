@@ -1,10 +1,12 @@
 export type LogKind = "info" | "ok" | "skip" | "error";
+export type BakeStatus = "idle" | "baking" | "done" | "error";
 
 export class BakeOverlay {
 	private readonly hudCurrent: HTMLElement;
 	private readonly progressFill: HTMLElement;
 	private readonly progressLabel: HTMLElement;
 	private readonly rendererPill: HTMLElement;
+	private readonly statusPill: HTMLElement;
 	private readonly previewImg: HTMLImageElement;
 	private readonly logEl: HTMLElement;
 	private readonly bakeButton: HTMLButtonElement;
@@ -15,10 +17,12 @@ export class BakeOverlay {
 		this.progressFill = this.mustGet("progress-fill");
 		this.progressLabel = this.mustGet("progress-label");
 		this.rendererPill = this.mustGet("renderer-pill");
+		this.statusPill = this.mustGet("status-pill");
 		this.previewImg = this.mustGet("preview-img") as HTMLImageElement;
 		this.logEl = this.mustGet("log");
 		this.bakeButton = this.mustGet("bake-button") as HTMLButtonElement;
 		this.exportPath = this.mustGet("export-path");
+		this.setStatus("idle", "Idle — press Bake PNGs");
 	}
 
 	public setRenderer(label: string, ok: boolean): void {
@@ -30,9 +34,17 @@ export class BakeOverlay {
 		this.exportPath.textContent = "Writing to " + folder;
 	}
 
-	public setBusy(busy: boolean): void {
+	public setStatus(state: BakeStatus, label: string): void {
+		this.statusPill.className = state;
+		this.statusPill.textContent = "Status: " + label;
+	}
+
+	public setBusy(busy: boolean, markBaking = true): void {
 		this.bakeButton.disabled = busy;
 		this.bakeButton.textContent = busy ? "Baking…" : "Bake PNGs";
+		if (busy && markBaking) {
+			this.setStatus("baking", "Baking");
+		}
 	}
 
 	public onBake(handler: () => void): void {

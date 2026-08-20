@@ -4,6 +4,11 @@
  * generateSymbolTextureAssetsForDeactivated) plus each symbol class's
  * setPreviewSprite().
  *
+ * Libsym strings are from SpinDataset (toLowerCase for texture-cache names):
+ *   plusonespin_symbol = "OB"  →  ob / ob_b / ob_appear / ob_deactivated
+ *   luckyboot_symbol   = "LB"  →  lb / lb_b / lb_appear / lb_deactivated
+ *   blank_symbol       = "BL"  →  bl_b only (Blank ignores preview; appear/spin are empty)
+ *
  * Folders are the Spine animation actually posed (or blur / blur_green).
  * Filenames are the texture-cache names from assets.ts, not skeleton names.
  *
@@ -33,16 +38,23 @@ const FULLSWEEP = "fs";
 const TRUCK = "ctr";
 const SIXPACK = "sp";
 const BOAT = "bo";
-const LUCKYBOOT = "ob";
-const PLUSONE = "plusonespin";
+const PLUSONE = "ob";
+const BLANK = "bl";
+const LUCKYBOOT = "lb";
 const LARGEWILD = "lw";
 const SMALLWILD = "sw";
 
-/** lib_bonus_symbols_blur minus basket (fish are baked with cash values). */
+/**
+ * lib_bonus_symbols_blur (basket is not in this list).
+ * Blank is blur-only: Blank.setSymbolSprite never poses spine for preview,
+ * and appear/spin with isFeature=false bake an empty container.
+ */
 const BONUS_BLUR = [
-	COLLECTOR, CATCHBOOST, DROPSHOT, FULLSWEEP,
-	TRUCK, SIXPACK, BOAT, LUCKYBOOT, PLUSONE
+	COLLECTOR, DROPSHOT, TRUCK, SIXPACK, CATCHBOOST, FULLSWEEP,
+	PLUSONE, BLANK, BOAT, LUCKYBOOT
 ];
+
+const BONUS_SPINE = BONUS_BLUR.filter((libsym) => libsym !== BLANK);
 
 const DEACTIVATED = [
 	COLLECTOR, FULLSWEEP, DROPSHOT, CATCHBOOST,
@@ -80,10 +92,12 @@ function bonusPose(libsym: string): { spine: string; skin: string | null; animat
 			return { spine: "sp", skin: null, animation: "static_spin" };
 		case BOAT:
 			return { spine: "bo", skin: "no_multi", animation: "static_spin" };
-		case LUCKYBOOT:
-			return { spine: "luckyboot_sym", skin: null, animation: "static_spin" };
 		case PLUSONE:
 			return { spine: "plusonespin", skin: null, animation: "static_spin" };
+		case LUCKYBOOT:
+			return { spine: "luckyboot_sym", skin: null, animation: "static_spin" };
+		case BLANK:
+			return { spine: "hilo_sym", skin: "blank", animation: "static_appear" };
 		default:
 			throw new Error("Unknown bonus libsym: " + libsym);
 	}
@@ -156,7 +170,7 @@ export function buildBakeJobs(): BakeJob[] {
 		}));
 	}
 
-	const appearSymbols = BONUS_BLUR.concat([LARGEWILD, SMALLWILD], CARDS);
+	const appearSymbols = BONUS_SPINE.concat([LARGEWILD, SMALLWILD], CARDS);
 	for (const libsym of appearSymbols) {
 		if (libsym === LARGEWILD) {
 			jobs.push(job({
@@ -202,7 +216,7 @@ export function buildBakeJobs(): BakeJob[] {
 		}));
 	}
 
-	const spinSymbols = BONUS_BLUR.concat(CARDS);
+	const spinSymbols = BONUS_SPINE.concat(CARDS);
 	for (const libsym of spinSymbols) {
 		if (CARDS.indexOf(libsym) >= 0) {
 			jobs.push(job({

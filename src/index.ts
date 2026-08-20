@@ -33,22 +33,23 @@ overlay.setRenderer(rendererType, isWebGl);
 if (!isWebGl) {
 	overlay.log("WebGL is required. Canvas renderer is not used.", "error");
 	overlay.setHud("WebGL unavailable");
-	overlay.setBusy(true);
+	overlay.setStatus("error", "WebGL unavailable");
+	overlay.setBusy(true, false);
 } else {
-	overlay.log("Using " + rendererType + ".");
+	overlay.log("Using " + rendererType + ". Baker is idle until you press Bake PNGs.");
+	overlay.setHud("Idle");
+	overlay.setStatus("idle", "Idle — press Bake PNGs");
 	layoutCanvas();
 	window.addEventListener("resize", layoutCanvas);
 	overlay.onBake(() => {
-		runBake(app, overlay).catch((err) => {
+		runBake(app, overlay).then(() => {
+			overlay.setStatus("done", "Done — idle");
+		}).catch((err) => {
 			const message = err instanceof Error ? err.message : String(err);
 			overlay.log(message, "error");
 			overlay.setBusy(false);
+			overlay.setStatus("error", "Failed");
 		});
-	});
-	runBake(app, overlay).catch((err) => {
-		const message = err instanceof Error ? err.message : String(err);
-		overlay.log(message, "error");
-		overlay.setBusy(false);
 	});
 }
 

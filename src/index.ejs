@@ -85,13 +85,19 @@
 			color: #9aa4b5;
 		}
 
+		#status-pill,
 		#renderer-pill {
 			display: inline-block;
 			margin-top: 6px;
-			padding: 2px 8px;
+			margin-right: 6px;
+			padding: 4px 10px;
 			border-radius: 999px;
 			font-size: 11px;
 			letter-spacing: 0.04em;
+			font-weight: 600;
+		}
+
+		#renderer-pill {
 			background: #1d3b28;
 			color: #8ee0a8;
 		}
@@ -99,6 +105,32 @@
 		#renderer-pill.error {
 			background: #3b1d1d;
 			color: #f0a0a0;
+		}
+
+		#status-pill.idle {
+			background: #1c222d;
+			color: #c5cdd8;
+		}
+
+		#status-pill.baking {
+			background: #1d3358;
+			color: #9ec1ff;
+			animation: status-pulse 1s ease-in-out infinite;
+		}
+
+		#status-pill.done {
+			background: #1d3b28;
+			color: #8ee0a8;
+		}
+
+		#status-pill.error {
+			background: #3b1d1d;
+			color: #f0a0a0;
+		}
+
+		@keyframes status-pulse {
+			0%, 100% { opacity: 1; }
+			50% { opacity: 0.55; }
 		}
 
 		.progress-track {
@@ -183,7 +215,11 @@
 			<div>
 				<h1>Static Spine baker</h1>
 				<div class="meta">Load-path poses only. Folders are animation names (or blur). Filenames are texture-cache names.</div>
-				<div id="renderer-pill">Renderer: checking</div>
+				<div class="meta">Baker: <code>http://127.0.0.1:3456</code> (slot game keeps 1234)</div>
+				<div>
+					<div id="status-pill" class="idle">Status: Idle</div>
+					<div id="renderer-pill">Renderer: checking</div>
+				</div>
 			</div>
 			<div>
 				<div id="progress-label">0 / 0</div>

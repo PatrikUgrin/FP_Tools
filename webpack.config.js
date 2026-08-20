@@ -14,8 +14,8 @@ module.exports = (_env, argv) => {
 		devServer: {
 			compress: true,
 			hot: true,
-			open: true,
-			port: 1234,
+			open: false,
+			port: 3456,
 			host: "127.0.0.1",
 			client: {
 				overlay: {

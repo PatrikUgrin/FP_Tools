@@ -68,6 +68,7 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 		await saveManifest(saved);
 		overlay.log("Wrote export/png/manifest.json (" + saved.length + " file(s)).", "ok");
 		overlay.setHud("Done — " + saved.length + " PNG(s)");
+		overlay.setStatus("done", "Done — " + saved.length + " PNG(s)");
 	} finally {
 		resetLoader();
 		overlay.setBusy(false);

@@ -1,19 +1,19 @@
 {
-	"version": "0.2.0",
-	"configurations": [
-		{
-			"type": "chrome",
-			"request": "launch",
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
 			"name": "Static Spine Baker",
-			"url": "http://127.0.0.1:1234",
-			"webRoot": "${workspaceFolder}",
-			"sourceMaps": true,
-			"pathMappings": [
-				{
+			"url": "http://127.0.0.1:3456",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "pathMappings": [
+                {
 					"url": "webpack:///",
 					"path": "${workspaceFolder}"
-				}
-			]
-		}
-	]
+                }
+            ]
+        }
+    ]
 }
