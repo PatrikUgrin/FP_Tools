@@ -28,21 +28,26 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 
 	const saved: Array<{ group: string; texName: string; path: string }> = [];
 	const spineDataCache = new Map<string, any>();
+	const loadedSheets = new Set<string>();
 	let done = 0;
 
 	try {
 		for (const bakeJob of jobs) {
 			overlay.setHud(bakeJob.group + " / " + bakeJob.texName);
-			let spine: Spine | null = null;
+			let display: PIXI.Container | null = null;
 			try {
-				spine = await createSpine(spineDataCache, bakeJob);
-				poseSymbol(spine, bakeJob);
+				if (bakeJob.spriteFrame && bakeJob.spriteSheet) {
+					display = await createSprite(loadedSheets, bakeJob);
+				} else {
+					display = await createSpine(spineDataCache, bakeJob);
+					poseSymbol(display as Spine, bakeJob);
+				}
 
 				const result = bakeJob.blur
-					? captureBlur(app.renderer as PIXI.Renderer, spine)
-					: capturePreview(app.renderer as PIXI.Renderer, spine);
+					? captureBlur(app.renderer as PIXI.Renderer, display)
+					: capturePreview(app.renderer as PIXI.Renderer, display);
 
-				fitSpineInView(app, spine);
+				fitInView(app, display);
 				app.renderer.render(app.stage);
 
 				const relPath = await savePng(bakeJob.group, bakeJob.texName, result.base64);
@@ -53,11 +58,15 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 				const message = err instanceof Error ? err.message : String(err);
 				overlay.log("Error " + bakeJob.texName + ": " + message, "error");
 			} finally {
-				if (spine) {
-					if (spine.parent) {
-						spine.parent.removeChild(spine);
+				if (display) {
+					if (display.parent) {
+						display.parent.removeChild(display);
 					}
-					spine.destroy({ children: true });
+					if (display instanceof PIXI.Sprite) {
+						display.destroy({ children: false, texture: false, baseTexture: false });
+					} else {
+						display.destroy({ children: true });
+					}
 				}
 			}
 			done += 1;
@@ -110,12 +119,28 @@ function poseSymbol(spine: Spine, bakeJob: BakeJob): void {
 	spine.update(0);
 }
 
-function fitSpineInView(app: PIXI.Application, spine: Spine): void {
+async function createSprite(loadedSheets: Set<string>, bakeJob: BakeJob): Promise<PIXI.Sprite> {
+	const sheetUrl = bakeJob.spriteSheet as string;
+	const frame = bakeJob.spriteFrame as string;
+	if (!loadedSheets.has(sheetUrl)) {
+		await loadSpritesheet(sheetUrl);
+		loadedSheets.add(sheetUrl);
+	}
+	const texture = PIXI.Texture.from(frame);
+	if (!texture || texture === PIXI.Texture.EMPTY) {
+		throw new Error("No spritesheet frame " + frame);
+	}
+	const sprite = new PIXI.Sprite(texture);
+	sprite.anchor.set(0.5);
+	return sprite;
+}
+
+function fitInView(app: PIXI.Application, node: PIXI.Container): void {
 	app.stage.removeChildren();
-	app.stage.addChild(spine);
-	spine.scale.set(1);
-	spine.position.set(0, 0);
-	const bounds = spine.getLocalBounds();
+	app.stage.addChild(node);
+	node.scale.set(1);
+	node.position.set(0, 0);
+	const bounds = node.getLocalBounds();
 	const bw = Math.max(bounds.width, 1);
 	const bh = Math.max(bounds.height, 1);
 	const scale = Math.min(
@@ -123,17 +148,17 @@ function fitSpineInView(app: PIXI.Application, spine: Spine): void {
 		(app.renderer.height * VIEW_MARGIN) / bh,
 		1
 	);
-	spine.scale.set(scale);
-	spine.position.set(
+	node.scale.set(scale);
+	node.position.set(
 		app.renderer.width / 2 - (bounds.x + bounds.width / 2) * scale,
 		app.renderer.height / 2 - (bounds.y + bounds.height / 2) * scale
 	);
 }
 
-function capturePreview(renderer: PIXI.Renderer, spine: Spine): BakePixels {
-	spine.scale.set(1);
+function capturePreview(renderer: PIXI.Renderer, node: PIXI.Container): BakePixels {
+	node.scale.set(1);
 
-	const bounds = spine.getLocalBounds();
+	const bounds = node.getLocalBounds();
 	const left = -bounds.x;
 	const right = bounds.x + bounds.width;
 	const top = -bounds.y;
@@ -144,8 +169,8 @@ function capturePreview(renderer: PIXI.Renderer, spine: Spine): BakePixels {
 	height = Math.min(Math.ceil(height), SYM_Y * 2);
 
 	const holder = new PIXI.Container();
-	holder.addChild(spine);
-	spine.position.set(width / 2, height / 2);
+	holder.addChild(node);
+	node.position.set(width / 2, height / 2);
 
 	const renderTexture = PIXI.RenderTexture.create({
 		width: Math.max(1, width),
@@ -155,15 +180,15 @@ function capturePreview(renderer: PIXI.Renderer, spine: Spine): BakePixels {
 	renderer.render(holder, { renderTexture, clear: true });
 	const pixels = textureToPng(renderer, renderTexture);
 	renderTexture.destroy(true);
-	holder.removeChild(spine);
+	holder.removeChild(node);
 	holder.destroy({ children: false });
 	return pixels;
 }
 
-function captureBlur(renderer: PIXI.Renderer, spine: Spine): BakePixels {
-	spine.scale.set(1);
+function captureBlur(renderer: PIXI.Renderer, node: PIXI.Container): BakePixels {
+	node.scale.set(1);
 
-	const bounds = spine.getLocalBounds();
+	const bounds = node.getLocalBounds();
 	let width = Math.max(bounds.width, SYM_X) + SYMBOL_BLUR_PAD * 2;
 	let height = Math.max(bounds.height, SYM_Y) + SYMBOL_BLUR_PAD * 2;
 	width = Math.min(Math.ceil(width), SYM_X * 2 + SYMBOL_BLUR_PAD * 2);
@@ -174,8 +199,8 @@ function captureBlur(renderer: PIXI.Renderer, spine: Spine): BakePixels {
 	}
 
 	const holder = new PIXI.Container();
-	holder.addChild(spine);
-	spine.position.set(width / 2, height / 2);
+	holder.addChild(node);
+	node.position.set(width / 2, height / 2);
 	holder.filters = [sharedMotionBlur];
 	holder.filterArea = new PIXI.Rectangle(0, 0, width, height);
 
@@ -188,7 +213,7 @@ function captureBlur(renderer: PIXI.Renderer, spine: Spine): BakePixels {
 	holder.filters = null;
 	const pixels = textureToPng(renderer, renderTexture);
 	renderTexture.destroy(true);
-	holder.removeChild(spine);
+	holder.removeChild(node);
 	holder.destroy({ children: false });
 	emptyFilterTexturePool(renderer);
 	return pixels;
@@ -234,6 +259,29 @@ function textureToPng(renderer: PIXI.Renderer, renderTexture: PIXI.RenderTexture
 		width,
 		height
 	};
+}
+
+function loadSpritesheet(url: string): Promise<void> {
+	return new Promise((resolve, reject) => {
+		const loader = new PIXI.Loader();
+		loader.add("symbols_img", url);
+		loader.load((_ldr, resources) => {
+			const resource = resources.symbols_img;
+			if (!resource) {
+				reject(new Error("Loader returned no resource for " + url));
+				return;
+			}
+			if (resource.error) {
+				reject(resource.error);
+				return;
+			}
+			if (!resource.spritesheet && !resource.textures) {
+				reject(new Error("No spritesheet on " + url));
+				return;
+			}
+			resolve();
+		});
+	});
 }
 
 function loadSpineData(name: string, url: string): Promise<any> {

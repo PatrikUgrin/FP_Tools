@@ -7,7 +7,7 @@
  * Libsym strings are from SpinDataset (toLowerCase for texture-cache names):
  *   plusonespin_symbol = "OB"  →  ob / ob_b / ob_appear / ob_deactivated
  *   luckyboot_symbol   = "LB"  →  lb / lb_b / lb_appear / lb_deactivated
- *   blank_symbol       = "BL"  →  bl_b only (Blank ignores preview; appear/spin are empty)
+ *   blank_symbol       = "BL"  →  bl_b from symbols_img.json "bl.png" + motion blur
  *
  * Folders are the Spine animation actually posed (or blur / blur_green).
  * Filenames are the texture-cache names from assets.ts, not skeleton names.
@@ -25,6 +25,8 @@ export interface BakeJob {
 	group: string;
 	texName: string;
 	blur: boolean;
+	spriteSheet: string | null;
+	spriteFrame: string | null;
 }
 
 const FISH = "f";
@@ -65,14 +67,19 @@ function spineUrl(file: string): string {
 	return "./spine/" + file + ".json";
 }
 
-function job(partial: Omit<BakeJob, "url" | "group">): BakeJob {
+function job(partial: Omit<BakeJob, "url" | "group" | "spriteSheet" | "spriteFrame"> & {
+	spriteSheet?: string | null;
+	spriteFrame?: string | null;
+}): BakeJob {
 	const group = partial.blur
 		? (partial.texName.indexOf("_green") >= 0 ? "blur_green" : "blur")
 		: partial.animation;
 	return {
+		spriteSheet: null,
+		spriteFrame: null,
 		...partial,
 		group,
-		url: spineUrl(partial.spine)
+		url: partial.spine ? spineUrl(partial.spine) : ""
 	};
 }
 
@@ -96,8 +103,6 @@ function bonusPose(libsym: string): { spine: string; skin: string | null; animat
 			return { spine: "plusonespin", skin: null, animation: "static_spin" };
 		case LUCKYBOOT:
 			return { spine: "luckyboot_sym", skin: null, animation: "static_spin" };
-		case BLANK:
-			return { spine: "hilo_sym", skin: "blank", animation: "static_appear" };
 		default:
 			throw new Error("Unknown bonus libsym: " + libsym);
 	}
@@ -136,7 +141,7 @@ export function buildBakeJobs(): BakeJob[] {
 		}));
 	}
 
-	for (const libsym of BONUS_BLUR) {
+	for (const libsym of BONUS_SPINE) {
 		const pose = bonusPose(libsym);
 		jobs.push(job({
 			libsym,
@@ -147,6 +152,17 @@ export function buildBakeJobs(): BakeJob[] {
 			blur: true
 		}));
 	}
+
+	jobs.push(job({
+		libsym: BLANK,
+		spine: "",
+		skin: null,
+		animation: "sprite",
+		texName: "bl_b",
+		blur: true,
+		spriteSheet: "./symbols_img.json",
+		spriteFrame: "bl.png"
+	}));
 
 	for (const value of FISH_VALUES) {
 		jobs.push(job({
@@ -267,11 +283,14 @@ export function buildBakeJobs(): BakeJob[] {
 	}
 
 	for (const value of FISH_VALUES) {
+		// Original generateSymbolBlurAssetsForLoad(green) only flips isInsidePlayfield;
+		// Bass.setPreviewSprite still plays _spine_static_spin ("static_appear").
+		// That left *_b_green looking identical to *_b. Pose static_appear_green instead.
 		jobs.push(job({
 			libsym: FISH,
 			spine: "cash_sym",
 			skin: String(value),
-			animation: "static_appear",
+			animation: "static_appear_green",
 			texName: value + "_b_green",
 			blur: true
 		}));
