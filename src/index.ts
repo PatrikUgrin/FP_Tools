@@ -13,6 +13,7 @@ PIXI.settings.RESOLUTION = 1;
 
 const canvas = document.getElementById("pixi-canvas") as HTMLCanvasElement;
 const overlay = new BakeOverlay();
+let bakeInFlight = false;
 
 const app = new PIXI.Application({
 	view: canvas,
@@ -36,20 +37,46 @@ if (!isWebGl) {
 	overlay.setStatus("error", "WebGL unavailable");
 	overlay.setBusy(true, false);
 } else {
-	overlay.log("Using " + rendererType + ". Baker is idle until you press Bake PNGs.");
-	overlay.setHud("Idle");
-	overlay.setStatus("idle", "Idle — press Bake PNGs");
+	const autobake = shouldAutobake();
+	overlay.log("Using " + rendererType + ". " + (autobake
+		? "Autobake requested — starting now."
+		: "Baker is idle until you press Bake PNGs."));
+	overlay.setHud(autobake ? "Starting bake…" : "Idle");
+	overlay.setStatus("idle", autobake ? "Idle — autobake" : "Idle — press Bake PNGs");
 	layoutCanvas();
 	window.addEventListener("resize", layoutCanvas);
-	overlay.onBake(() => {
-		runBake(app, overlay).then(() => {
-			overlay.setStatus("done", "Done — idle");
-		}).catch((err) => {
-			const message = err instanceof Error ? err.message : String(err);
-			overlay.log(message, "error");
-			overlay.setBusy(false);
-			overlay.setStatus("error", "Failed");
-		});
+	overlay.onBake(startBake);
+	if (autobake) {
+		startBake();
+	}
+}
+
+function shouldAutobake(): boolean {
+	const params = new URLSearchParams(window.location.search);
+	if (!params.has("autobake")) {
+		return false;
+	}
+	const url = new URL(window.location.href);
+	url.searchParams.delete("autobake");
+	const next = url.pathname + url.search + url.hash;
+	window.history.replaceState({}, "", next);
+	return true;
+}
+
+function startBake(): void {
+	if (bakeInFlight) {
+		return;
+	}
+	bakeInFlight = true;
+	runBake(app, overlay).then(() => {
+		overlay.setStatus("done", "Done — idle");
+	}).catch((err) => {
+		const message = err instanceof Error ? err.message : String(err);
+		overlay.log(message, "error");
+		overlay.setBusy(false);
+		overlay.setStatus("error", "Failed");
+	}).finally(() => {
+		bakeInFlight = false;
 	});
 }
 

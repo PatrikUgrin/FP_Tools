@@ -3,7 +3,8 @@
 	"private": true,
 	"scripts": {
 		"start": "webpack-dev-server --mode=development",
-		"build": "webpack --mode=production"
+		"build": "webpack --mode=production",
+		"bake": "node scripts/start-baker.js"
 	},
 	"dependencies": {
 		"express": "^4.19.2",
