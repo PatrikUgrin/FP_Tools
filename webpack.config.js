@@ -1,7 +1,12 @@
 const path = require("path");
 const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { createExportRouter } = require("./exportApi");
+
+function freshExportApi() {
+	delete require.cache[require.resolve("./bakerPaths")];
+	delete require.cache[require.resolve("./exportApi")];
+	return require("./exportApi");
+}
 
 module.exports = (_env, argv) => {
 	return {
@@ -16,18 +21,25 @@ module.exports = (_env, argv) => {
 			hot: true,
 			open: false,
 			port: 3456,
-			host: "127.0.0.1",
+			host: "0.0.0.0",
+			allowedHosts: "all",
 			client: {
-				overlay: {
-					errors: true,
-					warnings: false
-				}
+				overlay: false,
+				webSocketURL: "auto://0.0.0.0:0/ws"
 			},
 			setupMiddlewares: (middlewares, devServer) => {
 				if (!devServer) {
 					throw new Error("webpack-dev-server is not defined");
 				}
-				devServer.app.use("/api", createExportRouter());
+				devServer.app.use("/spine", (req, res, next) => {
+					freshExportApi().createSpineStatic()(req, res, next);
+				});
+				devServer.app.use("/spritesheet", (req, res, next) => {
+					freshExportApi().createSpritesheetStatic()(req, res, next);
+				});
+				devServer.app.use("/api", (req, res, next) => {
+					freshExportApi().createExportRouter()(req, res, next);
+				});
 				return middlewares;
 			}
 		},
@@ -47,7 +59,10 @@ module.exports = (_env, argv) => {
 		},
 		plugins: [
 			new CopyPlugin({
-				patterns: [{ from: "static/" }]
+				patterns: [{
+					from: "static",
+					noErrorOnMissing: true
+				}]
 			}),
 			new HtmlWebpackPlugin({
 				template: "src/index.ejs",

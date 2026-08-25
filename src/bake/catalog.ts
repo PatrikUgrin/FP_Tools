@@ -160,7 +160,7 @@ export function buildBakeJobs(): BakeJob[] {
 		animation: "sprite",
 		texName: "bl_b",
 		blur: true,
-		spriteSheet: "./symbols_img.json",
+		spriteSheet: "./spritesheet/symbols_img.json",
 		spriteFrame: "bl.png"
 	}));
 

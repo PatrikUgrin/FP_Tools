@@ -1,0 +1,5 @@
+# Spine baker folders. Edit here or press Save paths in the web UI.
+# Relative paths are from this project folder.
+spine=D:\Dropbox\GG - BASS BUCK™\spine\_export
+export=D:\Dropbox\GG - BASS BUCK™\Texture pecker\_BakeExport
+spritesheet=D:\Dropbox\GG - BASS BUCK™\Texture pecker\symbols\export

@@ -4,6 +4,7 @@ const { spawn, spawnSync } = require("child_process");
 const fs = require("fs");
 const http = require("http");
 const path = require("path");
+const { loadBakerPaths, listLanIPv4 } = require("../bakerPaths");
 
 const ROOT = path.resolve(__dirname, "..");
 const HOST = "127.0.0.1";
@@ -11,6 +12,8 @@ const PORT = 3456;
 const BAKER_URL = "http://" + HOST + ":" + PORT + "/";
 const AUTOBAKE_URL = BAKER_URL + "?autobake=1";
 const IS_WIN = process.platform === "win32";
+const AUTOBAKE = process.argv.indexOf("--idle") < 0;
+const OPEN_URL = AUTOBAKE ? AUTOBAKE_URL : BAKER_URL;
 
 process.chdir(ROOT);
 
@@ -23,8 +26,12 @@ async function main() {
 	}
 
 	if (await isBakerUp()) {
-		console.log("Baker is already running. Opening the browser to bake…");
-		openBrowser(AUTOBAKE_URL);
+		console.log(AUTOBAKE
+			? "Baker is already running. Opening the browser to bake…"
+			: "Baker is already running. Opening the browser…");
+		printLanAddresses();
+		printFolders();
+		openBrowser(OPEN_URL);
 		return;
 	}
 
@@ -39,14 +46,16 @@ async function main() {
 	}
 
 	console.log("Starting baker. Leave this window open. Press Ctrl+C to stop.");
-	console.log("PNGs write to export" + path.sep + "png" + path.sep);
+	printLanAddresses();
+	printFolders();
+	console.log("If other PCs cannot connect, allow Node.js / port 3456 in Windows Firewall.");
 	console.log("");
 
 	const child = spawnNpm(["start"]);
 	waitForBaker(90000)
 		.then(function () {
-			console.log("Opening " + AUTOBAKE_URL);
-			openBrowser(AUTOBAKE_URL);
+			console.log("Opening " + OPEN_URL);
+			openBrowser(OPEN_URL);
 		})
 		.catch(function (err) {
 			console.error(err.message);
@@ -63,8 +72,30 @@ async function main() {
 function printBanner() {
 	console.log("");
 	console.log("Static Spine baker");
-	console.log("  " + AUTOBAKE_URL);
 	console.log("");
+}
+
+function printLanAddresses() {
+	console.log("  This PC:    " + BAKER_URL);
+	const lan = listLanIPv4();
+	if (!lan.length) {
+		console.log("  Other PCs:  (no LAN IPv4 found)");
+		return;
+	}
+	lan.forEach(function (ip) {
+		console.log("  Other PCs:  http://" + ip + ":" + PORT + "/");
+	});
+}
+
+function printFolders() {
+	try {
+		const cfg = loadBakerPaths();
+		console.log("  Spine:       " + (cfg.spineError || cfg.spineResolved));
+		console.log("  Spritesheet: " + (cfg.spritesheetError || cfg.spritesheetResolved));
+		console.log("  Export:      " + (cfg.exportError || cfg.exportResolved));
+	} catch (err) {
+		console.log("  Folders:    " + (err && err.message ? err.message : String(err)));
+	}
 }
 
 function hasNpm() {

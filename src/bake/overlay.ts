@@ -1,3 +1,5 @@
+import { BakerConfig } from "./exportClient";
+
 export type LogKind = "info" | "ok" | "skip" | "error";
 export type BakeStatus = "idle" | "baking" | "done" | "error";
 
@@ -10,7 +12,14 @@ export class BakeOverlay {
 	private readonly previewImg: HTMLImageElement;
 	private readonly logEl: HTMLElement;
 	private readonly bakeButton: HTMLButtonElement;
+	private readonly savePathsButton: HTMLButtonElement;
 	private readonly exportPath: HTMLElement;
+	private readonly spineInput: HTMLInputElement;
+	private readonly exportInput: HTMLInputElement;
+	private readonly spritesheetInput: HTMLInputElement;
+	private readonly lanUrls: HTMLElement;
+	private readonly pathFileLabel: HTMLElement;
+	private readonly pathError: HTMLElement;
 
 	public constructor() {
 		this.hudCurrent = this.mustGet("hud-current");
@@ -21,8 +30,49 @@ export class BakeOverlay {
 		this.previewImg = this.mustGet("preview-img") as HTMLImageElement;
 		this.logEl = this.mustGet("log");
 		this.bakeButton = this.mustGet("bake-button") as HTMLButtonElement;
+		this.savePathsButton = this.mustGet("save-paths-button") as HTMLButtonElement;
 		this.exportPath = this.mustGet("export-path");
+		this.spineInput = this.mustGet("spine-folder") as HTMLInputElement;
+		this.exportInput = this.mustGet("export-folder") as HTMLInputElement;
+		this.spritesheetInput = this.mustGet("spritesheet-folder") as HTMLInputElement;
+		this.lanUrls = this.mustGet("lan-urls");
+		this.pathFileLabel = this.mustGet("path-file-label");
+		this.pathError = this.mustGet("path-error");
 		this.setStatus("idle", "Idle — press Bake PNGs");
+		const saveOnEnter = (event: KeyboardEvent): void => {
+			if (event.key === "Enter") {
+				this.savePathsButton.click();
+			}
+		};
+		this.spineInput.addEventListener("keydown", saveOnEnter);
+		this.exportInput.addEventListener("keydown", saveOnEnter);
+		this.spritesheetInput.addEventListener("keydown", saveOnEnter);
+	}
+
+	public applyConfig(config: BakerConfig): void {
+		this.spineInput.value = config.spine || "";
+		this.exportInput.value = config.export || "";
+		this.spritesheetInput.value = config.spritesheet || "";
+		this.spineInput.classList.toggle("invalid", !config.spineExists);
+		this.exportInput.classList.toggle("invalid", !config.exportExists);
+		this.spritesheetInput.classList.toggle("invalid", !config.spritesheetExists);
+		this.setExportPath(config.exportResolved || config.export);
+		this.pathFileLabel.textContent = "Saved in " + config.file;
+		const lines = [config.localhost].concat(config.lanUrls);
+		this.lanUrls.textContent = lines.join("\n");
+		this.setPathError(pathMessage(config));
+	}
+
+	public setPathError(message: string): void {
+		this.pathError.textContent = message;
+	}
+
+	public readPathInputs(): { spine: string; export: string; spritesheet: string } {
+		return {
+			spine: this.spineInput.value.trim(),
+			export: this.exportInput.value.trim(),
+			spritesheet: this.spritesheetInput.value.trim()
+		};
 	}
 
 	public setRenderer(label: string, ok: boolean): void {
@@ -41,14 +91,31 @@ export class BakeOverlay {
 
 	public setBusy(busy: boolean, markBaking = true): void {
 		this.bakeButton.disabled = busy;
+		this.savePathsButton.disabled = busy;
+		this.spineInput.disabled = busy;
+		this.exportInput.disabled = busy;
+		this.spritesheetInput.disabled = busy;
 		this.bakeButton.textContent = busy ? "Baking…" : "Bake PNGs";
 		if (busy && markBaking) {
 			this.setStatus("baking", "Baking");
 		}
 	}
 
+	public setBakeEnabled(enabled: boolean): void {
+		this.bakeButton.disabled = !enabled;
+	}
+
+	public setSaveBusy(busy: boolean): void {
+		this.savePathsButton.disabled = busy;
+		this.savePathsButton.textContent = busy ? "Saving…" : "Save paths";
+	}
+
 	public onBake(handler: () => void): void {
 		this.bakeButton.addEventListener("click", handler);
+	}
+
+	public onSavePaths(handler: () => void): void {
+		this.savePathsButton.addEventListener("click", handler);
 	}
 
 	public setHud(text: string): void {
@@ -91,4 +158,24 @@ export class BakeOverlay {
 		}
 		return el;
 	}
+}
+
+function pathMessage(config: BakerConfig): string {
+	const parts: string[] = [];
+	if (config.saveError) {
+		parts.push(config.saveError);
+	}
+	if (config.spineError) {
+		parts.push(config.spineError);
+	}
+	if (config.exportError) {
+		parts.push(config.exportError);
+	}
+	if (config.spritesheetError) {
+		parts.push(config.spritesheetError);
+	}
+	if (!parts.length) {
+		return "";
+	}
+	return parts.join("\n") + "\nType a valid folder and press Save paths.";
 }

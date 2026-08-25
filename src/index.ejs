@@ -17,7 +17,7 @@
 
 		#app {
 			display: grid;
-			grid-template-columns: minmax(0, 1fr) 360px;
+			grid-template-columns: minmax(0, 1fr) 400px;
 			height: 100%;
 		}
 
@@ -167,11 +167,107 @@
 			cursor: default;
 		}
 
+		#save-paths-button {
+			background: #2a3648;
+		}
+
+		.path-block {
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+		}
+
+		.path-group {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			padding: 10px 10px 10px 12px;
+			border-radius: 6px;
+			border: 1px solid transparent;
+		}
+
+		.path-group-title {
+			font-size: 10px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			font-weight: 700;
+		}
+
+		.path-group.input {
+			background: #152033;
+			border-color: #2a4a73;
+		}
+
+		.path-group.input .path-group-title {
+			color: #9ec1ff;
+		}
+
+		.path-group.output {
+			background: #15261c;
+			border-color: #2d5a3c;
+			margin-top: 4px;
+		}
+
+		.path-group.output .path-group-title {
+			color: #8ee0a8;
+		}
+
+		.path-block label {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			font-size: 11px;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+			color: #9aa4b5;
+		}
+
+		.path-block input {
+			appearance: none;
+			width: 100%;
+			box-sizing: border-box;
+			border: 1px solid #2a3140;
+			border-radius: 6px;
+			background: #0e1116;
+			color: #e8e8e8;
+			padding: 7px 8px;
+			font-size: 12px;
+			font-family: inherit;
+		}
+
+		.path-group.input input {
+			border-color: #3a5f8f;
+		}
+
+		.path-group.output input {
+			border-color: #3d7a52;
+		}
+
+		.path-block input.invalid {
+			border-color: #c45b5b;
+		}
+
+		#path-error {
+			font-size: 12px;
+			color: #f0a0a0;
+			white-space: pre-wrap;
+			word-break: break-word;
+			min-height: 1.2em;
+		}
+
+		#lan-urls {
+			white-space: pre-wrap;
+			word-break: break-all;
+			font-family: Consolas, "Courier New", monospace;
+			font-size: 11px;
+			color: #c5cdd8;
+		}
+
 		#preview-wrap {
 			background: #151821;
 			border: 1px solid #2a3140;
 			border-radius: 6px;
-			min-height: 160px;
+			min-height: 110px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -180,7 +276,7 @@
 
 		#preview-img {
 			max-width: 100%;
-			max-height: 220px;
+			max-height: 140px;
 			image-rendering: auto;
 		}
 
@@ -215,8 +311,8 @@
 			<div>
 				<h1>Static Spine baker</h1>
 				<div class="meta">Load-path poses only. Folders are animation names (or blur). Filenames are texture-cache names.</div>
-				<div class="meta">One click: double-click <code>Bake.bat</code> (Windows) or <code>Bake.command</code> (Mac). Baking starts on its own.</div>
-				<div class="meta">Baker: <code>http://127.0.0.1:3456</code> (slot game keeps 1234)</div>
+				<div class="meta">On this PC double-click <code>Bake.bat</code>. Other machines open a LAN address below (slot game keeps 1234).</div>
+				<div class="meta" id="lan-urls">Loading addresses…</div>
 				<div>
 					<div id="status-pill" class="idle">Status: Idle</div>
 					<div id="renderer-pill">Renderer: checking</div>
@@ -225,6 +321,26 @@
 			<div>
 				<div id="progress-label">0 / 0</div>
 				<div class="progress-track"><div id="progress-fill"></div></div>
+			</div>
+			<div class="path-block">
+				<div class="path-group input">
+					<div class="path-group-title">Input — read from</div>
+					<label>Spine folder
+						<input id="spine-folder" type="text" spellcheck="false" autocomplete="off">
+					</label>
+					<label>Spritesheet folder
+						<input id="spritesheet-folder" type="text" spellcheck="false" autocomplete="off" placeholder="Folder that contains symbols_img.json">
+					</label>
+				</div>
+				<div class="path-group output">
+					<div class="path-group-title">Output — write to</div>
+					<label>Export folder
+						<input id="export-folder" type="text" spellcheck="false" autocomplete="off">
+					</label>
+				</div>
+				<button id="save-paths-button" type="button">Save paths</button>
+				<div class="meta" id="path-file-label">Saved in baker-paths.txt</div>
+				<div id="path-error"></div>
 			</div>
 			<button id="bake-button" type="button">Bake PNGs</button>
 			<div class="meta" id="export-path">Writing to export/png/&lt;animation or blur&gt;/</div>

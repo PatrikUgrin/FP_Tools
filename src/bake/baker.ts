@@ -1,8 +1,8 @@
 import * as PIXI from "pixi.js";
-import { Spine } from "pixi-spine";
+import { Spine, SpineParser, TextureAtlas } from "pixi-spine";
 import { MotionBlurFilter } from "pixi-filters";
 import { BakeJob, buildBakeJobs } from "./catalog";
-import { resetExport, saveManifest, savePng } from "./exportClient";
+import { loadConfig, resetExport, saveManifest, savePng } from "./exportClient";
 import { BakeOverlay } from "./overlay";
 
 const SYM_X = 252;
@@ -10,17 +10,29 @@ const SYM_Y = 168;
 const SYMBOL_BAKE_RESOLUTION = 1;
 const SYMBOL_BLUR_PAD = 64;
 const VIEW_MARGIN = 0.82;
+const LOAD_TIMEOUT_MS = 45000;
 
 let sharedMotionBlur: MotionBlurFilter | null = null;
 
 export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Promise<void> {
 	overlay.setBusy(true);
 	overlay.clearLog();
-	overlay.setExportPath("export/png/<animation or blur>/");
 	overlay.setHud("Building bake list…");
 
-	await resetExport();
-	overlay.log("Cleared previous bake output (export/png only).");
+	const config = await loadConfig();
+	if (!config.spineExists) {
+		throw new Error(config.spineError || "Spine folder not found. Save a valid path in the sidebar.");
+	}
+	if (config.exportError && !config.exportExists) {
+		throw new Error(config.exportError);
+	}
+
+	const reset = await resetExport();
+	overlay.setExportPath(reset.exportRoot);
+	overlay.log("Cleared previous bake output (" + reset.exportRoot + ").");
+	if (reset.skipped.length) {
+		overlay.log("Dropbox still had a lock on " + reset.skipped.length + " item(s); those files will be overwritten.", "skip");
+	}
 
 	const jobs = buildBakeJobs();
 	overlay.setProgress(0, jobs.length);
@@ -28,18 +40,21 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 
 	const saved: Array<{ group: string; texName: string; path: string }> = [];
 	const spineDataCache = new Map<string, any>();
+	const spineLoadErrors = new Map<string, Error>();
+	const spineLoads = new Map<string, Promise<any>>();
 	const loadedSheets = new Set<string>();
 	let done = 0;
 
 	try {
 		for (const bakeJob of jobs) {
 			overlay.setHud(bakeJob.group + " / " + bakeJob.texName);
+			await waitFrames(1);
 			let display: PIXI.Container | null = null;
 			try {
 				if (bakeJob.spriteFrame && bakeJob.spriteSheet) {
-					display = await createSprite(loadedSheets, bakeJob);
+					display = await createSprite(loadedSheets, bakeJob, overlay);
 				} else {
-					display = await createSpine(spineDataCache, bakeJob);
+					display = await createSpine(spineDataCache, spineLoads, spineLoadErrors, bakeJob, overlay);
 					poseSymbol(display as Spine, bakeJob);
 				}
 
@@ -75,7 +90,7 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 		}
 
 		await saveManifest(saved);
-		overlay.log("Wrote export/png/manifest.json (" + saved.length + " file(s)).", "ok");
+		overlay.log("Wrote manifest.json in " + reset.exportRoot + " (" + saved.length + " file(s)).", "ok");
 		overlay.setHud("Done — " + saved.length + " PNG(s)");
 		overlay.setStatus("done", "Done — " + saved.length + " PNG(s)");
 	} finally {
@@ -84,11 +99,36 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 	}
 }
 
-async function createSpine(dataCache: Map<string, any>, bakeJob: BakeJob): Promise<Spine> {
+async function createSpine(
+	dataCache: Map<string, any>,
+	inflight: Map<string, Promise<any>>,
+	failed: Map<string, Error>,
+	bakeJob: BakeJob,
+	overlay: BakeOverlay
+): Promise<Spine> {
+	const cachedError = failed.get(bakeJob.url);
+	if (cachedError) {
+		throw cachedError;
+	}
 	let spineData = dataCache.get(bakeJob.url);
 	if (!spineData) {
-		spineData = await loadSpineData(bakeJob.spine, bakeJob.url);
-		dataCache.set(bakeJob.url, spineData);
+		let pending = inflight.get(bakeJob.url);
+		if (!pending) {
+			overlay.log("Loading " + bakeJob.spine + "…");
+			await waitFrames(1);
+			pending = loadSpineData(bakeJob.spine, bakeJob.url, overlay).then((data) => {
+				dataCache.set(bakeJob.url, data);
+				return data;
+			}).catch((err) => {
+				const wrapped = err instanceof Error ? err : new Error(String(err));
+				failed.set(bakeJob.url, wrapped);
+				throw wrapped;
+			}).finally(() => {
+				inflight.delete(bakeJob.url);
+			});
+			inflight.set(bakeJob.url, pending);
+		}
+		spineData = await pending;
 	}
 	const spine = new Spine(spineData);
 	spine.autoUpdate = false;
@@ -119,10 +159,12 @@ function poseSymbol(spine: Spine, bakeJob: BakeJob): void {
 	spine.update(0);
 }
 
-async function createSprite(loadedSheets: Set<string>, bakeJob: BakeJob): Promise<PIXI.Sprite> {
+async function createSprite(loadedSheets: Set<string>, bakeJob: BakeJob, overlay: BakeOverlay): Promise<PIXI.Sprite> {
 	const sheetUrl = bakeJob.spriteSheet as string;
 	const frame = bakeJob.spriteFrame as string;
 	if (!loadedSheets.has(sheetUrl)) {
+		overlay.log("Loading " + sheetUrl + "…");
+		await waitFrames(1);
 		await loadSpritesheet(sheetUrl);
 		loadedSheets.add(sheetUrl);
 	}
@@ -264,8 +306,13 @@ function textureToPng(renderer: PIXI.Renderer, renderTexture: PIXI.RenderTexture
 function loadSpritesheet(url: string): Promise<void> {
 	return new Promise((resolve, reject) => {
 		const loader = new PIXI.Loader();
+		const timer = window.setTimeout(() => {
+			loader.reset();
+			reject(new Error("Timed out fetching " + url + " after " + (LOAD_TIMEOUT_MS / 1000) + "s"));
+		}, LOAD_TIMEOUT_MS);
 		loader.add("symbols_img", url);
 		loader.load((_ldr, resources) => {
+			window.clearTimeout(timer);
 			const resource = resources.symbols_img;
 			if (!resource) {
 				reject(new Error("Loader returned no resource for " + url));
@@ -284,27 +331,102 @@ function loadSpritesheet(url: string): Promise<void> {
 	});
 }
 
-function loadSpineData(name: string, url: string): Promise<any> {
-	return new Promise((resolve, reject) => {
-		const loader = new PIXI.Loader();
-		loader.add(name, url);
-		loader.load((_ldr, resources) => {
-			const resource = resources[name];
-			if (!resource) {
-				reject(new Error("Loader returned no resource for " + name));
-				return;
+function loadSpineData(name: string, url: string, overlay: BakeOverlay): Promise<any> {
+	return (async () => {
+		const jsonUrl = url;
+		const atlasUrl = url.replace(/\.json(\?.*)?$/i, ".atlas$1");
+		overlay.log("  fetching " + name + ".json");
+		const json = JSON.parse(await fetchText(jsonUrl));
+		overlay.log("  fetching " + name + ".atlas");
+		const atlasText = await fetchText(atlasUrl);
+		const pages = atlasPageNames(atlasText);
+		if (!pages.length) {
+			throw new Error("No PNG page listed in " + atlasUrl);
+		}
+		const textures: { [page: string]: PIXI.Texture } = {};
+		const folder = url.replace(/[^/]+$/, "");
+		for (const page of pages) {
+			overlay.log("  fetching " + page);
+			textures[page] = await fetchTexture(folder + page);
+		}
+		overlay.log("  parsing " + name);
+		const atlas = new TextureAtlas(atlasText, (line: string, done: (baseTexture: PIXI.BaseTexture) => void) => {
+			const tex = textures[line] || textures[line.replace(/^.*[\\/]/, "")];
+			if (!tex) {
+				throw new Error("Atlas asked for image that was not fetched: " + line);
 			}
-			if (resource.error) {
-				reject(resource.error);
-				return;
-			}
-			if (!resource.spineData) {
-				reject(new Error("No spineData on " + name));
-				return;
-			}
-			resolve(resource.spineData);
+			done(tex.baseTexture);
 		});
+		const parser = new SpineParser();
+		const jsonParser = parser.createJsonParser() as unknown as {
+			readSkeletonData: (atlas: TextureAtlas, data: unknown) => unknown;
+		};
+		const spineData = jsonParser.readSkeletonData(atlas, json);
+		if (!spineData) {
+			throw new Error("No spineData on " + name);
+		}
+		return spineData;
+	})();
+}
+
+function atlasPageNames(atlasText: string): string[] {
+	const pages: string[] = [];
+	const blocks = atlasText.replace(/\r/g, "").split("\n\n");
+	for (const block of blocks) {
+		const first = block.trim().split("\n")[0];
+		if (first && /\.(png|jpe?g|webp)$/i.test(first)) {
+			pages.push(first.trim());
+		}
+	}
+	return pages;
+}
+
+async function fetchText(url: string): Promise<string> {
+	const response = await fetchWithTimeout(url);
+	return response.text();
+}
+
+async function fetchTexture(url: string): Promise<PIXI.Texture> {
+	const response = await fetchWithTimeout(url);
+	const blob = await response.blob();
+	const objectUrl = URL.createObjectURL(blob);
+	try {
+		const image = await loadImage(objectUrl);
+		return PIXI.Texture.from(image);
+	} finally {
+		URL.revokeObjectURL(objectUrl);
+	}
+}
+
+function loadImage(src: string): Promise<HTMLImageElement> {
+	return new Promise((resolve, reject) => {
+		const image = new Image();
+		image.onload = () => resolve(image);
+		image.onerror = () => reject(new Error("Image decode failed"));
+		image.src = src;
 	});
+}
+
+async function fetchWithTimeout(url: string): Promise<Response> {
+	const controller = new AbortController();
+	const timer = window.setTimeout(() => controller.abort(), LOAD_TIMEOUT_MS);
+	try {
+		const response = await fetch(url, {
+			signal: controller.signal,
+			cache: "no-store"
+		});
+		if (!response.ok) {
+			throw new Error(url + " HTTP " + response.status);
+		}
+		return response;
+	} catch (err) {
+		if (err instanceof Error && err.name === "AbortError") {
+			throw new Error("Timed out fetching " + url + " after " + (LOAD_TIMEOUT_MS / 1000) + "s");
+		}
+		throw err;
+	} finally {
+		window.clearTimeout(timer);
+	}
 }
 
 function resetLoader(): void {
