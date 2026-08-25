@@ -5,6 +5,7 @@ import { BakeJob, buildBakeJobs } from "./catalog";
 import { loadConfig, resetExport, saveManifest, savePng } from "./exportClient";
 import { BakeOverlay } from "./overlay";
 import { runPack } from "./packer";
+import { runConvert } from "./convert";
 
 const SYM_X = 252;
 const SYM_Y = 168;
@@ -92,7 +93,7 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 
 		await saveManifest(saved);
 		overlay.log("Wrote manifest.json in " + reset.exportRoot + " (" + saved.length + " file(s)).", "ok");
-		overlay.setBusy(true, false);
+		overlay.setBusy(true, "pack");
 		overlay.setStatus("packing", "Packing");
 		const pack = await runPack(overlay, false);
 		if (pack.skipped) {
@@ -106,6 +107,20 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 			overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
 			overlay.setHud("Done — " + saved.length + " PNG(s), " + pack.packed + " packed");
 			overlay.setStatus("done", "Done — baked and packed");
+		}
+		overlay.setBusy(true, "convert");
+		overlay.setStatus("converting", "Converting");
+		const converted = await runConvert(overlay, false);
+		if (converted.skipped) {
+			// keep the bake/pack status already set
+		} else if (!converted.ok) {
+			overlay.log("Converted " + converted.converted + ", failed " + converted.failed + ".", "error");
+			overlay.setHud("Converted " + converted.converted + ", failed " + converted.failed);
+			overlay.setStatus("error", "Convert failed");
+		} else {
+			overlay.log("Converted " + converted.converted + " PNG(s) to RGBA5555.", "ok");
+			overlay.setHud("Done — baked, packed, converted " + converted.converted);
+			overlay.setStatus("done", "Done — baked, packed, converted");
 		}
 	} finally {
 		resetLoader();

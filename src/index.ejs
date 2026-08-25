@@ -118,9 +118,9 @@
 			animation: status-pulse 1s ease-in-out infinite;
 		}
 
-		#status-pill.packing {
-			background: #58401d;
-			color: #e0c08e;
+		#status-pill.converting {
+			background: #3d2a58;
+			color: #cbb0f0;
 			animation: status-pulse 1s ease-in-out infinite;
 		}
 
@@ -179,6 +179,10 @@
 
 		#pack-button {
 			background: #b07a3a;
+		}
+
+		#convert-button {
+			background: #6b4aa0;
 		}
 
 		.action-row {
@@ -268,8 +272,18 @@
 			color: #e0c08e;
 		}
 
-		.path-group.pack input {
-			border-color: #8a6a45;
+		.path-group.convert {
+			background: #22182b;
+			border-color: #5a3d73;
+			margin-top: 4px;
+		}
+
+		.path-group.convert .path-group-title {
+			color: #cbb0f0;
+		}
+
+		.path-group.convert input {
+			border-color: #7a5aa0;
 		}
 
 		.path-block input.invalid {
@@ -373,6 +387,15 @@
 						<input id="tps-folder" type="text" spellcheck="false" autocomplete="off" placeholder="Folder of .tps project files">
 					</label>
 				</div>
+				<div class="path-group convert">
+					<div class="path-group-title">Convert — RGBA5555</div>
+					<label>Spine export (untouched)
+						<input id="spine-export-folder" type="text" spellcheck="false" autocomplete="off" placeholder="Original spine export folder">
+					</label>
+					<label>Converted output
+						<input id="spine-converted-folder" type="text" spellcheck="false" autocomplete="off" placeholder="Copy destination, then convert PNGs">
+					</label>
+				</div>
 				<button id="save-paths-button" type="button">Save paths</button>
 				<div class="meta" id="path-file-label">Project defaults. Save writes to your user folder.</div>
 				<div id="path-error"></div>
@@ -381,6 +404,7 @@
 				<button id="bake-button" type="button">Bake PNGs</button>
 				<button id="pack-button" type="button">Pack spritesheets</button>
 			</div>
+			<button id="convert-button" type="button">Convert spine PNGs</button>
 			<div class="meta" id="export-path">Writing to export/png/&lt;animation or blur&gt;/</div>
 			<div id="preview-wrap">
 				<img id="preview-img" alt="Last exported PNG">

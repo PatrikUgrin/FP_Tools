@@ -6,7 +6,14 @@ export async function loadConfig(): Promise<BakerConfig> {
 	return await response.json() as BakerConfig;
 }
 
-export async function saveConfig(spine: string, exportDir: string, spritesheet: string, tps: string): Promise<BakerConfig> {
+export async function saveConfig(
+	spine: string,
+	exportDir: string,
+	spritesheet: string,
+	tps: string,
+	spineExport: string,
+	spineConverted: string
+): Promise<BakerConfig> {
 	const response = await fetch("/api/config", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -14,7 +21,9 @@ export async function saveConfig(spine: string, exportDir: string, spritesheet: 
 			spine,
 			export: exportDir,
 			spritesheet,
-			tps
+			tps,
+			spineexport: spineExport,
+			spineconverted: spineConverted
 		})
 	});
 	if (!response.ok) {
@@ -119,23 +128,65 @@ export async function packTpsProject(relative: string): Promise<TpsPackResult> {
 	}
 }
 
+export async function prepareConvert(): Promise<ConvertPrepareResult> {
+	const response = await fetch("/api/convert/prepare", { method: "POST" });
+	if (!response.ok) {
+		const text = await response.text();
+		throw new Error(apiError(text, response.status, "Failed to copy spine export folder"));
+	}
+	return await response.json() as ConvertPrepareResult;
+}
+
+export async function convertPng(relative: string): Promise<ConvertResult> {
+	const controller = new AbortController();
+	const timer = window.setTimeout(() => controller.abort(), 100000);
+	try {
+		const response = await fetch("/api/convert", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ relative }),
+			signal: controller.signal
+		});
+		if (!response.ok) {
+			const text = await response.text();
+			throw new Error(apiError(text, response.status, "Failed to convert " + relative));
+		}
+		return await response.json() as ConvertResult;
+	} catch (err) {
+		if (err instanceof DOMException && err.name === "AbortError") {
+			throw new Error("Convert timed out on " + relative);
+		}
+		throw err;
+	} finally {
+		window.clearTimeout(timer);
+	}
+}
+
 export interface BakerConfig {
 	spine: string;
 	export: string;
 	spritesheet: string;
 	tps: string;
+	spineexport: string;
+	spineconverted: string;
 	spineResolved: string;
 	exportResolved: string;
 	spritesheetResolved: string;
 	tpsResolved: string;
+	spineExportResolved: string;
+	spineConvertedResolved: string;
 	spineExists: boolean;
 	exportExists: boolean;
 	spritesheetExists: boolean;
 	tpsExists: boolean;
+	spineExportExists: boolean;
+	spineConvertedExists: boolean;
 	spineError: string | null;
 	exportError: string | null;
 	spritesheetError: string | null;
 	tpsError: string | null;
+	spineExportError: string | null;
+	spineConvertedError: string | null;
 	saveError?: string;
 	file: string;
 	defaultFile?: string;
@@ -154,6 +205,22 @@ export interface TpsListing {
 }
 
 export interface TpsPackResult {
+	ok: boolean;
+	relative: string;
+	file: string;
+	code: number;
+	stdout: string;
+	stderr: string;
+}
+
+export interface ConvertPrepareResult {
+	folder: string;
+	copiedFrom: string;
+	skipped: string[];
+	files: Array<{ name: string; relative: string }>;
+}
+
+export interface ConvertResult {
 	ok: boolean;
 	relative: string;
 	file: string;

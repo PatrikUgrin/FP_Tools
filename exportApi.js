@@ -36,18 +36,33 @@ function createExportRouter() {
 			const tps = String(
 				(req.body && (req.body.tps || req.body.texturepacker)) || ""
 			).trim();
+			const spineExport = String(
+				(req.body && (req.body.spineexport || req.body.spineExport)) || ""
+			).trim();
+			const spineConverted = String(
+				(req.body && (req.body.spineconverted || req.body.spineConverted)) || ""
+			).trim();
 			const { writeBakerPaths } = loadBakerPathsModule();
-			const saved = writeBakerPaths(spine, exportDir, spritesheet, tps);
+			const saved = writeBakerPaths(spine, exportDir, spritesheet, tps, spineExport, spineConverted);
 			console.log("[baker] saved paths");
-			console.log("  Spine:       " + saved.spineResolved);
-			console.log("  Spritesheet: " + (saved.spritesheetResolved || saved.spritesheet));
-			console.log("  Export:      " + saved.exportResolved);
-			console.log("  TPS:         " + (saved.tpsResolved || saved.tps || "(not set)"));
+			console.log("  Spine:         " + saved.spineResolved);
+			console.log("  Spritesheet:   " + (saved.spritesheetResolved || saved.spritesheet));
+			console.log("  Export:        " + saved.exportResolved);
+			console.log("  TPS:           " + (saved.tpsResolved || saved.tps || "(not set)"));
+			console.log("  Spine export:  " + (saved.spineExportResolved || saved.spineexport || "(not set)"));
+			console.log("  Spine convert: " + (saved.spineConvertedResolved || saved.spineconverted || "(not set)"));
 			if (saved.exportResolved) {
 				try {
 					fs.mkdirSync(saved.exportResolved, { recursive: true });
 				} catch (_err) {
 					// Keep the saved path; the UI will show why export is not usable.
+				}
+			}
+			if (saved.spineConvertedResolved) {
+				try {
+					fs.mkdirSync(saved.spineConvertedResolved, { recursive: true });
+				} catch (_err) {
+					// Keep the saved path; convert will show why it is not usable.
 				}
 			}
 			res.json(configPayload());
@@ -68,6 +83,22 @@ function createExportRouter() {
 
 	router.post("/pack", (req, res) => {
 		packOneFromRequest(req).then((body) => {
+			res.json(body);
+		}).catch((err) => {
+			res.status(400).json({ error: err.message || String(err) });
+		});
+	});
+
+	router.post("/convert/prepare", (_req, res) => {
+		prepareConvertCopy().then((body) => {
+			res.json(body);
+		}).catch((err) => {
+			res.status(400).json({ error: err.message || String(err) });
+		});
+	});
+
+	router.post("/convert", (req, res) => {
+		convertOneFromRequest(req).then((body) => {
 			res.json(body);
 		}).catch((err) => {
 			res.status(400).json({ error: err.message || String(err) });
@@ -303,6 +334,12 @@ function loadTpsPacker() {
 	return require("./tpsPacker");
 }
 
+function loadRgbaConvert() {
+	const id = require.resolve("./rgbaConvert");
+	delete require.cache[id];
+	return require("./rgbaConvert");
+}
+
 function tpsListing() {
 	const cfg = loadBakerPathsModule().loadBakerPaths();
 	const packer = loadTpsPacker();
@@ -347,6 +384,66 @@ async function packOneFromRequest(req) {
 	};
 }
 
+async function prepareConvertCopy() {
+	const cfg = loadBakerPathsModule().loadBakerPaths();
+	if (!cfg.spineExportExists) {
+		throw new Error(cfg.spineExportError || "Spine export convert folder is not set");
+	}
+	if (!cfg.spineconverted) {
+		throw new Error(cfg.spineConvertedError || "Converted spine output folder is not set");
+	}
+	const convert = loadRgbaConvert();
+	if (cfg.spineConvertedResolved) {
+		fs.mkdirSync(cfg.spineConvertedResolved, { recursive: true });
+	}
+	const dest = cfg.spineConvertedResolved || convertDestFromConfig(cfg);
+	console.log("[baker] copying spine export to " + dest);
+	const skipped = convert.copyFolderContents(cfg.spineExportResolved, dest);
+	const files = convert.listPngFiles(dest);
+	return {
+		folder: dest,
+		copiedFrom: cfg.spineExportResolved,
+		skipped: skipped,
+		files: files.map((file) => ({
+			name: file.name,
+			relative: file.relative
+		}))
+	};
+}
+
+function convertDestFromConfig(cfg) {
+	if (cfg.spineConvertedResolved) {
+		return cfg.spineConvertedResolved;
+	}
+	throw new Error(cfg.spineConvertedError || "Converted spine output folder is not usable");
+}
+
+async function convertOneFromRequest(req) {
+	const cfg = loadBakerPathsModule().loadBakerPaths();
+	if (!cfg.spineConvertedExists && !cfg.spineConvertedResolved) {
+		throw new Error(cfg.spineConvertedError || "Converted spine output folder is not set");
+	}
+	const convert = loadRgbaConvert();
+	const dest = cfg.spineConvertedResolved;
+	if (!dest) {
+		throw new Error(cfg.spineConvertedError || "Converted spine output folder is not usable");
+	}
+	const relative = String(req.body && req.body.relative || "").trim();
+	if (!relative) {
+		throw new Error("Missing PNG file (relative)");
+	}
+	const pngFile = convert.resolveListedPng(dest, relative);
+	const result = await convert.convertPngFile(pngFile);
+	return {
+		ok: result.ok,
+		relative: relative,
+		file: pngFile,
+		code: result.code,
+		stdout: result.stdout,
+		stderr: result.stderr
+	};
+}
+
 function configPayload() {
 	const paths = loadBakerPathsModule();
 	const cfg = paths.loadBakerPaths();
@@ -356,18 +453,26 @@ function configPayload() {
 		export: cfg.export,
 		spritesheet: cfg.spritesheet,
 		tps: cfg.tps,
+		spineexport: cfg.spineexport,
+		spineconverted: cfg.spineconverted,
 		spineResolved: cfg.spineResolved,
 		exportResolved: cfg.exportResolved,
 		spritesheetResolved: cfg.spritesheetResolved,
 		tpsResolved: cfg.tpsResolved,
+		spineExportResolved: cfg.spineExportResolved,
+		spineConvertedResolved: cfg.spineConvertedResolved,
 		spineExists: cfg.spineExists,
 		exportExists: cfg.exportExists,
 		spritesheetExists: cfg.spritesheetExists,
 		tpsExists: cfg.tpsExists,
+		spineExportExists: cfg.spineExportExists,
+		spineConvertedExists: cfg.spineConvertedExists,
 		spineError: cfg.spineError,
 		exportError: cfg.exportError,
 		spritesheetError: cfg.spritesheetError,
 		tpsError: cfg.tpsError,
+		spineExportError: cfg.spineExportError,
+		spineConvertedError: cfg.spineConvertedError,
 		file: cfg.file,
 		defaultFile: cfg.defaultFile,
 		usingUserFile: cfg.usingUserFile,

@@ -24,11 +24,19 @@ function loadBakerPaths() {
 	let exportDir = user.export || project.export || DEFAULTS.export;
 	let spritesheet = user.spritesheet || project.spritesheet || "";
 	let tps = user.tps || project.tps || "";
+	let spineExport = user.spineexport || project.spineexport || "";
+	let spineConverted = user.spineconverted || project.spineconverted || "";
 	if (spritesheet) {
 		spritesheet = folderFromMaybeFile(spritesheet);
 	}
 	if (tps) {
 		tps = folderFromMaybeFile(tps);
+	}
+	if (spineExport) {
+		spineExport = folderFromMaybeFile(spineExport);
+	}
+	if (spineConverted) {
+		spineConverted = folderFromMaybeFile(spineConverted);
 	}
 	const spineInfo = inspectDir(spine);
 	const exportInfo = inspectDir(exportDir);
@@ -38,23 +46,37 @@ function loadBakerPaths() {
 	const tpsInfo = tps
 		? inspectDir(tps)
 		: { resolved: "", exists: false, error: "TexturePacker .tps folder not set" };
+	const spineExportInfo = spineExport
+		? inspectDir(spineExport)
+		: { resolved: "", exists: false, error: "Spine export convert folder not set" };
+	const spineConvertedInfo = spineConverted
+		? inspectDir(spineConverted)
+		: { resolved: "", exists: false, error: "Converted spine output folder not set" };
 	return {
 		spine,
 		export: exportDir,
 		spritesheet,
 		tps,
+		spineexport: spineExport,
+		spineconverted: spineConverted,
 		spineResolved: spineInfo.resolved,
 		exportResolved: exportInfo.resolved,
 		spritesheetResolved: sheetInfo.resolved,
 		tpsResolved: tpsInfo.resolved,
+		spineExportResolved: spineExportInfo.resolved,
+		spineConvertedResolved: spineConvertedInfo.resolved,
 		spineExists: spineInfo.exists,
 		exportExists: exportInfo.exists,
 		spritesheetExists: sheetInfo.exists,
 		tpsExists: tpsInfo.exists,
+		spineExportExists: spineExportInfo.exists,
+		spineConvertedExists: spineConvertedInfo.exists,
 		spineError: spineInfo.error,
 		exportError: exportInfo.error,
 		spritesheetError: sheetInfo.error,
 		tpsError: tpsInfo.error,
+		spineExportError: spineExportInfo.error,
+		spineConvertedError: spineConvertedInfo.error,
 		file: USER_PATHS_FILE,
 		defaultFile: PROJECT_PATHS_FILE,
 		usingUserFile
@@ -62,7 +84,7 @@ function loadBakerPaths() {
 }
 
 function parsePathsFile(text) {
-	const out = { spine: "", export: "", spritesheet: "", tps: "" };
+	const out = { spine: "", export: "", spritesheet: "", tps: "", spineexport: "", spineconverted: "" };
 	const lines = String(text || "").split(/\r?\n/);
 	for (const line of lines) {
 		const trimmed = line.trim();
@@ -77,7 +99,11 @@ function parsePathsFile(text) {
 		const value = stripQuotes(trimmed.slice(eq + 1).trim());
 		if (key === "texturepacker" || key === "packer") {
 			out.tps = value;
-		} else if (key === "spine" || key === "export" || key === "spritesheet" || key === "tps") {
+		} else if (key === "convertin" || key === "spine_export") {
+			out.spineexport = value;
+		} else if (key === "convertout" || key === "spine_converted") {
+			out.spineconverted = value;
+		} else if (key === "spine" || key === "export" || key === "spritesheet" || key === "tps" || key === "spineexport" || key === "spineconverted") {
 			out[key] = value;
 		}
 	}
@@ -96,7 +122,7 @@ function stripQuotes(value) {
 	return text;
 }
 
-function writeBakerPathsFile(spine, exportDir, spritesheet, tps) {
+function writeBakerPathsFile(spine, exportDir, spritesheet, tps, spineExport, spineConverted) {
 	const body = [
 		"# Spine baker folders for this user. Edit here or press Save paths in the web UI.",
 		"# The copy in the project (baker-paths.txt) is only used if this file is missing.",
@@ -105,13 +131,15 @@ function writeBakerPathsFile(spine, exportDir, spritesheet, tps) {
 		"export=" + String(exportDir || "").trim(),
 		"spritesheet=" + String(spritesheet || "").trim(),
 		"tps=" + String(tps || "").trim(),
+		"spineexport=" + String(spineExport || "").trim(),
+		"spineconverted=" + String(spineConverted || "").trim(),
 		""
 	].join("\n");
 	fs.mkdirSync(USER_PATHS_DIR, { recursive: true });
 	fs.writeFileSync(USER_PATHS_FILE, body, "utf8");
 }
 
-function writeBakerPaths(spine, exportDir, spritesheet, tps) {
+function writeBakerPaths(spine, exportDir, spritesheet, tps, spineExport, spineConverted) {
 	const existing = parseExistingPaths();
 	const nextSpine = stripQuotes(spine || existing.spine || DEFAULTS.spine);
 	const nextExport = stripQuotes(exportDir || existing.export || DEFAULTS.export);
@@ -119,13 +147,25 @@ function writeBakerPaths(spine, exportDir, spritesheet, tps) {
 	let nextTps = tps === undefined
 		? stripQuotes(existing.tps || "")
 		: stripQuotes(tps || "");
+	let nextSpineExport = spineExport === undefined
+		? stripQuotes(existing.spineexport || "")
+		: stripQuotes(spineExport || "");
+	let nextSpineConverted = spineConverted === undefined
+		? stripQuotes(existing.spineconverted || "")
+		: stripQuotes(spineConverted || "");
 	if (nextSheet) {
 		nextSheet = folderFromMaybeFile(nextSheet);
 	}
 	if (nextTps) {
 		nextTps = folderFromMaybeFile(nextTps);
 	}
-	writeBakerPathsFile(nextSpine, nextExport, nextSheet, nextTps);
+	if (nextSpineExport) {
+		nextSpineExport = folderFromMaybeFile(nextSpineExport);
+	}
+	if (nextSpineConverted) {
+		nextSpineConverted = folderFromMaybeFile(nextSpineConverted);
+	}
+	writeBakerPathsFile(nextSpine, nextExport, nextSheet, nextTps, nextSpineExport, nextSpineConverted);
 	return loadBakerPaths();
 }
 
@@ -137,7 +177,7 @@ function parseExistingPaths() {
 }
 
 function emptyPaths() {
-	return { spine: "", export: "", spritesheet: "", tps: "" };
+	return { spine: "", export: "", spritesheet: "", tps: "", spineexport: "", spineconverted: "" };
 }
 
 function readPathsFrom(file) {

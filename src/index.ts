@@ -3,6 +3,7 @@ import "pixi-spine";
 import { BakeOverlay } from "./bake/overlay";
 import { runBake } from "./bake/baker";
 import { runPack } from "./bake/packer";
+import { runConvert } from "./bake/convert";
 import { loadConfig, saveConfig } from "./bake/exportClient";
 
 PIXI.settings.PREFER_ENV = PIXI.ENV.WEBGL2;
@@ -60,6 +61,12 @@ async function boot(): Promise<void> {
 		if (config.tpsError && config.tps) {
 			overlay.log(config.tpsError, "error");
 		}
+		if (config.spineExportError && config.spineexport) {
+			overlay.log(config.spineExportError, "error");
+		}
+		if (config.spineConvertedError && config.spineconverted) {
+			overlay.log(config.spineConvertedError, "error");
+		}
 	} catch (err) {
 		const message = err instanceof Error ? err.message : String(err);
 		overlay.log(message, "error");
@@ -74,6 +81,7 @@ async function boot(): Promise<void> {
 		layoutCanvas();
 		window.addEventListener("resize", layoutCanvas);
 		overlay.onPack(startPack);
+		overlay.onConvert(startConvert);
 		return;
 	}
 
@@ -90,6 +98,7 @@ async function boot(): Promise<void> {
 	window.addEventListener("resize", layoutCanvas);
 	overlay.onBake(startBake);
 	overlay.onPack(startPack);
+	overlay.onConvert(startConvert);
 	if (autobake && configOk) {
 		startBake();
 	}
@@ -99,16 +108,25 @@ async function savePathsFromUi(): Promise<void> {
 	const inputs = overlay.readPathInputs();
 	overlay.setSaveBusy(true);
 	try {
-		const config = await saveConfig(inputs.spine, inputs.export, inputs.spritesheet, inputs.tps);
+		const config = await saveConfig(
+			inputs.spine,
+			inputs.export,
+			inputs.spritesheet,
+			inputs.tps,
+			inputs.spineexport,
+			inputs.spineconverted
+		);
 		overlay.applyConfig(config);
 		overlay.log("Saved " + (config.file || "user baker-paths.txt"), "ok");
 		overlay.log("Spine: " + (config.spineResolved || config.spine), config.spineError ? "error" : "ok");
 		overlay.log("Spritesheet: " + (config.spritesheetResolved || config.spritesheet), config.spritesheetError ? "error" : "ok");
 		overlay.log("Export: " + (config.exportResolved || config.export), config.exportError ? "error" : "ok");
 		overlay.log("TPS: " + (config.tpsResolved || config.tps || "(not set)"), config.tps && config.tpsError ? "error" : "ok");
+		overlay.log("Spine export: " + (config.spineExportResolved || config.spineexport || "(not set)"), config.spineexport && config.spineExportError ? "error" : "ok");
+		overlay.log("Converted out: " + (config.spineConvertedResolved || config.spineconverted || "(not set)"), config.spineconverted && config.spineConvertedError ? "error" : "ok");
 		if (config.saveError) {
 			overlay.log(config.saveError, "error");
-		} else if (config.spineError || config.exportError || config.spritesheetError || (config.tps && config.tpsError)) {
+		} else if (config.spineError || config.exportError || config.spritesheetError || (config.tps && config.tpsError) || (config.spineexport && config.spineExportError) || (config.spineconverted && config.spineConvertedError)) {
 			overlay.log("Path was saved. Fix any missing folder and save again if needed.", "error");
 		}
 	} catch (err) {
@@ -151,7 +169,7 @@ function startPack(): void {
 		return;
 	}
 	bakeInFlight = true;
-	overlay.setBusy(true, false);
+	overlay.setBusy(true, "pack");
 	overlay.setStatus("packing", "Packing");
 	runPack(overlay, true).then((pack) => {
 		if (!pack.ok) {
@@ -167,7 +185,33 @@ function startPack(): void {
 		overlay.log(message, "error");
 		overlay.setStatus("error", "Pack failed");
 	}).finally(() => {
-		overlay.setBusy(false, false);
+		overlay.setBusy(false);
+		bakeInFlight = false;
+	});
+}
+
+function startConvert(): void {
+	if (bakeInFlight) {
+		return;
+	}
+	bakeInFlight = true;
+	overlay.setBusy(true, "convert");
+	overlay.setStatus("converting", "Converting");
+	runConvert(overlay, true).then((result) => {
+		if (!result.ok) {
+			overlay.setStatus("error", "Convert failed");
+			overlay.setHud("Converted " + result.converted + ", failed " + result.failed);
+			return;
+		}
+		overlay.log("Converted " + result.converted + " PNG(s) to RGBA5555.", "ok");
+		overlay.setHud("Done — " + result.converted + " converted");
+		overlay.setStatus("done", "Done — converted");
+	}).catch((err) => {
+		const message = err instanceof Error ? err.message : String(err);
+		overlay.log(message, "error");
+		overlay.setStatus("error", "Convert failed");
+	}).finally(() => {
+		overlay.setBusy(false);
 		bakeInFlight = false;
 	});
 }

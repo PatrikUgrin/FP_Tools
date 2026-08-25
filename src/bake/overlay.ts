@@ -1,7 +1,7 @@
 import { BakerConfig } from "./exportClient";
 
 export type LogKind = "info" | "ok" | "skip" | "error";
-export type BakeStatus = "idle" | "baking" | "packing" | "done" | "error";
+export type BakeStatus = "idle" | "baking" | "packing" | "converting" | "done" | "error";
 
 export class BakeOverlay {
 	private readonly hudCurrent: HTMLElement;
@@ -13,12 +13,15 @@ export class BakeOverlay {
 	private readonly logEl: HTMLElement;
 	private readonly bakeButton: HTMLButtonElement;
 	private readonly packButton: HTMLButtonElement;
+	private readonly convertButton: HTMLButtonElement;
 	private readonly savePathsButton: HTMLButtonElement;
 	private readonly exportPath: HTMLElement;
 	private readonly spineInput: HTMLInputElement;
 	private readonly exportInput: HTMLInputElement;
 	private readonly spritesheetInput: HTMLInputElement;
 	private readonly tpsInput: HTMLInputElement;
+	private readonly spineExportInput: HTMLInputElement;
+	private readonly spineConvertedInput: HTMLInputElement;
 	private readonly lanUrls: HTMLElement;
 	private readonly pathFileLabel: HTMLElement;
 	private readonly pathError: HTMLElement;
@@ -33,12 +36,15 @@ export class BakeOverlay {
 		this.logEl = this.mustGet("log");
 		this.bakeButton = this.mustGet("bake-button") as HTMLButtonElement;
 		this.packButton = this.mustGet("pack-button") as HTMLButtonElement;
+		this.convertButton = this.mustGet("convert-button") as HTMLButtonElement;
 		this.savePathsButton = this.mustGet("save-paths-button") as HTMLButtonElement;
 		this.exportPath = this.mustGet("export-path");
 		this.spineInput = this.mustGet("spine-folder") as HTMLInputElement;
 		this.exportInput = this.mustGet("export-folder") as HTMLInputElement;
 		this.spritesheetInput = this.mustGet("spritesheet-folder") as HTMLInputElement;
 		this.tpsInput = this.mustGet("tps-folder") as HTMLInputElement;
+		this.spineExportInput = this.mustGet("spine-export-folder") as HTMLInputElement;
+		this.spineConvertedInput = this.mustGet("spine-converted-folder") as HTMLInputElement;
 		this.lanUrls = this.mustGet("lan-urls");
 		this.pathFileLabel = this.mustGet("path-file-label");
 		this.pathError = this.mustGet("path-error");
@@ -52,6 +58,8 @@ export class BakeOverlay {
 		this.exportInput.addEventListener("keydown", saveOnEnter);
 		this.spritesheetInput.addEventListener("keydown", saveOnEnter);
 		this.tpsInput.addEventListener("keydown", saveOnEnter);
+		this.spineExportInput.addEventListener("keydown", saveOnEnter);
+		this.spineConvertedInput.addEventListener("keydown", saveOnEnter);
 	}
 
 	public applyConfig(config: BakerConfig): void {
@@ -59,10 +67,14 @@ export class BakeOverlay {
 		this.exportInput.value = config.export || "";
 		this.spritesheetInput.value = config.spritesheet || "";
 		this.tpsInput.value = config.tps || "";
+		this.spineExportInput.value = config.spineexport || "";
+		this.spineConvertedInput.value = config.spineconverted || "";
 		this.spineInput.classList.toggle("invalid", !config.spineExists);
 		this.exportInput.classList.toggle("invalid", !config.exportExists);
 		this.spritesheetInput.classList.toggle("invalid", !config.spritesheetExists);
 		this.tpsInput.classList.toggle("invalid", Boolean(config.tps) && !config.tpsExists);
+		this.spineExportInput.classList.toggle("invalid", Boolean(config.spineexport) && !config.spineExportExists);
+		this.spineConvertedInput.classList.toggle("invalid", Boolean(config.spineconverted) && !config.spineConvertedExists);
 		this.setExportPath(config.exportResolved || config.export);
 		this.pathFileLabel.textContent = config.usingUserFile
 			? "Saved in " + config.file
@@ -76,12 +88,21 @@ export class BakeOverlay {
 		this.pathError.textContent = message;
 	}
 
-	public readPathInputs(): { spine: string; export: string; spritesheet: string; tps: string } {
+	public readPathInputs(): {
+		spine: string;
+		export: string;
+		spritesheet: string;
+		tps: string;
+		spineexport: string;
+		spineconverted: string;
+	} {
 		return {
 			spine: this.spineInput.value.trim(),
 			export: this.exportInput.value.trim(),
 			spritesheet: this.spritesheetInput.value.trim(),
-			tps: this.tpsInput.value.trim()
+			tps: this.tpsInput.value.trim(),
+			spineexport: this.spineExportInput.value.trim(),
+			spineconverted: this.spineConvertedInput.value.trim()
 		};
 	}
 
@@ -99,17 +120,21 @@ export class BakeOverlay {
 		this.statusPill.textContent = "Status: " + label;
 	}
 
-	public setBusy(busy: boolean, markBaking = true): void {
+	public setBusy(busy: boolean, kind: "bake" | "pack" | "convert" = "bake"): void {
 		this.bakeButton.disabled = busy;
 		this.packButton.disabled = busy;
+		this.convertButton.disabled = busy;
 		this.savePathsButton.disabled = busy;
 		this.spineInput.disabled = busy;
 		this.exportInput.disabled = busy;
 		this.spritesheetInput.disabled = busy;
 		this.tpsInput.disabled = busy;
-		this.bakeButton.textContent = busy && markBaking ? "Baking…" : "Bake PNGs";
-		this.packButton.textContent = busy && !markBaking ? "Packing…" : "Pack spritesheets";
-		if (busy && markBaking) {
+		this.spineExportInput.disabled = busy;
+		this.spineConvertedInput.disabled = busy;
+		this.bakeButton.textContent = busy && kind === "bake" ? "Baking…" : "Bake PNGs";
+		this.packButton.textContent = busy && kind === "pack" ? "Packing…" : "Pack spritesheets";
+		this.convertButton.textContent = busy && kind === "convert" ? "Converting…" : "Convert spine PNGs";
+		if (busy && kind === "bake") {
 			this.setStatus("baking", "Baking");
 		}
 	}
@@ -129,6 +154,10 @@ export class BakeOverlay {
 
 	public onPack(handler: () => void): void {
 		this.packButton.addEventListener("click", handler);
+	}
+
+	public onConvert(handler: () => void): void {
+		this.convertButton.addEventListener("click", handler);
 	}
 
 	public onSavePaths(handler: () => void): void {
@@ -193,6 +222,12 @@ function pathMessage(config: BakerConfig): string {
 	}
 	if (config.tpsError && config.tps) {
 		parts.push(config.tpsError);
+	}
+	if (config.spineExportError && config.spineexport) {
+		parts.push(config.spineExportError);
+	}
+	if (config.spineConvertedError && config.spineconverted) {
+		parts.push(config.spineConvertedError);
 	}
 	if (!parts.length) {
 		return "";
