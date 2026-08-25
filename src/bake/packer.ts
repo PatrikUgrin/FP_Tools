@@ -40,7 +40,7 @@ export async function runPack(overlay: BakeOverlay, required: boolean): Promise<
 		const file = listing.files[i];
 		overlay.setHud("Pack " + file.relative);
 		overlay.log("Packing " + file.relative + "…");
-		const result = await packTpsProject(file.relative);
+		const result = await packWithHeartbeat(overlay, file.relative);
 		if (result.ok) {
 			packed += 1;
 			overlay.log("Packed " + file.relative, "ok");
@@ -72,4 +72,17 @@ function logCliOutput(overlay: BakeOverlay, text: string, kind: "ok" | "error"):
 			overlay.log(line, kind);
 		}
 	});
+}
+
+async function packWithHeartbeat(overlay: BakeOverlay, relative: string) {
+	let seconds = 0;
+	const beat = window.setInterval(() => {
+		seconds += 5;
+		overlay.log("  still packing " + relative + " (" + seconds + "s)…");
+	}, 5000);
+	try {
+		return await packTpsProject(relative);
+	} finally {
+		window.clearInterval(beat);
+	}
 }

@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const { spawn, spawnSync } = require("child_process");
 
-const PACK_TIMEOUT_MS = 5 * 60 * 1000;
+const PACK_TIMEOUT_MS = 90 * 1000;
 const MAX_DEPTH = 8;
 
 function findTexturePackerCli() {
@@ -101,24 +101,54 @@ function resolveListedTps(root, relative) {
 
 function packTpsFile(cli, tpsFile) {
 	return new Promise(function (resolve) {
+		let finished = false;
+		let timedOut = false;
 		const child = spawn(cli, ["--force-publish", tpsFile], {
+			cwd: path.dirname(tpsFile),
 			windowsHide: true,
+			stdio: ["ignore", "pipe", "pipe"],
 			env: process.env
 		});
 		let stdout = "";
 		let stderr = "";
-		child.stdout.on("data", function (chunk) {
-			stdout += chunk.toString("utf8");
-		});
-		child.stderr.on("data", function (chunk) {
-			stderr += chunk.toString("utf8");
-		});
+		if (child.stdout) {
+			child.stdout.on("data", function (chunk) {
+				stdout += chunk.toString("utf8");
+			});
+		}
+		if (child.stderr) {
+			child.stderr.on("data", function (chunk) {
+				stderr += chunk.toString("utf8");
+			});
+		}
+
+		console.log("[baker] TexturePacker --force-publish " + tpsFile);
 		const timer = setTimeout(function () {
-			child.kill();
+			timedOut = true;
+			console.log("[baker] TexturePacker timed out, killing PID " + child.pid);
+			killProcessTree(child);
+			setTimeout(function () {
+				finish({
+					ok: false,
+					code: -1,
+					file: tpsFile,
+					stdout: stdout.trim(),
+					stderr: timeoutMessage(stderr)
+				});
+			}, 1500);
 		}, PACK_TIMEOUT_MS);
-		child.on("error", function (err) {
+
+		function finish(result) {
+			if (finished) {
+				return;
+			}
+			finished = true;
 			clearTimeout(timer);
-			resolve({
+			resolve(result);
+		}
+
+		child.on("error", function (err) {
+			finish({
 				ok: false,
 				code: -1,
 				file: tpsFile,
@@ -126,18 +156,48 @@ function packTpsFile(cli, tpsFile) {
 				stderr: ((stderr ? stderr + "\n" : "") + (err.message || String(err))).trim()
 			});
 		});
-		child.on("close", function (code, signal) {
-			clearTimeout(timer);
-			const timedOut = signal === "SIGTERM" || signal === "SIGKILL";
-			resolve({
+		child.on("close", function (code) {
+			if (timedOut) {
+				finish({
+					ok: false,
+					code: code == null ? -1 : code,
+					file: tpsFile,
+					stdout: stdout.trim(),
+					stderr: timeoutMessage(stderr)
+				});
+				return;
+			}
+			finish({
 				ok: code === 0,
 				code: code == null ? -1 : code,
 				file: tpsFile,
 				stdout: stdout.trim(),
-				stderr: (stderr.trim() + (timedOut ? "\nTimed out after 5 minutes" : "")).trim()
+				stderr: stderr.trim()
 			});
 		});
 	});
+}
+
+function timeoutMessage(stderr) {
+	return (String(stderr || "").trim() + "\nTimed out after " + (PACK_TIMEOUT_MS / 1000) + "s and killed TexturePacker").trim();
+}
+
+function killProcessTree(child) {
+	if (!child || !child.pid) {
+		return;
+	}
+	if (process.platform === "win32") {
+		spawnSync("taskkill", ["/F", "/T", "/PID", String(child.pid)], {
+			windowsHide: true,
+			stdio: "ignore"
+		});
+		return;
+	}
+	try {
+		child.kill("SIGKILL");
+	} catch (_err) {
+		// already exited
+	}
 }
 
 module.exports = {

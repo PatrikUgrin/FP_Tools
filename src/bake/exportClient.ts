@@ -95,16 +95,28 @@ export async function listTpsProjects(): Promise<TpsListing> {
 }
 
 export async function packTpsProject(relative: string): Promise<TpsPackResult> {
-	const response = await fetch("/api/pack", {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ relative })
-	});
-	if (!response.ok) {
-		const text = await response.text();
-		throw new Error(apiError(text, response.status, "Failed to pack " + relative));
+	const controller = new AbortController();
+	const timer = window.setTimeout(() => controller.abort(), 100000);
+	try {
+		const response = await fetch("/api/pack", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ relative }),
+			signal: controller.signal
+		});
+		if (!response.ok) {
+			const text = await response.text();
+			throw new Error(apiError(text, response.status, "Failed to pack " + relative));
+		}
+		return await response.json() as TpsPackResult;
+	} catch (err) {
+		if (err instanceof DOMException && err.name === "AbortError") {
+			throw new Error("Pack timed out waiting for TexturePacker on " + relative);
+		}
+		throw err;
+	} finally {
+		window.clearTimeout(timer);
 	}
-	return await response.json() as TpsPackResult;
 }
 
 export interface BakerConfig {
