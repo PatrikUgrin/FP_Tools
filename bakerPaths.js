@@ -9,13 +9,15 @@ const PATHS_FILE = path.join(ROOT, "baker-paths.txt");
 const DEFAULTS = {
 	spine: "static/spine",
 	export: "export/png",
-	spritesheet: "static"
+	spritesheet: "static",
+	tps: ""
 };
 
 function loadBakerPaths() {
 	let spine = DEFAULTS.spine;
 	let exportDir = DEFAULTS.export;
 	let spritesheet = "";
+	let tps = "";
 	if (fs.existsSync(PATHS_FILE)) {
 		const parsed = parsePathsFile(fs.readFileSync(PATHS_FILE, "utf8"));
 		if (parsed.spine) {
@@ -27,36 +29,49 @@ function loadBakerPaths() {
 		if (parsed.spritesheet) {
 			spritesheet = parsed.spritesheet;
 		}
+		if (parsed.tps) {
+			tps = parsed.tps;
+		}
 	} else {
-		writeBakerPathsFile(spine, exportDir, spritesheet);
+		writeBakerPathsFile(spine, exportDir, spritesheet, tps);
 	}
 	if (spritesheet) {
 		spritesheet = folderFromMaybeFile(spritesheet);
+	}
+	if (tps) {
+		tps = folderFromMaybeFile(tps);
 	}
 	const spineInfo = inspectDir(spine);
 	const exportInfo = inspectDir(exportDir);
 	const sheetInfo = spritesheet
 		? inspectDir(spritesheet)
 		: { resolved: "", exists: false, error: "Spritesheet folder not set" };
+	const tpsInfo = tps
+		? inspectDir(tps)
+		: { resolved: "", exists: false, error: "TexturePacker .tps folder not set" };
 	return {
 		spine,
 		export: exportDir,
 		spritesheet,
+		tps,
 		spineResolved: spineInfo.resolved,
 		exportResolved: exportInfo.resolved,
 		spritesheetResolved: sheetInfo.resolved,
+		tpsResolved: tpsInfo.resolved,
 		spineExists: spineInfo.exists,
 		exportExists: exportInfo.exists,
 		spritesheetExists: sheetInfo.exists,
+		tpsExists: tpsInfo.exists,
 		spineError: spineInfo.error,
 		exportError: exportInfo.error,
 		spritesheetError: sheetInfo.error,
+		tpsError: tpsInfo.error,
 		file: PATHS_FILE
 	};
 }
 
 function parsePathsFile(text) {
-	const out = { spine: "", export: "", spritesheet: "" };
+	const out = { spine: "", export: "", spritesheet: "", tps: "" };
 	const lines = String(text || "").split(/\r?\n/);
 	for (const line of lines) {
 		const trimmed = line.trim();
@@ -69,7 +84,9 @@ function parsePathsFile(text) {
 		}
 		const key = trimmed.slice(0, eq).trim().toLowerCase();
 		const value = stripQuotes(trimmed.slice(eq + 1).trim());
-		if (key === "spine" || key === "export" || key === "spritesheet") {
+		if (key === "texturepacker" || key === "packer") {
+			out.tps = value;
+		} else if (key === "spine" || key === "export" || key === "spritesheet" || key === "tps") {
 			out[key] = value;
 		}
 	}
@@ -88,33 +105,40 @@ function stripQuotes(value) {
 	return text;
 }
 
-function writeBakerPathsFile(spine, exportDir, spritesheet) {
+function writeBakerPathsFile(spine, exportDir, spritesheet, tps) {
 	const body = [
 		"# Spine baker folders. Edit here or press Save paths in the web UI.",
 		"# Relative paths are from this project folder.",
 		"spine=" + String(spine || "").trim(),
 		"export=" + String(exportDir || "").trim(),
 		"spritesheet=" + String(spritesheet || "").trim(),
+		"tps=" + String(tps || "").trim(),
 		""
 	].join("\n");
 	fs.writeFileSync(PATHS_FILE, body, "utf8");
 }
 
-function writeBakerPaths(spine, exportDir, spritesheet) {
+function writeBakerPaths(spine, exportDir, spritesheet, tps) {
 	const existing = parseExistingPaths();
 	const nextSpine = stripQuotes(spine || existing.spine || DEFAULTS.spine);
 	const nextExport = stripQuotes(exportDir || existing.export || DEFAULTS.export);
 	let nextSheet = stripQuotes(spritesheet || existing.spritesheet || "");
+	let nextTps = tps === undefined
+		? stripQuotes(existing.tps || "")
+		: stripQuotes(tps || "");
 	if (nextSheet) {
 		nextSheet = folderFromMaybeFile(nextSheet);
 	}
-	writeBakerPathsFile(nextSpine, nextExport, nextSheet);
+	if (nextTps) {
+		nextTps = folderFromMaybeFile(nextTps);
+	}
+	writeBakerPathsFile(nextSpine, nextExport, nextSheet, nextTps);
 	return loadBakerPaths();
 }
 
 function parseExistingPaths() {
 	if (!fs.existsSync(PATHS_FILE)) {
-		return { spine: "", export: "", spritesheet: "" };
+		return { spine: "", export: "", spritesheet: "", tps: "" };
 	}
 	return parsePathsFile(fs.readFileSync(PATHS_FILE, "utf8"));
 }

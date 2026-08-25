@@ -6,14 +6,15 @@ export async function loadConfig(): Promise<BakerConfig> {
 	return await response.json() as BakerConfig;
 }
 
-export async function saveConfig(spine: string, exportDir: string, spritesheet: string): Promise<BakerConfig> {
+export async function saveConfig(spine: string, exportDir: string, spritesheet: string, tps: string): Promise<BakerConfig> {
 	const response = await fetch("/api/config", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({
 			spine,
 			export: exportDir,
-			spritesheet
+			spritesheet,
+			tps
 		})
 	});
 	if (!response.ok) {
@@ -84,22 +85,65 @@ function configError(text: string, status: number): string {
 	return apiError(text, status, "Failed to save baker-paths.txt");
 }
 
+export async function listTpsProjects(): Promise<TpsListing> {
+	const response = await fetch("/api/tps");
+	if (!response.ok) {
+		const text = await response.text();
+		throw new Error(apiError(text, response.status, "Failed to list .tps projects"));
+	}
+	return await response.json() as TpsListing;
+}
+
+export async function packTpsProject(relative: string): Promise<TpsPackResult> {
+	const response = await fetch("/api/pack", {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ relative })
+	});
+	if (!response.ok) {
+		const text = await response.text();
+		throw new Error(apiError(text, response.status, "Failed to pack " + relative));
+	}
+	return await response.json() as TpsPackResult;
+}
+
 export interface BakerConfig {
 	spine: string;
 	export: string;
 	spritesheet: string;
+	tps: string;
 	spineResolved: string;
 	exportResolved: string;
 	spritesheetResolved: string;
+	tpsResolved: string;
 	spineExists: boolean;
 	exportExists: boolean;
 	spritesheetExists: boolean;
+	tpsExists: boolean;
 	spineError: string | null;
 	exportError: string | null;
 	spritesheetError: string | null;
+	tpsError: string | null;
 	saveError?: string;
 	file: string;
 	port: number;
 	localhost: string;
 	lanUrls: string[];
+}
+
+export interface TpsListing {
+	cli: string;
+	cliError: string | null;
+	folder: string;
+	folderError: string | null;
+	files: Array<{ name: string; relative: string }>;
+}
+
+export interface TpsPackResult {
+	ok: boolean;
+	relative: string;
+	file: string;
+	code: number;
+	stdout: string;
+	stderr: string;
 }

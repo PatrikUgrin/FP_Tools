@@ -118,6 +118,12 @@
 			animation: status-pulse 1s ease-in-out infinite;
 		}
 
+		#status-pill.packing {
+			background: #58401d;
+			color: #e0c08e;
+			animation: status-pulse 1s ease-in-out infinite;
+		}
+
 		#status-pill.done {
 			background: #1d3b28;
 			color: #8ee0a8;
@@ -169,6 +175,19 @@
 
 		#save-paths-button {
 			background: #2a3648;
+		}
+
+		#pack-button {
+			background: #b07a3a;
+		}
+
+		.action-row {
+			display: flex;
+			gap: 8px;
+		}
+
+		.action-row button {
+			flex: 1;
 		}
 
 		.path-block {
@@ -239,8 +258,18 @@
 			border-color: #3a5f8f;
 		}
 
-		.path-group.output input {
-			border-color: #3d7a52;
+		.path-group.pack {
+			background: #261c15;
+			border-color: #5a3d2d;
+			margin-top: 4px;
+		}
+
+		.path-group.pack .path-group-title {
+			color: #e0c08e;
+		}
+
+		.path-group.pack input {
+			border-color: #8a6a45;
 		}
 
 		.path-block input.invalid {
@@ -338,11 +367,20 @@
 						<input id="export-folder" type="text" spellcheck="false" autocomplete="off">
 					</label>
 				</div>
+				<div class="path-group pack">
+					<div class="path-group-title">Pack — TexturePacker</div>
+					<label>TPS folder
+						<input id="tps-folder" type="text" spellcheck="false" autocomplete="off" placeholder="Folder of .tps project files">
+					</label>
+				</div>
 				<button id="save-paths-button" type="button">Save paths</button>
 				<div class="meta" id="path-file-label">Saved in baker-paths.txt</div>
 				<div id="path-error"></div>
 			</div>
-			<button id="bake-button" type="button">Bake PNGs</button>
+			<div class="action-row">
+				<button id="bake-button" type="button">Bake PNGs</button>
+				<button id="pack-button" type="button">Pack spritesheets</button>
+			</div>
 			<div class="meta" id="export-path">Writing to export/png/&lt;animation or blur&gt;/</div>
 			<div id="preview-wrap">
 				<img id="preview-img" alt="Last exported PNG">

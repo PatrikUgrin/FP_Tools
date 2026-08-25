@@ -3,6 +3,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 function freshExportApi() {
+	try { delete require.cache[require.resolve("./tpsPacker")]; } catch (_err) { /* optional */ }
 	delete require.cache[require.resolve("./bakerPaths")];
 	delete require.cache[require.resolve("./exportApi")];
 	return require("./exportApi");

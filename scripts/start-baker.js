@@ -93,6 +93,7 @@ function printFolders() {
 		console.log("  Spine:       " + (cfg.spineError || cfg.spineResolved));
 		console.log("  Spritesheet: " + (cfg.spritesheetError || cfg.spritesheetResolved));
 		console.log("  Export:      " + (cfg.exportError || cfg.exportResolved));
+		console.log("  TPS:         " + (cfg.tpsError || cfg.tpsResolved));
 	} catch (err) {
 		console.log("  Folders:    " + (err && err.message ? err.message : String(err)));
 	}

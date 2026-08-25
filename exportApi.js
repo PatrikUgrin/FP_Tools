@@ -33,12 +33,16 @@ function createExportRouter() {
 				res.status(400).json({ error: "Spritesheet folder is required" });
 				return;
 			}
+			const tps = String(
+				(req.body && (req.body.tps || req.body.texturepacker)) || ""
+			).trim();
 			const { writeBakerPaths } = loadBakerPathsModule();
-			const saved = writeBakerPaths(spine, exportDir, spritesheet);
+			const saved = writeBakerPaths(spine, exportDir, spritesheet, tps);
 			console.log("[baker] saved paths");
 			console.log("  Spine:       " + saved.spineResolved);
 			console.log("  Spritesheet: " + (saved.spritesheetResolved || saved.spritesheet));
 			console.log("  Export:      " + saved.exportResolved);
+			console.log("  TPS:         " + (saved.tpsResolved || saved.tps || "(not set)"));
 			if (saved.exportResolved) {
 				try {
 					fs.mkdirSync(saved.exportResolved, { recursive: true });
@@ -52,6 +56,22 @@ function createExportRouter() {
 				saveError: err.message || String(err)
 			}));
 		}
+	});
+
+	router.get("/tps", (_req, res) => {
+		try {
+			res.json(tpsListing());
+		} catch (err) {
+			res.status(400).json({ error: err.message || String(err) });
+		}
+	});
+
+	router.post("/pack", (req, res) => {
+		packOneFromRequest(req).then((body) => {
+			res.json(body);
+		}).catch((err) => {
+			res.status(400).json({ error: err.message || String(err) });
+		});
 	});
 
 	router.get("/spines", (_req, res) => {
@@ -277,6 +297,56 @@ function loadBakerPathsModule() {
 	return require("./bakerPaths");
 }
 
+function loadTpsPacker() {
+	const id = require.resolve("./tpsPacker");
+	delete require.cache[id];
+	return require("./tpsPacker");
+}
+
+function tpsListing() {
+	const cfg = loadBakerPathsModule().loadBakerPaths();
+	const packer = loadTpsPacker();
+	const cli = packer.findTexturePackerCli();
+	const files = cfg.tpsExists ? packer.listTpsFiles(cfg.tpsResolved) : [];
+	return {
+		cli: cli.cli,
+		cliError: cli.error,
+		folder: cfg.tpsResolved || cfg.tps,
+		folderError: cfg.tpsError,
+		files: files.map((file) => ({
+			name: file.name,
+			relative: file.relative
+		}))
+	};
+}
+
+async function packOneFromRequest(req) {
+	const cfg = loadBakerPathsModule().loadBakerPaths();
+	if (!cfg.tpsExists) {
+		throw new Error(cfg.tpsError || "TexturePacker .tps folder is not set");
+	}
+	const packer = loadTpsPacker();
+	const cli = packer.findTexturePackerCli();
+	if (cli.error) {
+		throw new Error(cli.error);
+	}
+	const relative = String(req.body && req.body.relative || "").trim();
+	if (!relative) {
+		throw new Error("Missing .tps file (relative)");
+	}
+	const tpsFile = packer.resolveListedTps(cfg.tpsResolved, relative);
+	console.log("[baker] packing " + tpsFile);
+	const result = await packer.packTpsFile(cli.cli, tpsFile);
+	return {
+		ok: result.ok,
+		relative: relative,
+		file: tpsFile,
+		code: result.code,
+		stdout: result.stdout,
+		stderr: result.stderr
+	};
+}
+
 function configPayload() {
 	const paths = loadBakerPathsModule();
 	const cfg = paths.loadBakerPaths();
@@ -285,15 +355,19 @@ function configPayload() {
 		spine: cfg.spine,
 		export: cfg.export,
 		spritesheet: cfg.spritesheet,
+		tps: cfg.tps,
 		spineResolved: cfg.spineResolved,
 		exportResolved: cfg.exportResolved,
 		spritesheetResolved: cfg.spritesheetResolved,
+		tpsResolved: cfg.tpsResolved,
 		spineExists: cfg.spineExists,
 		exportExists: cfg.exportExists,
 		spritesheetExists: cfg.spritesheetExists,
+		tpsExists: cfg.tpsExists,
 		spineError: cfg.spineError,
 		exportError: cfg.exportError,
 		spritesheetError: cfg.spritesheetError,
+		tpsError: cfg.tpsError,
 		file: "baker-paths.txt",
 		port: PORT,
 		localhost: "http://127.0.0.1:" + PORT + "/",

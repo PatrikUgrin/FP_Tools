@@ -4,6 +4,7 @@ import { MotionBlurFilter } from "pixi-filters";
 import { BakeJob, buildBakeJobs } from "./catalog";
 import { loadConfig, resetExport, saveManifest, savePng } from "./exportClient";
 import { BakeOverlay } from "./overlay";
+import { runPack } from "./packer";
 
 const SYM_X = 252;
 const SYM_Y = 168;
@@ -91,8 +92,21 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 
 		await saveManifest(saved);
 		overlay.log("Wrote manifest.json in " + reset.exportRoot + " (" + saved.length + " file(s)).", "ok");
-		overlay.setHud("Done — " + saved.length + " PNG(s)");
-		overlay.setStatus("done", "Done — " + saved.length + " PNG(s)");
+		overlay.setBusy(true, false);
+		overlay.setStatus("packing", "Packing");
+		const pack = await runPack(overlay, false);
+		if (pack.skipped) {
+			overlay.setHud("Done — " + saved.length + " PNG(s)");
+			overlay.setStatus("done", "Done — " + saved.length + " PNG(s)");
+		} else if (!pack.ok) {
+			overlay.log("Packed " + pack.packed + ", failed " + pack.failed + ".", "error");
+			overlay.setHud("Packed " + pack.packed + ", failed " + pack.failed);
+			overlay.setStatus("error", "Pack failed");
+		} else {
+			overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
+			overlay.setHud("Done — " + saved.length + " PNG(s), " + pack.packed + " packed");
+			overlay.setStatus("done", "Done — baked and packed");
+		}
 	} finally {
 		resetLoader();
 		overlay.setBusy(false);

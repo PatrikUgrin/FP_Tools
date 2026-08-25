@@ -1,7 +1,7 @@
 import { BakerConfig } from "./exportClient";
 
 export type LogKind = "info" | "ok" | "skip" | "error";
-export type BakeStatus = "idle" | "baking" | "done" | "error";
+export type BakeStatus = "idle" | "baking" | "packing" | "done" | "error";
 
 export class BakeOverlay {
 	private readonly hudCurrent: HTMLElement;
@@ -12,11 +12,13 @@ export class BakeOverlay {
 	private readonly previewImg: HTMLImageElement;
 	private readonly logEl: HTMLElement;
 	private readonly bakeButton: HTMLButtonElement;
+	private readonly packButton: HTMLButtonElement;
 	private readonly savePathsButton: HTMLButtonElement;
 	private readonly exportPath: HTMLElement;
 	private readonly spineInput: HTMLInputElement;
 	private readonly exportInput: HTMLInputElement;
 	private readonly spritesheetInput: HTMLInputElement;
+	private readonly tpsInput: HTMLInputElement;
 	private readonly lanUrls: HTMLElement;
 	private readonly pathFileLabel: HTMLElement;
 	private readonly pathError: HTMLElement;
@@ -30,11 +32,13 @@ export class BakeOverlay {
 		this.previewImg = this.mustGet("preview-img") as HTMLImageElement;
 		this.logEl = this.mustGet("log");
 		this.bakeButton = this.mustGet("bake-button") as HTMLButtonElement;
+		this.packButton = this.mustGet("pack-button") as HTMLButtonElement;
 		this.savePathsButton = this.mustGet("save-paths-button") as HTMLButtonElement;
 		this.exportPath = this.mustGet("export-path");
 		this.spineInput = this.mustGet("spine-folder") as HTMLInputElement;
 		this.exportInput = this.mustGet("export-folder") as HTMLInputElement;
 		this.spritesheetInput = this.mustGet("spritesheet-folder") as HTMLInputElement;
+		this.tpsInput = this.mustGet("tps-folder") as HTMLInputElement;
 		this.lanUrls = this.mustGet("lan-urls");
 		this.pathFileLabel = this.mustGet("path-file-label");
 		this.pathError = this.mustGet("path-error");
@@ -47,15 +51,18 @@ export class BakeOverlay {
 		this.spineInput.addEventListener("keydown", saveOnEnter);
 		this.exportInput.addEventListener("keydown", saveOnEnter);
 		this.spritesheetInput.addEventListener("keydown", saveOnEnter);
+		this.tpsInput.addEventListener("keydown", saveOnEnter);
 	}
 
 	public applyConfig(config: BakerConfig): void {
 		this.spineInput.value = config.spine || "";
 		this.exportInput.value = config.export || "";
 		this.spritesheetInput.value = config.spritesheet || "";
+		this.tpsInput.value = config.tps || "";
 		this.spineInput.classList.toggle("invalid", !config.spineExists);
 		this.exportInput.classList.toggle("invalid", !config.exportExists);
 		this.spritesheetInput.classList.toggle("invalid", !config.spritesheetExists);
+		this.tpsInput.classList.toggle("invalid", Boolean(config.tps) && !config.tpsExists);
 		this.setExportPath(config.exportResolved || config.export);
 		this.pathFileLabel.textContent = "Saved in " + config.file;
 		const lines = [config.localhost].concat(config.lanUrls);
@@ -67,11 +74,12 @@ export class BakeOverlay {
 		this.pathError.textContent = message;
 	}
 
-	public readPathInputs(): { spine: string; export: string; spritesheet: string } {
+	public readPathInputs(): { spine: string; export: string; spritesheet: string; tps: string } {
 		return {
 			spine: this.spineInput.value.trim(),
 			export: this.exportInput.value.trim(),
-			spritesheet: this.spritesheetInput.value.trim()
+			spritesheet: this.spritesheetInput.value.trim(),
+			tps: this.tpsInput.value.trim()
 		};
 	}
 
@@ -91,11 +99,14 @@ export class BakeOverlay {
 
 	public setBusy(busy: boolean, markBaking = true): void {
 		this.bakeButton.disabled = busy;
+		this.packButton.disabled = busy;
 		this.savePathsButton.disabled = busy;
 		this.spineInput.disabled = busy;
 		this.exportInput.disabled = busy;
 		this.spritesheetInput.disabled = busy;
-		this.bakeButton.textContent = busy ? "Baking…" : "Bake PNGs";
+		this.tpsInput.disabled = busy;
+		this.bakeButton.textContent = busy && markBaking ? "Baking…" : "Bake PNGs";
+		this.packButton.textContent = busy && !markBaking ? "Packing…" : "Pack spritesheets";
 		if (busy && markBaking) {
 			this.setStatus("baking", "Baking");
 		}
@@ -112,6 +123,10 @@ export class BakeOverlay {
 
 	public onBake(handler: () => void): void {
 		this.bakeButton.addEventListener("click", handler);
+	}
+
+	public onPack(handler: () => void): void {
+		this.packButton.addEventListener("click", handler);
 	}
 
 	public onSavePaths(handler: () => void): void {
@@ -173,6 +188,9 @@ function pathMessage(config: BakerConfig): string {
 	}
 	if (config.spritesheetError) {
 		parts.push(config.spritesheetError);
+	}
+	if (config.tpsError && config.tps) {
+		parts.push(config.tpsError);
 	}
 	if (!parts.length) {
 		return "";

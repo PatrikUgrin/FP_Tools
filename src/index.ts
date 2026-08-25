@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import "pixi-spine";
 import { BakeOverlay } from "./bake/overlay";
 import { runBake } from "./bake/baker";
+import { runPack } from "./bake/packer";
 import { loadConfig, saveConfig } from "./bake/exportClient";
 
 PIXI.settings.PREFER_ENV = PIXI.ENV.WEBGL2;
@@ -56,6 +57,9 @@ async function boot(): Promise<void> {
 		if (config.spritesheetError) {
 			overlay.log(config.spritesheetError, "error");
 		}
+		if (config.tpsError && config.tps) {
+			overlay.log(config.tpsError, "error");
+		}
 	} catch (err) {
 		const message = err instanceof Error ? err.message : String(err);
 		overlay.log(message, "error");
@@ -63,10 +67,13 @@ async function boot(): Promise<void> {
 	}
 
 	if (!isWebGl) {
-		overlay.log("WebGL is required. Canvas renderer is not used.", "error");
+		overlay.log("WebGL is required to bake. Pack spritesheets still works.", "error");
 		overlay.setHud("WebGL unavailable");
 		overlay.setStatus("error", "WebGL unavailable");
 		overlay.setBakeEnabled(false);
+		layoutCanvas();
+		window.addEventListener("resize", layoutCanvas);
+		overlay.onPack(startPack);
 		return;
 	}
 
@@ -82,6 +89,7 @@ async function boot(): Promise<void> {
 	layoutCanvas();
 	window.addEventListener("resize", layoutCanvas);
 	overlay.onBake(startBake);
+	overlay.onPack(startPack);
 	if (autobake && configOk) {
 		startBake();
 	}
@@ -91,15 +99,16 @@ async function savePathsFromUi(): Promise<void> {
 	const inputs = overlay.readPathInputs();
 	overlay.setSaveBusy(true);
 	try {
-		const config = await saveConfig(inputs.spine, inputs.export, inputs.spritesheet);
+		const config = await saveConfig(inputs.spine, inputs.export, inputs.spritesheet, inputs.tps);
 		overlay.applyConfig(config);
 		overlay.log("Saved baker-paths.txt", "ok");
 		overlay.log("Spine: " + (config.spineResolved || config.spine), config.spineError ? "error" : "ok");
 		overlay.log("Spritesheet: " + (config.spritesheetResolved || config.spritesheet), config.spritesheetError ? "error" : "ok");
 		overlay.log("Export: " + (config.exportResolved || config.export), config.exportError ? "error" : "ok");
+		overlay.log("TPS: " + (config.tpsResolved || config.tps || "(not set)"), config.tps && config.tpsError ? "error" : "ok");
 		if (config.saveError) {
 			overlay.log(config.saveError, "error");
-		} else if (config.spineError || config.exportError || config.spritesheetError) {
+		} else if (config.spineError || config.exportError || config.spritesheetError || (config.tps && config.tpsError)) {
 			overlay.log("Path was saved. Fix any missing folder and save again if needed.", "error");
 		}
 	} catch (err) {
@@ -127,14 +136,38 @@ function startBake(): void {
 		return;
 	}
 	bakeInFlight = true;
-	runBake(app, overlay).then(() => {
-		overlay.setStatus("done", "Done — idle");
-	}).catch((err) => {
+	runBake(app, overlay).catch((err) => {
 		const message = err instanceof Error ? err.message : String(err);
 		overlay.log(message, "error");
 		overlay.setBusy(false);
 		overlay.setStatus("error", "Failed");
 	}).finally(() => {
+		bakeInFlight = false;
+	});
+}
+
+function startPack(): void {
+	if (bakeInFlight) {
+		return;
+	}
+	bakeInFlight = true;
+	overlay.setBusy(true, false);
+	overlay.setStatus("packing", "Packing");
+	runPack(overlay, true).then((pack) => {
+		if (!pack.ok) {
+			overlay.setStatus("error", "Pack failed");
+			overlay.setHud("Packed " + pack.packed + ", failed " + pack.failed);
+			return;
+		}
+		overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
+		overlay.setHud("Done — " + pack.packed + " packed");
+		overlay.setStatus("done", "Done — packed");
+	}).catch((err) => {
+		const message = err instanceof Error ? err.message : String(err);
+		overlay.log(message, "error");
+		overlay.setStatus("error", "Pack failed");
+	}).finally(() => {
+		overlay.setBusy(false, false);
 		bakeInFlight = false;
 	});
 }

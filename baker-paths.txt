@@ -3,3 +3,4 @@
 spine=D:\Dropbox\GG - BASS BUCK™\spine\_export
 export=D:\Dropbox\GG - BASS BUCK™\Texture pecker\_BakeExport
 spritesheet=D:\Dropbox\GG - BASS BUCK™\Texture pecker\symbols\export
+tps=
