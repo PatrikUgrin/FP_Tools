@@ -101,7 +101,7 @@ async function savePathsFromUi(): Promise<void> {
 	try {
 		const config = await saveConfig(inputs.spine, inputs.export, inputs.spritesheet, inputs.tps);
 		overlay.applyConfig(config);
-		overlay.log("Saved baker-paths.txt", "ok");
+		overlay.log("Saved " + (config.file || "user baker-paths.txt"), "ok");
 		overlay.log("Spine: " + (config.spineResolved || config.spine), config.spineError ? "error" : "ok");
 		overlay.log("Spritesheet: " + (config.spritesheetResolved || config.spritesheet), config.spritesheetError ? "error" : "ok");
 		overlay.log("Export: " + (config.exportResolved || config.export), config.exportError ? "error" : "ok");

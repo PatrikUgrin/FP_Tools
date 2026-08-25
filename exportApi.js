@@ -368,7 +368,9 @@ function configPayload() {
 		exportError: cfg.exportError,
 		spritesheetError: cfg.spritesheetError,
 		tpsError: cfg.tpsError,
-		file: "baker-paths.txt",
+		file: cfg.file,
+		defaultFile: cfg.defaultFile,
+		usingUserFile: cfg.usingUserFile,
 		port: PORT,
 		localhost: "http://127.0.0.1:" + PORT + "/",
 		lanUrls: lan.map((ip) => "http://" + ip + ":" + PORT + "/")

@@ -138,6 +138,8 @@ export interface BakerConfig {
 	tpsError: string | null;
 	saveError?: string;
 	file: string;
+	defaultFile?: string;
+	usingUserFile?: boolean;
 	port: number;
 	localhost: string;
 	lanUrls: string[];

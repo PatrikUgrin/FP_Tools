@@ -64,7 +64,9 @@ export class BakeOverlay {
 		this.spritesheetInput.classList.toggle("invalid", !config.spritesheetExists);
 		this.tpsInput.classList.toggle("invalid", Boolean(config.tps) && !config.tpsExists);
 		this.setExportPath(config.exportResolved || config.export);
-		this.pathFileLabel.textContent = "Saved in " + config.file;
+		this.pathFileLabel.textContent = config.usingUserFile
+			? "Saved in " + config.file
+			: "Using project defaults. Save writes to " + config.file;
 		const lines = [config.localhost].concat(config.lanUrls);
 		this.lanUrls.textContent = lines.join("\n");
 		this.setPathError(pathMessage(config));

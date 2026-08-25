@@ -5,7 +5,10 @@ const os = require("os");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname);
-const PATHS_FILE = path.join(ROOT, "baker-paths.txt");
+const PROJECT_PATHS_FILE = path.join(ROOT, "baker-paths.txt");
+const USER_PATHS_DIR = path.join(os.homedir(), ".fp-tools");
+const USER_PATHS_FILE = path.join(USER_PATHS_DIR, "baker-paths.txt");
+const PATHS_FILE = USER_PATHS_FILE;
 const DEFAULTS = {
 	spine: "static/spine",
 	export: "export/png",
@@ -14,27 +17,13 @@ const DEFAULTS = {
 };
 
 function loadBakerPaths() {
-	let spine = DEFAULTS.spine;
-	let exportDir = DEFAULTS.export;
-	let spritesheet = "";
-	let tps = "";
-	if (fs.existsSync(PATHS_FILE)) {
-		const parsed = parsePathsFile(fs.readFileSync(PATHS_FILE, "utf8"));
-		if (parsed.spine) {
-			spine = parsed.spine;
-		}
-		if (parsed.export) {
-			exportDir = parsed.export;
-		}
-		if (parsed.spritesheet) {
-			spritesheet = parsed.spritesheet;
-		}
-		if (parsed.tps) {
-			tps = parsed.tps;
-		}
-	} else {
-		writeBakerPathsFile(spine, exportDir, spritesheet, tps);
-	}
+	const project = readPathsFrom(PROJECT_PATHS_FILE);
+	const usingUserFile = fs.existsSync(USER_PATHS_FILE);
+	const user = usingUserFile ? readPathsFrom(USER_PATHS_FILE) : emptyPaths();
+	let spine = user.spine || project.spine || DEFAULTS.spine;
+	let exportDir = user.export || project.export || DEFAULTS.export;
+	let spritesheet = user.spritesheet || project.spritesheet || "";
+	let tps = user.tps || project.tps || "";
 	if (spritesheet) {
 		spritesheet = folderFromMaybeFile(spritesheet);
 	}
@@ -66,7 +55,9 @@ function loadBakerPaths() {
 		exportError: exportInfo.error,
 		spritesheetError: sheetInfo.error,
 		tpsError: tpsInfo.error,
-		file: PATHS_FILE
+		file: USER_PATHS_FILE,
+		defaultFile: PROJECT_PATHS_FILE,
+		usingUserFile
 	};
 }
 
@@ -107,15 +98,17 @@ function stripQuotes(value) {
 
 function writeBakerPathsFile(spine, exportDir, spritesheet, tps) {
 	const body = [
-		"# Spine baker folders. Edit here or press Save paths in the web UI.",
-		"# Relative paths are from this project folder.",
+		"# Spine baker folders for this user. Edit here or press Save paths in the web UI.",
+		"# The copy in the project (baker-paths.txt) is only used if this file is missing.",
+		"# Relative paths are from the FP_Tools project folder.",
 		"spine=" + String(spine || "").trim(),
 		"export=" + String(exportDir || "").trim(),
 		"spritesheet=" + String(spritesheet || "").trim(),
 		"tps=" + String(tps || "").trim(),
 		""
 	].join("\n");
-	fs.writeFileSync(PATHS_FILE, body, "utf8");
+	fs.mkdirSync(USER_PATHS_DIR, { recursive: true });
+	fs.writeFileSync(USER_PATHS_FILE, body, "utf8");
 }
 
 function writeBakerPaths(spine, exportDir, spritesheet, tps) {
@@ -137,10 +130,21 @@ function writeBakerPaths(spine, exportDir, spritesheet, tps) {
 }
 
 function parseExistingPaths() {
-	if (!fs.existsSync(PATHS_FILE)) {
-		return { spine: "", export: "", spritesheet: "", tps: "" };
+	if (fs.existsSync(USER_PATHS_FILE)) {
+		return readPathsFrom(USER_PATHS_FILE);
 	}
-	return parsePathsFile(fs.readFileSync(PATHS_FILE, "utf8"));
+	return readPathsFrom(PROJECT_PATHS_FILE);
+}
+
+function emptyPaths() {
+	return { spine: "", export: "", spritesheet: "", tps: "" };
+}
+
+function readPathsFrom(file) {
+	if (!file || !fs.existsSync(file)) {
+		return emptyPaths();
+	}
+	return parsePathsFile(fs.readFileSync(file, "utf8"));
 }
 
 function folderFromMaybeFile(value) {
@@ -217,6 +221,8 @@ function listLanIPv4() {
 module.exports = {
 	ROOT,
 	PATHS_FILE,
+	PROJECT_PATHS_FILE,
+	USER_PATHS_FILE,
 	DEFAULTS,
 	loadBakerPaths,
 	writeBakerPaths,

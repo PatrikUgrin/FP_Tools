@@ -1,4 +1,5 @@
-# Spine baker folders. Edit here or press Save paths in the web UI.
+# Default baker folders for this project. Used only if the user copy is missing.
+# Live paths are saved to %USERPROFILE%\.fp-tools\baker-paths.txt (Save paths in the UI).
 # Relative paths are from this project folder.
 spine=D:\Dropbox\GG - BASS BUCK™\spine\_export
 export=D:\Dropbox\GG - BASS BUCK™\Texture pecker\_BakeExport
