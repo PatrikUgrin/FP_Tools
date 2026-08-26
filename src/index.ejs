@@ -19,6 +19,11 @@
 			display: grid;
 			grid-template-columns: minmax(0, 1fr) 400px;
 			height: 100%;
+			min-height: 0;
+		}
+
+		#app > * {
+			min-height: 0;
 		}
 
 		#work-area {
@@ -44,16 +49,36 @@
 		}
 
 		#errors-panel {
-			flex: 0 0 28%;
-			min-height: 140px;
-			max-height: 42%;
+			flex: 1 1 50%;
+			min-height: 0;
+			min-width: 0;
 			display: flex;
 			flex-direction: column;
 			gap: 8px;
 			padding: 10px 12px;
 			background: #140e10;
-			border-top: 1px solid #5a2f2f;
+			border-left: 1px solid #5a2f2f;
+		}
+
+		#log-panel {
+			flex: 1 1 50%;
+			min-height: 0;
 			min-width: 0;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			padding: 10px 12px;
+			background: #0e1116;
+		}
+
+		#bottom-panels {
+			flex: 0 0 30%;
+			min-height: 120px;
+			max-height: 38%;
+			display: flex;
+			flex-direction: row;
+			min-width: 0;
+			border-top: 1px solid #2a3140;
 		}
 
 		#errors-header {
@@ -144,6 +169,22 @@
 			background: #0e1116;
 			border-left: 1px solid #2a3140;
 			min-height: 0;
+			height: 100%;
+			overflow-x: hidden;
+			overflow-y: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+
+		#sidebar > .sidebar-actions {
+			position: sticky;
+			bottom: 0;
+			z-index: 2;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			padding-top: 8px;
+			padding-bottom: 4px;
+			background: linear-gradient(180deg, rgba(14, 17, 22, 0) 0%, #0e1116 18%, #0e1116 100%);
 		}
 
 		h1 {
@@ -436,7 +477,7 @@
 		}
 
 		#log-label {
-			font-size: 10px;
+			font-size: 11px;
 			letter-spacing: 0.08em;
 			text-transform: uppercase;
 			font-weight: 700;
@@ -445,7 +486,7 @@
 
 		#log {
 			flex: 1;
-			min-height: 120px;
+			min-height: 0;
 			overflow: auto;
 			font-size: 12px;
 			line-height: 1.45;
@@ -454,11 +495,58 @@
 			border-radius: 6px;
 			padding: 8px;
 			white-space: pre-wrap;
+			word-break: break-word;
 		}
 
 		.log-error { color: #f0a0a0; }
 		.log-skip { color: #c9b06a; }
 		.log-ok { color: #8ee0a8; }
+
+		@media (max-height: 820px) {
+			#bottom-panels {
+				flex-basis: 26%;
+				max-height: 32%;
+				min-height: 100px;
+			}
+
+			#preview-wrap {
+				min-height: 56px;
+			}
+
+			#preview-img {
+				max-height: 64px;
+			}
+		}
+
+		@media (max-width: 960px) {
+			#app {
+				grid-template-columns: minmax(0, 1fr) minmax(300px, 34vw);
+			}
+		}
+
+		@media (max-width: 780px) {
+			#app {
+				grid-template-columns: 1fr;
+				grid-template-rows: minmax(200px, 1fr) minmax(260px, 48vh);
+			}
+
+			#sidebar {
+				border-left: 0;
+				border-top: 1px solid #2a3140;
+				height: auto;
+				max-height: 48vh;
+			}
+
+			#bottom-panels {
+				flex-direction: column;
+				max-height: 45%;
+			}
+
+			#errors-panel {
+				border-left: 0;
+				border-top: 1px solid #5a2f2f;
+			}
+		}
 	</style>
 </head>
 <body>
@@ -471,13 +559,19 @@
 					<div id="hud-current">Waiting…</div>
 				</div>
 			</div>
-			<section id="errors-panel" aria-label="Errors">
-				<div id="errors-header">
-					<div id="errors-title">Errors <span id="errors-count">(0)</span></div>
-					<button id="clear-errors-button" type="button">Clear errors</button>
-				</div>
-				<div id="error-log"></div>
-			</section>
+			<div id="bottom-panels">
+				<section id="log-panel" aria-label="Activity log">
+					<div id="log-label">Activity log</div>
+					<div id="log"></div>
+				</section>
+				<section id="errors-panel" aria-label="Errors">
+					<div id="errors-header">
+						<div id="errors-title">Errors <span id="errors-count">(0)</span></div>
+						<button id="clear-errors-button" type="button">Clear errors</button>
+					</div>
+					<div id="error-log"></div>
+				</section>
+			</div>
 		</div>
 		<aside id="sidebar">
 			<div>
@@ -531,18 +625,18 @@
 				<div class="meta" id="path-file-label">Project defaults. Save writes to your user folder.</div>
 				<div id="path-error"></div>
 			</div>
-			<button id="all-button" type="button">Run all — bake, pack, convert</button>
-			<div class="action-row">
-				<button id="bake-button" type="button">Bake PNGs</button>
-				<button id="pack-button" type="button">Pack spritesheets</button>
-				<button id="convert-button" type="button">Convert spine PNGs</button>
-			</div>
-			<div class="meta" id="export-path">Writing to base_game_symbols / bonus_game_symbols / cash_game_symbols</div>
 			<div id="preview-wrap">
 				<img id="preview-img" alt="Last exported PNG">
 			</div>
-			<div id="log-label">Activity log</div>
-			<div id="log"></div>
+			<div class="meta" id="export-path">Writing to base_game_symbols / bonus_game_symbols / cash_game_symbols</div>
+			<div class="sidebar-actions">
+				<button id="all-button" type="button">Run all — bake, pack, convert</button>
+				<div class="action-row">
+					<button id="bake-button" type="button">Bake PNGs</button>
+					<button id="pack-button" type="button">Pack spritesheets</button>
+					<button id="convert-button" type="button">Convert spine PNGs</button>
+				</div>
+			</div>
 		</aside>
 	</div>
 </body>
