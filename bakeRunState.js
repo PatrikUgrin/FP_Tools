@@ -5,9 +5,6 @@ const STATE_FILE = path.join(__dirname, ".bake-run.json");
 const ACTIVE = new Set(["baking", "packing", "converting"]);
 const STALE_MS = 15000;
 
-/** @type {BakeRunState} */
-let state = loadOrRecover();
-
 /**
  * @typedef {object} BakeRunState
  * @property {"idle"|"baking"|"packing"|"converting"|"done"|"error"} phase
@@ -26,6 +23,9 @@ let state = loadOrRecover();
  * @property {string} message
  * @property {number} updatedAt
  */
+
+/** @type {BakeRunState} */
+let state;
 
 function idleState(extra) {
 	return Object.assign({
@@ -435,6 +435,8 @@ function noteDuration(kind, durationMs) {
 	persist(next);
 	return publicStatus(null);
 }
+
+state = loadOrRecover();
 
 module.exports = {
 	publicStatus,
