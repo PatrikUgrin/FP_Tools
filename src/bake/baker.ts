@@ -245,6 +245,12 @@ function fitInView(app: PIXI.Application, node: PIXI.Container): void {
 	);
 }
 
+/** Ceil to an even pixel size so bake origin (w/2) lands on an integer and matches anchor 0.5. */
+function ceilEven(value: number): number {
+	const ceiled = Math.max(2, Math.ceil(value));
+	return ceiled + (ceiled & 1);
+}
+
 function capturePreview(renderer: PIXI.Renderer, node: PIXI.Container): BakePixels {
 	node.scale.set(1);
 
@@ -255,10 +261,9 @@ function capturePreview(renderer: PIXI.Renderer, node: PIXI.Container): BakePixe
 	const bottom = bounds.y + bounds.height;
 	// Size from origin extent only — no SYM_X/SYM_Y floor (that forced ~252×168 empties).
 	// Spine getLocalBounds is still generous; alpha trim below finishes the job.
-	let width = 2 * Math.max(left, right, 1);
-	let height = 2 * Math.max(top, bottom, 1);
-	width = Math.min(Math.ceil(width), SYM_X * 2);
-	height = Math.min(Math.ceil(height), SYM_Y * 2);
+	// Even sizes are required: odd RTs put the origin at *.5 and the trim round-trip shifts by 1px vs spine.
+	let width = Math.min(ceilEven(2 * Math.max(left, right, 1)), SYM_X * 2);
+	let height = Math.min(ceilEven(2 * Math.max(top, bottom, 1)), SYM_Y * 2);
 
 	const holder = new PIXI.Container();
 	holder.addChild(node);
@@ -286,10 +291,14 @@ function captureBlur(renderer: PIXI.Renderer, node: PIXI.Container): BakePixels 
 	const top = -bounds.y;
 	const bottom = bounds.y + bounds.height;
 	// Same origin-centred sizing as preview, plus blur pad (trimmed after render).
-	let width = 2 * Math.max(left, right, 1) + SYMBOL_BLUR_PAD * 2;
-	let height = 2 * Math.max(top, bottom, 1) + SYMBOL_BLUR_PAD * 2;
-	width = Math.min(Math.ceil(width), SYM_X * 2 + SYMBOL_BLUR_PAD * 2);
-	height = Math.min(Math.ceil(height), SYM_Y * 2 + SYMBOL_BLUR_PAD * 2);
+	let width = Math.min(
+		ceilEven(2 * Math.max(left, right, 1) + SYMBOL_BLUR_PAD * 2),
+		SYM_X * 2 + SYMBOL_BLUR_PAD * 2
+	);
+	let height = Math.min(
+		ceilEven(2 * Math.max(top, bottom, 1) + SYMBOL_BLUR_PAD * 2),
+		SYM_Y * 2 + SYMBOL_BLUR_PAD * 2
+	);
 
 	if (!sharedMotionBlur) {
 		sharedMotionBlur = new MotionBlurFilter([0, 15], 5);
@@ -401,21 +410,20 @@ function cropTransparentSymmetric(
 	}
 
 	if (maxX < 0) {
-		const empty = new Uint8ClampedArray(4);
-		return { pixels: empty, width: 1, height: 1 };
+		const empty = new Uint8ClampedArray(8);
+		return { pixels: empty, width: 2, height: 2 };
 	}
 
-	const cx = width / 2;
-	const cy = height / 2;
-	let halfW = Math.ceil(Math.max(cx - minX, maxX + 1 - cx)) + ALPHA_TRIM_PAD;
-	let halfH = Math.ceil(Math.max(cy - minY, maxY + 1 - cy)) + ALPHA_TRIM_PAD;
-	halfW = Math.min(halfW, Math.floor(cx), Math.floor(width - cx));
-	halfH = Math.min(halfH, Math.floor(cy), Math.floor(height - cy));
-	halfW = Math.max(halfW, 1);
-	halfH = Math.max(halfH, 1);
+	// Integer centre — matches position.set(width/2) when width/height are even (see ceilEven).
+	const originX = width >> 1;
+	const originY = height >> 1;
+	let halfW = Math.max(originX - minX, maxX + 1 - originX) + ALPHA_TRIM_PAD;
+	let halfH = Math.max(originY - minY, maxY + 1 - originY) + ALPHA_TRIM_PAD;
+	halfW = Math.min(Math.max(halfW, 1), originX, width - originX);
+	halfH = Math.min(Math.max(halfH, 1), originY, height - originY);
 
-	const cropX = Math.round(cx - halfW);
-	const cropY = Math.round(cy - halfH);
+	const cropX = originX - halfW;
+	const cropY = originY - halfH;
 	const outW = halfW * 2;
 	const outH = halfH * 2;
 	const out = new Uint8ClampedArray(outW * outH * 4);
