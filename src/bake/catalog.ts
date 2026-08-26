@@ -4,16 +4,12 @@
  * generateSymbolTextureAssetsForDeactivated) plus each symbol class's
  * setPreviewSprite().
  *
- * Libsym strings are from SpinDataset (toLowerCase for texture-cache names):
- *   plusonespin_symbol = "OB"  →  ob / ob_b / ob_appear / ob_deactivated
- *   luckyboot_symbol   = "LB"  →  lb / lb_b / lb_appear / lb_deactivated
- *   blank_symbol       = "BL"  →  bl_b from symbols_img.json "bl.png" + motion blur
+ * Export folders match TexturePacker sheets under _BakeTexturePacker:
+ *   base_game_symbols   — hi-lo cards + lw_appear / sw_appear
+ *   bonus_game_symbols  — bonus spin / blur / deactivated (+ bl_b)
+ *   cash_game_symbols   — fish values (appear / green / blur / blur_green)
  *
- * Folders are the Spine animation actually posed (or blur / blur_green).
- * Filenames are the texture-cache names from assets.ts, not skeleton names.
- *
- * BuckSymbol, LargeWild, SmallWild, Boat, Truck, Sixpack, LuckyBoot and
- * Plus1Spin ignore _spine_static_spin for preview. Buck has no static_appear.
+ * Filenames are texture-cache names. Bonus *_appear duplicates are not baked.
  */
 
 export interface BakeJob {
@@ -28,6 +24,10 @@ export interface BakeJob {
 	spriteSheet: string | null;
 	spriteFrame: string | null;
 }
+
+export const PACK_BASE = "base_game_symbols";
+export const PACK_BONUS = "bonus_game_symbols";
+export const PACK_CASH = "cash_game_symbols";
 
 const FISH = "f";
 const FISH_VALUES = [1, 2, 3, 5, 10, 25, 50, 100, 250, 500, 1000, 2000];
@@ -48,8 +48,7 @@ const SMALLWILD = "sw";
 
 /**
  * lib_bonus_symbols_blur (basket is not in this list).
- * Blank is blur-only: Blank.setSymbolSprite never poses spine for preview,
- * and appear/spin with isFeature=false bake an empty container.
+ * Blank is blur-only: Blank.setSymbolSprite never poses spine for preview.
  */
 const BONUS_BLUR = [
 	COLLECTOR, DROPSHOT, TRUCK, SIXPACK, CATCHBOOST, FULLSWEEP,
@@ -63,6 +62,9 @@ const DEACTIVATED = [
 	SIXPACK, BOAT, LUCKYBOOT, PLUSONE
 ];
 
+const FISH_VALUE_SET = new Set(FISH_VALUES.map(String));
+const CARD_SET = new Set(CARDS);
+
 function spineUrl(file: string): string {
 	return "./spine/" + file + ".json";
 }
@@ -75,25 +77,39 @@ function job(partial: Omit<BakeJob, "url" | "group" | "spriteSheet" | "spriteFra
 		spriteSheet: null,
 		spriteFrame: null,
 		...partial,
-		group: folderFor(partial),
+		group: packFolderFor(partial.texName),
 		url: partial.spine ? spineUrl(partial.spine) : ""
 	};
 }
 
-function folderFor(partial: { blur: boolean; texName: string; animation: string }): string {
-	if (partial.blur) {
-		return partial.texName.indexOf("_green") >= 0 ? "blur_green" : "blur";
+/** Map texture-cache name → one of the three TPS pack folders. */
+export function packFolderFor(texName: string): string {
+	if (texName === "lw_appear" || texName === "sw_appear") {
+		return PACK_BASE;
 	}
-	if (partial.texName.indexOf("_deactivated") >= 0) {
-		return "static_deactivated";
+	if (CARD_SET.has(texName)) {
+		return PACK_BASE;
 	}
-	if (partial.texName.length >= 7 && partial.texName.substring(partial.texName.length - 7) === "_appear") {
-		return "static_appear";
+	for (const card of CARDS) {
+		if (texName === card + "_appear") {
+			return PACK_BASE;
+		}
 	}
-	if (partial.texName.length >= 6 && partial.texName.substring(partial.texName.length - 6) === "_green") {
-		return "static_appear_green";
+
+	const cashStem = texName
+		.replace(/_b_green$/, "")
+		.replace(/_b$/, "")
+		.replace(/_green$/, "");
+	if (FISH_VALUE_SET.has(cashStem) && (
+		texName === cashStem
+		|| texName === cashStem + "_b"
+		|| texName === cashStem + "_green"
+		|| texName === cashStem + "_b_green"
+	)) {
+		return PACK_CASH;
 	}
-	return partial.animation;
+
+	return PACK_BONUS;
 }
 
 function bonusPose(libsym: string): { spine: string; skin: string | null; animation: string } {
@@ -199,8 +215,7 @@ export function buildBakeJobs(): BakeJob[] {
 		}));
 	}
 
-	// Bonus symbols (c, cb, ds, fs, ctr, sp, bo, lb, ob) do not bake *_appear.
-	// Hi-lo cards still bake l1_appear…h4_appear, plus lw_appear and sw_appear.
+	// Bonus symbols do not bake *_appear. Hi-lo + wilds do.
 	const appearSymbols = [LARGEWILD, SMALLWILD].concat(CARDS);
 	for (const libsym of appearSymbols) {
 		if (libsym === LARGEWILD) {
@@ -286,9 +301,7 @@ export function buildBakeJobs(): BakeJob[] {
 	}
 
 	for (const value of FISH_VALUES) {
-		// Original generateSymbolBlurAssetsForLoad(green) only flips isInsidePlayfield;
-		// Bass.setPreviewSprite still plays _spine_static_spin ("static_appear").
-		// That left *_b_green looking identical to *_b. Pose static_appear_green instead.
+		// Original green blur never switched animation; baker uses static_appear_green.
 		jobs.push(job({
 			libsym: FISH,
 			spine: "cash_sym",

@@ -43,7 +43,7 @@ export async function runBake(
 
 	const jobs = buildBakeJobs();
 	overlay.setProgress(0, jobs.length);
-	overlay.log("Load-path jobs: " + jobs.length + " grouped by animation / blur, named by texture cache.");
+	overlay.log("Load-path jobs: " + jobs.length + " → base_game_symbols / bonus_game_symbols / cash_game_symbols.");
 
 	const saved: Array<{ group: string; texName: string; path: string }> = [];
 	const spineDataCache = new Map<string, any>();
