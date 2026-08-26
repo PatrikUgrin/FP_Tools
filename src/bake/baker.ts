@@ -9,7 +9,12 @@ import { reportRunProgress } from "./runSession";
 const SYM_X = 252;
 const SYM_Y = 168;
 const SYMBOL_BAKE_RESOLUTION = 1;
+/** Extra RT margin so MotionBlurFilter([0,15],5) is not clipped before trim. */
 const SYMBOL_BLUR_PAD = 64;
+/** Alpha above this counts as opaque when centre-trimming baked PNGs. */
+const ALPHA_TRIM_THRESHOLD = 1;
+/** Keep a 1px halo so bilinear sampling / TPS packing never clips edges. */
+const ALPHA_TRIM_PAD = 1;
 const VIEW_MARGIN = 0.82;
 const LOAD_TIMEOUT_MS = 45000;
 
@@ -248,8 +253,10 @@ function capturePreview(renderer: PIXI.Renderer, node: PIXI.Container): BakePixe
 	const right = bounds.x + bounds.width;
 	const top = -bounds.y;
 	const bottom = bounds.y + bounds.height;
-	let width = 2 * Math.max(left, right, SYM_X / 2);
-	let height = 2 * Math.max(top, bottom, SYM_Y / 2);
+	// Size from origin extent only — no SYM_X/SYM_Y floor (that forced ~252×168 empties).
+	// Spine getLocalBounds is still generous; alpha trim below finishes the job.
+	let width = 2 * Math.max(left, right, 1);
+	let height = 2 * Math.max(top, bottom, 1);
 	width = Math.min(Math.ceil(width), SYM_X * 2);
 	height = Math.min(Math.ceil(height), SYM_Y * 2);
 
@@ -263,7 +270,7 @@ function capturePreview(renderer: PIXI.Renderer, node: PIXI.Container): BakePixe
 		resolution: SYMBOL_BAKE_RESOLUTION
 	});
 	renderer.render(holder, { renderTexture, clear: true });
-	const pixels = textureToPng(renderer, renderTexture);
+	const pixels = textureToPng(renderer, renderTexture, true);
 	renderTexture.destroy(true);
 	holder.removeChild(node);
 	holder.destroy({ children: false });
@@ -274,8 +281,13 @@ function captureBlur(renderer: PIXI.Renderer, node: PIXI.Container): BakePixels 
 	node.scale.set(1);
 
 	const bounds = node.getLocalBounds();
-	let width = Math.max(bounds.width, SYM_X) + SYMBOL_BLUR_PAD * 2;
-	let height = Math.max(bounds.height, SYM_Y) + SYMBOL_BLUR_PAD * 2;
+	const left = -bounds.x;
+	const right = bounds.x + bounds.width;
+	const top = -bounds.y;
+	const bottom = bounds.y + bounds.height;
+	// Same origin-centred sizing as preview, plus blur pad (trimmed after render).
+	let width = 2 * Math.max(left, right, 1) + SYMBOL_BLUR_PAD * 2;
+	let height = 2 * Math.max(top, bottom, 1) + SYMBOL_BLUR_PAD * 2;
 	width = Math.min(Math.ceil(width), SYM_X * 2 + SYMBOL_BLUR_PAD * 2);
 	height = Math.min(Math.ceil(height), SYM_Y * 2 + SYMBOL_BLUR_PAD * 2);
 
@@ -296,7 +308,7 @@ function captureBlur(renderer: PIXI.Renderer, node: PIXI.Container): BakePixels 
 	});
 	renderer.render(holder, { renderTexture, clear: true });
 	holder.filters = null;
-	const pixels = textureToPng(renderer, renderTexture);
+	const pixels = textureToPng(renderer, renderTexture, true);
 	renderTexture.destroy(true);
 	holder.removeChild(node);
 	holder.destroy({ children: false });
@@ -318,20 +330,27 @@ interface BakePixels {
 	height: number;
 }
 
-function textureToPng(renderer: PIXI.Renderer, renderTexture: PIXI.RenderTexture): BakePixels {
+function textureToPng(
+	renderer: PIXI.Renderer,
+	renderTexture: PIXI.RenderTexture,
+	trimSymmetric = false
+): BakePixels {
 	const resolution = renderTexture.baseTexture.resolution || 1;
 	const width = Math.round(renderTexture.width * resolution);
 	const height = Math.round(renderTexture.height * resolution);
 	const pixels = renderer.extract.pixels(renderTexture);
+	const cropped = trimSymmetric
+		? cropTransparentSymmetric(pixels, width, height)
+		: { pixels, width, height };
 	const canvas = document.createElement("canvas");
-	canvas.width = width;
-	canvas.height = height;
+	canvas.width = cropped.width;
+	canvas.height = cropped.height;
 	const ctx = canvas.getContext("2d", { alpha: true });
 	if (!ctx) {
 		throw new Error("Could not create 2D canvas for PNG encode");
 	}
-	const imageData = ctx.createImageData(width, height);
-	imageData.data.set(pixels);
+	const imageData = ctx.createImageData(cropped.width, cropped.height);
+	imageData.data.set(cropped.pixels);
 	ctx.putImageData(imageData, 0, 0);
 	const dataUrl = canvas.toDataURL("image/png");
 	const comma = dataUrl.indexOf(",");
@@ -341,9 +360,81 @@ function textureToPng(renderer: PIXI.Renderer, renderTexture: PIXI.RenderTexture
 	return {
 		dataUrl,
 		base64: dataUrl.substring(comma + 1),
-		width,
-		height
+		width: cropped.width,
+		height: cropped.height
 	};
+}
+
+/**
+ * Trim fully-transparent margins while keeping the bake origin at the image centre.
+ * Asymmetric TexturePacker-style trim would break anchor 0.5 / 0.5; this expands the
+ * crop on the short side so left/right (and top/bottom) padding stay equal.
+ */
+function cropTransparentSymmetric(
+	pixels: Uint8Array | Uint8ClampedArray,
+	width: number,
+	height: number
+): { pixels: Uint8ClampedArray; width: number; height: number } {
+	let minX = width;
+	let minY = height;
+	let maxX = -1;
+	let maxY = -1;
+
+	for (let y = 0; y < height; y++) {
+		const row = y * width * 4;
+		for (let x = 0; x < width; x++) {
+			if (pixels[row + x * 4 + 3] > ALPHA_TRIM_THRESHOLD) {
+				if (x < minX) {
+					minX = x;
+				}
+				if (x > maxX) {
+					maxX = x;
+				}
+				if (y < minY) {
+					minY = y;
+				}
+				if (y > maxY) {
+					maxY = y;
+				}
+			}
+		}
+	}
+
+	if (maxX < 0) {
+		const empty = new Uint8ClampedArray(4);
+		return { pixels: empty, width: 1, height: 1 };
+	}
+
+	const cx = width / 2;
+	const cy = height / 2;
+	let halfW = Math.ceil(Math.max(cx - minX, maxX + 1 - cx)) + ALPHA_TRIM_PAD;
+	let halfH = Math.ceil(Math.max(cy - minY, maxY + 1 - cy)) + ALPHA_TRIM_PAD;
+	halfW = Math.min(halfW, Math.floor(cx), Math.floor(width - cx));
+	halfH = Math.min(halfH, Math.floor(cy), Math.floor(height - cy));
+	halfW = Math.max(halfW, 1);
+	halfH = Math.max(halfH, 1);
+
+	const cropX = Math.round(cx - halfW);
+	const cropY = Math.round(cy - halfH);
+	const outW = halfW * 2;
+	const outH = halfH * 2;
+	const out = new Uint8ClampedArray(outW * outH * 4);
+
+	for (let y = 0; y < outH; y++) {
+		const srcY = cropY + y;
+		const srcRow = srcY * width * 4;
+		const dstRow = y * outW * 4;
+		for (let x = 0; x < outW; x++) {
+			const src = srcRow + (cropX + x) * 4;
+			const dst = dstRow + x * 4;
+			out[dst] = pixels[src];
+			out[dst + 1] = pixels[src + 1];
+			out[dst + 2] = pixels[src + 2];
+			out[dst + 3] = pixels[src + 3];
+		}
+	}
+
+	return { pixels: out, width: outW, height: outH };
 }
 
 function loadSpritesheet(url: string): Promise<void> {
