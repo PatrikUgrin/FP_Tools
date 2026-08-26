@@ -1,4 +1,5 @@
 import { BakerConfig } from "./exportClient";
+import { RunStatus } from "./runSession";
 
 export type LogKind = "info" | "ok" | "skip" | "error";
 export type BakeStatus = "idle" | "baking" | "packing" | "converting" | "done" | "error";
@@ -29,6 +30,12 @@ export class BakeOverlay {
 	private readonly lanUrls: HTMLElement;
 	private readonly pathFileLabel: HTMLElement;
 	private readonly pathError: HTMLElement;
+	private readonly etaLabel: HTMLElement;
+	private readonly sharedRun: HTMLElement;
+	private localBusy = false;
+	private remoteBlocked = false;
+	private bakeAllowed = true;
+	private crashAckHandler: (() => void) | null = null;
 
 	public constructor() {
 		this.hudCurrent = this.mustGet("hud-current");
@@ -56,6 +63,8 @@ export class BakeOverlay {
 		this.lanUrls = this.mustGet("lan-urls");
 		this.pathFileLabel = this.mustGet("path-file-label");
 		this.pathError = this.mustGet("path-error");
+		this.etaLabel = this.mustGet("eta-label");
+		this.sharedRun = this.mustGet("shared-run");
 		this.setStatus("idle", "Idle — press Bake PNGs");
 		const saveOnEnter = (event: KeyboardEvent): void => {
 			if (event.key === "Enter") {
@@ -69,6 +78,11 @@ export class BakeOverlay {
 		this.spineExportInput.addEventListener("keydown", saveOnEnter);
 		this.spineConvertedInput.addEventListener("keydown", saveOnEnter);
 		this.clearErrorsButton.addEventListener("click", () => this.clearErrors());
+		this.sharedRun.addEventListener("click", () => {
+			if (this.sharedRun.classList.contains("crash") && this.crashAckHandler) {
+				this.crashAckHandler();
+			}
+		});
 		this.updateErrorsCount();
 	}
 
@@ -131,18 +145,7 @@ export class BakeOverlay {
 	}
 
 	public setBusy(busy: boolean, kind: "bake" | "pack" | "convert" | "all" = "bake"): void {
-		this.bakeButton.disabled = busy;
-		this.packButton.disabled = busy;
-		this.convertButton.disabled = busy;
-		this.allButton.disabled = busy;
-		this.savePathsButton.disabled = busy;
-		this.clearErrorsButton.disabled = busy;
-		this.spineInput.disabled = busy;
-		this.exportInput.disabled = busy;
-		this.spritesheetInput.disabled = busy;
-		this.tpsInput.disabled = busy;
-		this.spineExportInput.disabled = busy;
-		this.spineConvertedInput.disabled = busy;
+		this.localBusy = busy;
 		this.bakeButton.textContent = busy && kind === "bake" ? "Baking…" : "Bake PNGs";
 		this.packButton.textContent = busy && kind === "pack" ? "Packing…" : "Pack spritesheets";
 		this.convertButton.textContent = busy && kind === "convert" ? "Converting…" : "Convert spine PNGs";
@@ -153,11 +156,96 @@ export class BakeOverlay {
 		if (busy && kind === "all") {
 			this.setStatus("baking", "Running all");
 		}
+		this.applyActionLock();
 	}
 
 	public setBakeEnabled(enabled: boolean): void {
-		this.bakeButton.disabled = !enabled;
-		this.allButton.disabled = !enabled;
+		this.bakeAllowed = enabled;
+		this.applyActionLock();
+	}
+
+	public onCrashAck(handler: () => void): void {
+		this.crashAckHandler = handler;
+	}
+
+	/** Mirror shared server run state for other WebUI tabs / LAN clients. */
+	public applySharedRun(status: RunStatus, options?: { localOwning?: boolean }): void {
+		const localOwning = Boolean(options && options.localOwning);
+		this.remoteBlocked = status.blocked;
+		this.applyActionLock();
+
+		const etaBits = ["Estimate: " + (status.etaLabel || "unknown estimate")];
+		if (status.durationHintMs) {
+			etaBits.push("last similar ≈ " + formatMs(status.durationHintMs));
+		} else if (!status.busy) {
+			const last = status.lastAllDurationMs || status.lastBakeDurationMs;
+			etaBits.push(last ? "last full ≈ " + formatMs(last) : "no prior timing");
+		}
+		this.etaLabel.textContent = etaBits.join(" · ");
+
+		if (status.error === "Missing connection to baker server") {
+			this.sharedRun.className = "crash";
+			this.sharedRun.textContent = "Missing connection to baker server.\nActions are paused until the baker process is reachable again.";
+			return;
+		}
+
+		if (status.lastCrashMessage) {
+			this.sharedRun.className = "crash";
+			this.sharedRun.textContent = "Crash recovery: " + status.lastCrashMessage
+				+ "\nClick this banner to dismiss.";
+			return;
+		}
+
+		if (status.blocked) {
+			const progress = status.total > 0
+				? status.current + " / " + status.total
+				: "in progress";
+			this.sharedRun.className = "blocked";
+			this.sharedRun.textContent = "Another WebUI session is "
+				+ status.phase
+				+ (status.label ? " — " + status.label : "")
+				+ "\nProgress: " + progress
+				+ "\n" + (status.etaLabel || "unknown estimate")
+				+ (status.message ? "\n" + status.message : "");
+			this.setHud(status.label || ("Remote " + status.phase));
+			this.setProgress(status.current, status.total);
+			this.setStatus(status.phase as BakeStatus, "Waiting — remote " + status.phase);
+			return;
+		}
+
+		if (status.busy && !localOwning) {
+			this.sharedRun.className = "blocked";
+			this.sharedRun.textContent = "Shared run active (" + status.phase + ").";
+			return;
+		}
+
+		if (status.busy && localOwning) {
+			this.sharedRun.className = "meta";
+			this.sharedRun.textContent = "You own the shared run lock (" + status.phase + ").\n"
+				+ (status.etaLabel || "unknown estimate");
+			return;
+		}
+
+		this.sharedRun.className = "meta";
+		this.sharedRun.textContent = status.phase === "done" || status.phase === "error"
+			? "Last shared result: " + status.phase + (status.message ? " — " + status.message : "")
+			: "No shared run — ready for a new step.";
+	}
+
+	private applyActionLock(): void {
+		const locked = this.localBusy || this.remoteBlocked;
+		this.bakeButton.disabled = locked || !this.bakeAllowed;
+		this.packButton.disabled = locked;
+		this.convertButton.disabled = locked;
+		this.allButton.disabled = locked || !this.bakeAllowed;
+		this.savePathsButton.disabled = locked;
+		this.clearErrorsButton.disabled = locked;
+		this.spineInput.disabled = locked;
+		this.exportInput.disabled = locked;
+		this.spritesheetInput.disabled = locked;
+		this.tpsInput.disabled = locked;
+		this.spineExportInput.disabled = locked;
+		this.spineConvertedInput.disabled = locked;
 	}
 
 	public setSaveBusy(busy: boolean): void {
@@ -246,6 +334,16 @@ export class BakeOverlay {
 		}
 		return el;
 	}
+}
+
+function formatMs(ms: number): string {
+	const totalSec = Math.max(0, Math.round(ms / 1000));
+	const min = Math.floor(totalSec / 60);
+	const sec = totalSec % 60;
+	if (min <= 0) {
+		return sec + "s";
+	}
+	return min + "m " + String(sec).padStart(2, "0") + "s";
 }
 
 function pathMessage(config: BakerConfig): string {

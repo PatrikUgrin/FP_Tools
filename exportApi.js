@@ -4,6 +4,7 @@ const path = require("path");
 const crypto = require("crypto");
 const express = require("express");
 const { loadBakerPaths } = require("./bakerPaths");
+const bakeRun = require("./bakeRunState");
 
 const SAFE_NAME = /^[A-Za-z0-9_.-]+$/;
 const SPINE_FILE_NAME = /^[A-Za-z0-9_.@-]+$/;
@@ -13,6 +14,76 @@ const spineCopyLocks = new Map();
 function createExportRouter() {
 	const router = express.Router();
 	router.use(express.json({ limit: "64mb" }));
+
+	router.get("/run", (req, res) => {
+		const ownerId = String(req.query.ownerId || "");
+		res.json(bakeRun.publicStatus(ownerId || null));
+	});
+
+	router.post("/run/claim", (req, res) => {
+		try {
+			const ownerId = String(req.body && req.body.ownerId || "");
+			const phase = String(req.body && req.body.phase || "");
+			const label = String(req.body && req.body.label || "");
+			const total = Number(req.body && req.body.total || 0);
+			res.json(bakeRun.claim(ownerId, phase, label, total));
+		} catch (err) {
+			const status = err.status || 400;
+			if (err.statusBody) {
+				res.status(status).json(Object.assign({ error: err.message || String(err) }, err.statusBody));
+				return;
+			}
+			res.status(status).json({ error: err.message || String(err) });
+		}
+	});
+
+	router.post("/run/progress", (req, res) => {
+		try {
+			const ownerId = String(req.body && req.body.ownerId || "");
+			res.json(bakeRun.progress(ownerId, {
+				phase: req.body && req.body.phase,
+				label: req.body && req.body.label,
+				current: req.body && req.body.current,
+				total: req.body && req.body.total,
+				message: req.body && req.body.message
+			}));
+		} catch (err) {
+			res.status(err.status || 400).json({ error: err.message || String(err) });
+		}
+	});
+
+	router.post("/run/heartbeat", (req, res) => {
+		try {
+			const ownerId = String(req.body && req.body.ownerId || "");
+			res.json(bakeRun.heartbeat(ownerId));
+		} catch (err) {
+			res.status(err.status || 400).json({ error: err.message || String(err) });
+		}
+	});
+
+	router.post("/run/finish", (req, res) => {
+		try {
+			const ownerId = String(req.body && req.body.ownerId || "");
+			res.json(bakeRun.finish(ownerId, {
+				ok: !(req.body && req.body.ok === false),
+				kind: req.body && req.body.kind,
+				label: req.body && req.body.label,
+				message: req.body && req.body.message,
+				durationMs: req.body && req.body.durationMs
+			}));
+		} catch (err) {
+			res.status(err.status || 400).json({ error: err.message || String(err) });
+		}
+	});
+
+	router.post("/run/ack-crash", (_req, res) => {
+		res.json(bakeRun.clearCrashNotice());
+	});
+
+	router.post("/run/force-release", (req, res) => {
+		const reason = String(req.body && req.body.reason || "Manual force-release from WebUI");
+		res.json(bakeRun.forceRelease(reason));
+	});
 
 	router.get("/config", (_req, res) => {
 		res.json(configPayload());
@@ -189,11 +260,22 @@ function createExportRouter() {
 		}
 		try {
 			const entries = Array.isArray(req.body && req.body.entries) ? req.body.entries : [];
+			const durationMs = Number(req.body && req.body.durationMs);
+			const bakeDuration = Number.isFinite(durationMs) && durationMs > 0 ? Math.round(durationMs) : null;
+			if (bakeDuration) {
+				bakeRun.noteDuration("bake", bakeDuration);
+			}
+			const runStatus = bakeRun.publicStatus(null);
 			fs.mkdirSync(cfg.exportResolved, { recursive: true });
 			const manifestPath = path.join(cfg.exportResolved, "manifest.json");
 			fs.writeFileSync(manifestPath, JSON.stringify({
 				generatedAt: new Date().toISOString(),
 				count: entries.length,
+				durationMs: bakeDuration,
+				lastBakeDurationMs: bakeDuration || runStatus.lastBakeDurationMs,
+				lastPackDurationMs: runStatus.lastPackDurationMs,
+				lastConvertDurationMs: runStatus.lastConvertDurationMs,
+				lastAllDurationMs: runStatus.lastAllDurationMs,
 				entries
 			}, null, 2));
 			res.json({ path: manifestPath });

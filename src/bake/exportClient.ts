@@ -64,11 +64,17 @@ export async function savePng(group: string, texName: string, pngBase64: string)
 	return body.path;
 }
 
-export async function saveManifest(entries: Array<{ group: string; texName: string; path: string }>): Promise<void> {
+export async function saveManifest(
+	entries: Array<{ group: string; texName: string; path: string }>,
+	durationMs?: number
+): Promise<void> {
 	const response = await fetch("/api/manifest", {
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ entries })
+		body: JSON.stringify({
+			entries,
+			durationMs: durationMs != null ? durationMs : null
+		})
 	});
 	if (!response.ok) {
 		throw new Error("Failed to write manifest (" + response.status + ")");

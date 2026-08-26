@@ -196,6 +196,12 @@
 			animation: status-pulse 1s ease-in-out infinite;
 		}
 
+		#status-pill.packing {
+			background: #3a3018;
+			color: #e0c98e;
+			animation: status-pulse 1s ease-in-out infinite;
+		}
+
 		#status-pill.done {
 			background: #1d3b28;
 			color: #8ee0a8;
@@ -204,6 +210,32 @@
 		#status-pill.error {
 			background: #3b1d1d;
 			color: #f0a0a0;
+		}
+
+		#shared-run {
+			margin-top: 6px;
+			padding: 8px 10px;
+			border: 1px solid #2a3140;
+			border-radius: 6px;
+			background: #10141b;
+			color: #c5cdd8;
+			white-space: pre-wrap;
+		}
+
+		#shared-run.blocked {
+			border-color: #6a4a1d;
+			background: #241a0e;
+			color: #e0c98e;
+		}
+
+		#shared-run.crash {
+			border-color: #6a2a2a;
+			background: #241010;
+			color: #f0a0a0;
+		}
+
+		#eta-label {
+			margin-top: 6px;
 		}
 
 		@keyframes status-pulse {
@@ -461,6 +493,8 @@
 			<div>
 				<div id="progress-label">0 / 0</div>
 				<div class="progress-track"><div id="progress-fill"></div></div>
+				<div class="meta" id="eta-label">Estimate: idle</div>
+				<div id="shared-run" class="meta">No shared run</div>
 			</div>
 			<div class="path-block">
 				<div class="path-group input">

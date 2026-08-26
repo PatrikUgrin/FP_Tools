@@ -4,6 +4,7 @@ import { MotionBlurFilter } from "pixi-filters";
 import { BakeJob, buildBakeJobs } from "./catalog";
 import { loadConfig, resetExport, saveManifest, savePng } from "./exportClient";
 import { BakeOverlay } from "./overlay";
+import { reportRunProgress } from "./runSession";
 
 const SYM_X = 252;
 const SYM_Y = 168;
@@ -17,9 +18,11 @@ let sharedMotionBlur: MotionBlurFilter | null = null;
 export async function runBake(
 	app: PIXI.Application,
 	overlay: BakeOverlay,
-	options?: { manageBusy?: boolean }
-): Promise<number> {
+	options?: { manageBusy?: boolean; reportShared?: boolean }
+): Promise<{ count: number; durationMs: number }> {
 	const manageBusy = !options || options.manageBusy !== false;
+	const reportShared = !options || options.reportShared !== false;
+	const startedAt = Date.now();
 	if (manageBusy) {
 		overlay.setBusy(true);
 		overlay.clearLog();
@@ -44,6 +47,14 @@ export async function runBake(
 	const jobs = buildBakeJobs();
 	overlay.setProgress(0, jobs.length);
 	overlay.log("Load-path jobs: " + jobs.length + " → base_game_symbols / bonus_game_symbols / cash_game_symbols.");
+	if (reportShared) {
+		await reportRunProgress({
+			phase: "baking",
+			label: "Building bake list…",
+			current: 0,
+			total: jobs.length
+		}).catch(() => undefined);
+	}
 
 	const saved: Array<{ group: string; texName: string; path: string }> = [];
 	const spineDataCache = new Map<string, any>();
@@ -55,6 +66,14 @@ export async function runBake(
 	try {
 		for (const bakeJob of jobs) {
 			overlay.setHud(bakeJob.group + " / " + bakeJob.texName);
+			if (reportShared) {
+				await reportRunProgress({
+					phase: "baking",
+					label: bakeJob.group + " / " + bakeJob.texName,
+					current: done,
+					total: jobs.length
+				}).catch(() => undefined);
+			}
 			await waitFrames(1);
 			let display: PIXI.Container | null = null;
 			try {
@@ -93,18 +112,28 @@ export async function runBake(
 			}
 			done += 1;
 			overlay.setProgress(done, jobs.length);
+			if (reportShared) {
+				await reportRunProgress({
+					phase: "baking",
+					label: bakeJob.group + " / " + bakeJob.texName,
+					current: done,
+					total: jobs.length
+				}).catch(() => undefined);
+			}
 			await waitFrames(2);
 		}
 
-		await saveManifest(saved);
-		overlay.log("Wrote manifest.json in " + reset.exportRoot + " (" + saved.length + " file(s)).", "ok");
+		const durationMs = Date.now() - startedAt;
+		await saveManifest(saved, durationMs);
+		overlay.log("Wrote manifest.json in " + reset.exportRoot + " (" + saved.length + " file(s), "
+			+ Math.round(durationMs / 1000) + "s).", "ok");
 		if (manageBusy) {
 			overlay.setHud("Done — " + saved.length + " PNG(s)");
 			overlay.setStatus("done", "Done — " + saved.length + " PNG(s)");
 		} else {
 			overlay.log("Bake finished — " + saved.length + " PNG(s).", "ok");
 		}
-		return saved.length;
+		return { count: saved.length, durationMs };
 	} finally {
 		resetLoader();
 		if (manageBusy) {

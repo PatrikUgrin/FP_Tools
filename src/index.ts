@@ -5,6 +5,14 @@ import { runBake } from "./bake/baker";
 import { runPack } from "./bake/packer";
 import { runConvert } from "./bake/convert";
 import { loadConfig, saveConfig } from "./bake/exportClient";
+import {
+	RunWatchdog,
+	ackCrashNotice,
+	claimRun,
+	finishRun,
+	RunPhase,
+	RunStatus
+} from "./bake/runSession";
 
 PIXI.settings.PREFER_ENV = PIXI.ENV.WEBGL2;
 PIXI.settings.FAIL_IF_MAJOR_PERFORMANCE_CAVEAT = true;
@@ -19,6 +27,9 @@ const SIDEBAR_WIDTH = 400;
 const canvas = document.getElementById("pixi-canvas") as HTMLCanvasElement;
 const overlay = new BakeOverlay();
 let bakeInFlight = false;
+let localOwning = false;
+let lastCrashKey = "";
+let missingConnectionLogged = false;
 
 const app = new PIXI.Application({
 	view: canvas,
@@ -36,10 +47,40 @@ const rendererType = describeRenderer(app);
 const isWebGl = app.renderer.type === PIXI.RENDERER_TYPE.WEBGL;
 overlay.setRenderer(rendererType, isWebGl);
 overlay.onSavePaths(savePathsFromUi);
+overlay.onCrashAck(() => {
+	void ackCrashNotice().then((status) => {
+		overlay.applySharedRun(status, { localOwning });
+		lastCrashKey = "";
+		overlay.log("Cleared crash notice.", "ok");
+	}).catch((err) => {
+		const message = err instanceof Error ? err.message : String(err);
+		overlay.log(message, "error");
+	});
+});
+
+const watchdog = new RunWatchdog((status) => {
+	overlay.applySharedRun(status, { localOwning });
+	if (status.lastCrashMessage) {
+		const key = String(status.lastCrashAt || "") + "|" + status.lastCrashMessage;
+		if (key !== lastCrashKey) {
+			lastCrashKey = key;
+			overlay.log(status.lastCrashMessage, "error");
+		}
+	}
+	if (status.error === "Missing connection to baker server") {
+		if (!missingConnectionLogged) {
+			missingConnectionLogged = true;
+			overlay.log(status.error, "error");
+		}
+	} else {
+		missingConnectionLogged = false;
+	}
+});
 
 void boot();
 
 async function boot(): Promise<void> {
+	watchdog.start();
 	let configOk = true;
 	try {
 		const config = await loadConfig();
@@ -155,14 +196,26 @@ function startBake(): void {
 		return;
 	}
 	bakeInFlight = true;
-	runBake(app, overlay).catch((err) => {
-		const message = err instanceof Error ? err.message : String(err);
-		overlay.log(message, "error");
-		overlay.setBusy(false);
-		overlay.setStatus("error", "Failed");
-	}).finally(() => {
-		bakeInFlight = false;
-	});
+	void (async () => {
+		const startedAt = Date.now();
+		try {
+			await beginOwnedRun("baking", "Baking PNGs");
+			const baked = await runBake(app, overlay);
+			await endOwnedRun({
+				ok: true,
+				kind: "bake",
+				durationMs: baked.durationMs,
+				label: "Baked " + baked.count + " PNG(s)",
+				message: "Bake finished"
+			});
+		} catch (err) {
+			await handleRunFailure(err, "bake", Date.now() - startedAt);
+		} finally {
+			bakeInFlight = false;
+			localOwning = false;
+			watchdog.setOwning(false);
+		}
+	})();
 }
 
 function startPack(): void {
@@ -170,25 +223,44 @@ function startPack(): void {
 		return;
 	}
 	bakeInFlight = true;
-	overlay.setBusy(true, "pack");
-	overlay.setStatus("packing", "Packing");
-	runPack(overlay, true).then((pack) => {
-		if (!pack.ok) {
-			overlay.setStatus("error", "Pack failed");
-			overlay.setHud("Packed " + pack.packed + ", failed " + pack.failed);
-			return;
+	void (async () => {
+		const startedAt = Date.now();
+		try {
+			await beginOwnedRun("packing", "Packing spritesheets");
+			overlay.setBusy(true, "pack");
+			overlay.setStatus("packing", "Packing");
+			const pack = await runPack(overlay, true);
+			if (!pack.ok) {
+				overlay.setStatus("error", "Pack failed");
+				overlay.setHud("Packed " + pack.packed + ", failed " + pack.failed);
+				await endOwnedRun({
+					ok: false,
+					kind: "pack",
+					durationMs: pack.durationMs,
+					label: "Pack failed",
+					message: "Packed " + pack.packed + ", failed " + pack.failed
+				});
+				return;
+			}
+			overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
+			overlay.setHud("Done — " + pack.packed + " packed");
+			overlay.setStatus("done", "Done — packed");
+			await endOwnedRun({
+				ok: true,
+				kind: "pack",
+				durationMs: pack.durationMs,
+				label: "Packed " + pack.packed,
+				message: "Pack finished"
+			});
+		} catch (err) {
+			await handleRunFailure(err, "pack", Date.now() - startedAt);
+		} finally {
+			overlay.setBusy(false);
+			bakeInFlight = false;
+			localOwning = false;
+			watchdog.setOwning(false);
 		}
-		overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
-		overlay.setHud("Done — " + pack.packed + " packed");
-		overlay.setStatus("done", "Done — packed");
-	}).catch((err) => {
-		const message = err instanceof Error ? err.message : String(err);
-		overlay.log(message, "error");
-		overlay.setStatus("error", "Pack failed");
-	}).finally(() => {
-		overlay.setBusy(false);
-		bakeInFlight = false;
-	});
+	})();
 }
 
 function startConvert(): void {
@@ -196,25 +268,44 @@ function startConvert(): void {
 		return;
 	}
 	bakeInFlight = true;
-	overlay.setBusy(true, "convert");
-	overlay.setStatus("converting", "Converting");
-	runConvert(overlay, true).then((result) => {
-		if (!result.ok) {
-			overlay.setStatus("error", "Convert failed");
-			overlay.setHud("Converted " + result.converted + ", failed " + result.failed);
-			return;
+	void (async () => {
+		const startedAt = Date.now();
+		try {
+			await beginOwnedRun("converting", "Converting spine PNGs");
+			overlay.setBusy(true, "convert");
+			overlay.setStatus("converting", "Converting");
+			const result = await runConvert(overlay, true);
+			if (!result.ok) {
+				overlay.setStatus("error", "Convert failed");
+				overlay.setHud("Converted " + result.converted + ", failed " + result.failed);
+				await endOwnedRun({
+					ok: false,
+					kind: "convert",
+					durationMs: result.durationMs,
+					label: "Convert failed",
+					message: "Converted " + result.converted + ", failed " + result.failed
+				});
+				return;
+			}
+			overlay.log("Converted " + result.converted + " PNG(s) to RGBA5555.", "ok");
+			overlay.setHud("Done — " + result.converted + " converted");
+			overlay.setStatus("done", "Done — converted");
+			await endOwnedRun({
+				ok: true,
+				kind: "convert",
+				durationMs: result.durationMs,
+				label: "Converted " + result.converted,
+				message: "Convert finished"
+			});
+		} catch (err) {
+			await handleRunFailure(err, "convert", Date.now() - startedAt);
+		} finally {
+			overlay.setBusy(false);
+			bakeInFlight = false;
+			localOwning = false;
+			watchdog.setOwning(false);
 		}
-		overlay.log("Converted " + result.converted + " PNG(s) to RGBA5555.", "ok");
-		overlay.setHud("Done — " + result.converted + " converted");
-		overlay.setStatus("done", "Done — converted");
-	}).catch((err) => {
-		const message = err instanceof Error ? err.message : String(err);
-		overlay.log(message, "error");
-		overlay.setStatus("error", "Convert failed");
-	}).finally(() => {
-		overlay.setBusy(false);
-		bakeInFlight = false;
-	});
+	})();
 }
 
 function startAll(): void {
@@ -223,14 +314,27 @@ function startAll(): void {
 	}
 	bakeInFlight = true;
 	overlay.setBusy(true, "all");
-	void runAllPipeline().catch((err) => {
-		const message = err instanceof Error ? err.message : String(err);
-		overlay.log(message, "error");
-		overlay.setStatus("error", "Failed");
-	}).finally(() => {
-		overlay.setBusy(false);
-		bakeInFlight = false;
-	});
+	void (async () => {
+		const startedAt = Date.now();
+		try {
+			await beginOwnedRun("baking", "Run all — bake");
+			await runAllPipeline();
+			await endOwnedRun({
+				ok: true,
+				kind: "all",
+				durationMs: Date.now() - startedAt,
+				label: "Run all finished",
+				message: "Bake, pack, and convert finished"
+			});
+		} catch (err) {
+			await handleRunFailure(err, "all", Date.now() - startedAt);
+		} finally {
+			overlay.setBusy(false);
+			bakeInFlight = false;
+			localOwning = false;
+			watchdog.setOwning(false);
+		}
+	})();
 }
 
 async function runAllPipeline(): Promise<void> {
@@ -245,7 +349,7 @@ async function runAllPipeline(): Promise<void> {
 	if (!pack.ok) {
 		overlay.setStatus("error", "Pack failed");
 		overlay.setHud("Packed " + pack.packed + ", failed " + pack.failed);
-		return;
+		throw new Error("Pack failed (" + pack.failed + " project(s))");
 	}
 	if (!pack.skipped) {
 		overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
@@ -256,13 +360,71 @@ async function runAllPipeline(): Promise<void> {
 	if (!converted.ok) {
 		overlay.setStatus("error", "Convert failed");
 		overlay.setHud("Converted " + converted.converted + ", failed " + converted.failed);
-		return;
+		throw new Error("Convert failed (" + converted.failed + " PNG(s))");
 	}
 	if (!converted.skipped) {
 		overlay.log("Converted " + converted.converted + " PNG(s) to RGBA5555.", "ok");
 	}
-	overlay.setHud("Done — baked " + baked + ", packed, converted");
+	overlay.setHud("Done — baked " + baked.count + ", packed, converted");
 	overlay.setStatus("done", "Done — all steps");
+}
+
+async function beginOwnedRun(phase: RunPhase, label: string): Promise<void> {
+	try {
+		const status = await claimRun(phase, label);
+		localOwning = true;
+		watchdog.setOwning(true);
+		overlay.applySharedRun(status, { localOwning: true });
+	} catch (err) {
+		const blocked = err as Error & { status?: number; statusBody?: RunStatus };
+		if (blocked.status === 409 && blocked.statusBody) {
+			overlay.applySharedRun(blocked.statusBody, { localOwning: false });
+			overlay.log(blocked.message || "Another session already holds the run lock.", "error");
+		}
+		throw err;
+	}
+}
+
+async function endOwnedRun(result: {
+	ok: boolean;
+	kind: "bake" | "pack" | "convert" | "all";
+	durationMs?: number;
+	label?: string;
+	message?: string;
+}): Promise<void> {
+	if (!localOwning) {
+		return;
+	}
+	try {
+		const status = await finishRun(result);
+		overlay.applySharedRun(status, { localOwning: false });
+	} catch (err) {
+		const message = err instanceof Error ? err.message : String(err);
+		overlay.log("Could not release shared run lock: " + message, "error");
+	}
+}
+
+async function handleRunFailure(
+	err: unknown,
+	kind: "bake" | "pack" | "convert" | "all",
+	durationMs: number
+): Promise<void> {
+	const message = err instanceof Error ? err.message : String(err);
+	const blocked = err as Error & { status?: number };
+	if (blocked.status !== 409) {
+		overlay.log(message, "error");
+		overlay.setStatus("error", "Failed");
+		if (localOwning) {
+			await endOwnedRun({
+				ok: false,
+				kind,
+				durationMs,
+				label: "Failed",
+				message
+			});
+		}
+	}
+	overlay.setBusy(false);
 }
 
 function layoutCanvas(): void {

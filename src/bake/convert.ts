@@ -1,15 +1,24 @@
 import { BakeOverlay } from "./overlay";
 import { convertPng, prepareConvert } from "./exportClient";
+import { reportRunProgress } from "./runSession";
 
 export interface ConvertSummary {
 	ok: boolean;
 	converted: number;
 	failed: number;
 	skipped: boolean;
+	durationMs: number;
 }
 
 export async function runConvert(overlay: BakeOverlay, required: boolean): Promise<ConvertSummary> {
+	const startedAt = Date.now();
 	overlay.setHud("Copying spine export…");
+	await reportRunProgress({
+		phase: "converting",
+		label: "Copying spine export…",
+		current: 0,
+		total: 0
+	}).catch(() => undefined);
 	let listing;
 	try {
 		listing = await prepareConvert();
@@ -19,7 +28,7 @@ export async function runConvert(overlay: BakeOverlay, required: boolean): Promi
 			throw err;
 		}
 		overlay.log("Skipping convert — " + message, "skip");
-		return { ok: true, converted: 0, failed: 0, skipped: true };
+		return { ok: true, converted: 0, failed: 0, skipped: true, durationMs: Date.now() - startedAt };
 	}
 
 	overlay.log("Copied spine export to " + listing.folder, "ok");
@@ -32,11 +41,17 @@ export async function runConvert(overlay: BakeOverlay, required: boolean): Promi
 			throw new Error(message);
 		}
 		overlay.log(message, "skip");
-		return { ok: true, converted: 0, failed: 0, skipped: true };
+		return { ok: true, converted: 0, failed: 0, skipped: true, durationMs: Date.now() - startedAt };
 	}
 
 	overlay.log("Converting " + listing.files.length + " PNG(s) to RGBA5555");
 	overlay.setProgress(0, listing.files.length);
+	await reportRunProgress({
+		phase: "converting",
+		label: "Converting " + listing.files.length + " PNG(s)",
+		current: 0,
+		total: listing.files.length
+	}).catch(() => undefined);
 
 	let converted = 0;
 	let failed = 0;
@@ -44,6 +59,12 @@ export async function runConvert(overlay: BakeOverlay, required: boolean): Promi
 		const file = listing.files[i];
 		overlay.setHud("Convert " + file.relative);
 		overlay.log("Converting " + file.relative + "…");
+		await reportRunProgress({
+			phase: "converting",
+			label: "Convert " + file.relative,
+			current: i,
+			total: listing.files.length
+		}).catch(() => undefined);
 		const result = await convertWithHeartbeat(overlay, file.relative);
 		if (result.ok) {
 			converted += 1;
@@ -55,13 +76,20 @@ export async function runConvert(overlay: BakeOverlay, required: boolean): Promi
 			overlay.log("Failed " + file.relative + ": " + detail, "error");
 		}
 		overlay.setProgress(i + 1, listing.files.length);
+		await reportRunProgress({
+			phase: "converting",
+			label: "Convert " + file.relative,
+			current: i + 1,
+			total: listing.files.length
+		}).catch(() => undefined);
 	}
 
 	return {
 		ok: failed === 0,
 		converted,
 		failed,
-		skipped: false
+		skipped: false,
+		durationMs: Date.now() - startedAt
 	};
 }
 

@@ -1,22 +1,31 @@
 import { BakeOverlay } from "./overlay";
 import { listTpsProjects, packTpsProject } from "./exportClient";
+import { reportRunProgress } from "./runSession";
 
 export interface PackSummary {
 	ok: boolean;
 	packed: number;
 	failed: number;
 	skipped: boolean;
+	durationMs: number;
 }
 
 export async function runPack(overlay: BakeOverlay, required: boolean): Promise<PackSummary> {
+	const startedAt = Date.now();
 	overlay.setHud("Finding .tps projects…");
+	await reportRunProgress({
+		phase: "packing",
+		label: "Finding .tps projects…",
+		current: 0,
+		total: 0
+	}).catch(() => undefined);
 	const listing = await listTpsProjects();
 	if (listing.folderError) {
 		if (required) {
 			throw new Error(listing.folderError);
 		}
 		overlay.log("Skipping pack — " + listing.folderError, "skip");
-		return { ok: true, packed: 0, failed: 0, skipped: true };
+		return { ok: true, packed: 0, failed: 0, skipped: true, durationMs: Date.now() - startedAt };
 	}
 	if (listing.cliError) {
 		throw new Error(listing.cliError);
@@ -27,12 +36,18 @@ export async function runPack(overlay: BakeOverlay, required: boolean): Promise<
 			throw new Error(message);
 		}
 		overlay.log(message, "skip");
-		return { ok: true, packed: 0, failed: 0, skipped: true };
+		return { ok: true, packed: 0, failed: 0, skipped: true, durationMs: Date.now() - startedAt };
 	}
 
 	overlay.log("TexturePacker: " + listing.cli);
 	overlay.log("Packing " + listing.files.length + " project(s) from " + listing.folder);
 	overlay.setProgress(0, listing.files.length);
+	await reportRunProgress({
+		phase: "packing",
+		label: "Packing " + listing.files.length + " project(s)",
+		current: 0,
+		total: listing.files.length
+	}).catch(() => undefined);
 
 	let packed = 0;
 	let failed = 0;
@@ -40,6 +55,12 @@ export async function runPack(overlay: BakeOverlay, required: boolean): Promise<
 		const file = listing.files[i];
 		overlay.setHud("Pack " + file.relative);
 		overlay.log("Packing " + file.relative + "…");
+		await reportRunProgress({
+			phase: "packing",
+			label: "Pack " + file.relative,
+			current: i,
+			total: listing.files.length
+		}).catch(() => undefined);
 		const result = await packWithHeartbeat(overlay, file.relative);
 		if (result.ok) {
 			packed += 1;
@@ -51,13 +72,20 @@ export async function runPack(overlay: BakeOverlay, required: boolean): Promise<
 			overlay.log("Failed " + file.relative + ": " + detail, "error");
 		}
 		overlay.setProgress(i + 1, listing.files.length);
+		await reportRunProgress({
+			phase: "packing",
+			label: "Pack " + file.relative,
+			current: i + 1,
+			total: listing.files.length
+		}).catch(() => undefined);
 	}
 
 	return {
 		ok: failed === 0,
 		packed,
 		failed,
-		skipped: false
+		skipped: false,
+		durationMs: Date.now() - startedAt
 	};
 }
 
