@@ -21,9 +21,18 @@
 			height: 100%;
 		}
 
+		#work-area {
+			display: flex;
+			flex-direction: column;
+			min-width: 0;
+			min-height: 0;
+		}
+
 		#stage-wrap {
 			position: relative;
+			flex: 1 1 auto;
 			min-width: 0;
+			min-height: 160px;
 			background-image:
 				linear-gradient(45deg, #1c1f28 25%, transparent 25%),
 				linear-gradient(-45deg, #1c1f28 25%, transparent 25%),
@@ -32,6 +41,69 @@
 			background-size: 32px 32px;
 			background-position: 0 0, 0 16px, 16px -16px, -16px 0;
 			background-color: #151821;
+		}
+
+		#errors-panel {
+			flex: 0 0 28%;
+			min-height: 140px;
+			max-height: 42%;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+			padding: 10px 12px;
+			background: #140e10;
+			border-top: 1px solid #5a2f2f;
+			min-width: 0;
+		}
+
+		#errors-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+		}
+
+		#errors-title {
+			font-size: 11px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: #f0a0a0;
+		}
+
+		#errors-count {
+			margin-left: 8px;
+			font-weight: 600;
+			color: #c5cdd8;
+			letter-spacing: 0;
+			text-transform: none;
+		}
+
+		#clear-errors-button {
+			background: #5a2a2a;
+			padding: 5px 10px;
+			font-size: 12px;
+			flex: 0 0 auto;
+		}
+
+		#error-log {
+			flex: 1;
+			min-height: 0;
+			overflow: auto;
+			font-size: 12px;
+			line-height: 1.45;
+			background: #1a1012;
+			border: 1px solid #5a2f2f;
+			border-radius: 6px;
+			padding: 8px;
+			white-space: pre-wrap;
+			word-break: break-word;
+			color: #f0a0a0;
+		}
+
+		#error-log:empty::before {
+			content: "No errors yet.";
+			color: #7a6060;
 		}
 
 		#pixi-canvas {
@@ -317,22 +389,31 @@
 			background: #151821;
 			border: 1px solid #2a3140;
 			border-radius: 6px;
-			min-height: 110px;
+			min-height: 72px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			overflow: hidden;
+			flex: 0 0 auto;
 		}
 
 		#preview-img {
 			max-width: 100%;
-			max-height: 140px;
+			max-height: 90px;
 			image-rendering: auto;
+		}
+
+		#log-label {
+			font-size: 10px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: #9aa4b5;
 		}
 
 		#log {
 			flex: 1;
-			min-height: 0;
+			min-height: 120px;
 			overflow: auto;
 			font-size: 12px;
 			line-height: 1.45;
@@ -350,12 +431,21 @@
 </head>
 <body>
 	<div id="app">
-		<div id="stage-wrap">
-			<canvas id="pixi-canvas"></canvas>
-			<div id="hud">
-				<div id="hud-title">Live pose</div>
-				<div id="hud-current">Waiting…</div>
+		<div id="work-area">
+			<div id="stage-wrap">
+				<canvas id="pixi-canvas"></canvas>
+				<div id="hud">
+					<div id="hud-title">Live pose</div>
+					<div id="hud-current">Waiting…</div>
+				</div>
 			</div>
+			<section id="errors-panel" aria-label="Errors">
+				<div id="errors-header">
+					<div id="errors-title">Errors <span id="errors-count">(0)</span></div>
+					<button id="clear-errors-button" type="button">Clear errors</button>
+				</div>
+				<div id="error-log"></div>
+			</section>
 		</div>
 		<aside id="sidebar">
 			<div>
@@ -417,6 +507,7 @@
 			<div id="preview-wrap">
 				<img id="preview-img" alt="Last exported PNG">
 			</div>
+			<div id="log-label">Activity log</div>
 			<div id="log"></div>
 		</aside>
 	</div>

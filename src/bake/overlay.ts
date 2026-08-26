@@ -11,6 +11,9 @@ export class BakeOverlay {
 	private readonly statusPill: HTMLElement;
 	private readonly previewImg: HTMLImageElement;
 	private readonly logEl: HTMLElement;
+	private readonly errorLogEl: HTMLElement;
+	private readonly errorsCount: HTMLElement;
+	private readonly clearErrorsButton: HTMLButtonElement;
 	private readonly bakeButton: HTMLButtonElement;
 	private readonly packButton: HTMLButtonElement;
 	private readonly convertButton: HTMLButtonElement;
@@ -35,6 +38,9 @@ export class BakeOverlay {
 		this.statusPill = this.mustGet("status-pill");
 		this.previewImg = this.mustGet("preview-img") as HTMLImageElement;
 		this.logEl = this.mustGet("log");
+		this.errorLogEl = this.mustGet("error-log");
+		this.errorsCount = this.mustGet("errors-count");
+		this.clearErrorsButton = this.mustGet("clear-errors-button") as HTMLButtonElement;
 		this.bakeButton = this.mustGet("bake-button") as HTMLButtonElement;
 		this.packButton = this.mustGet("pack-button") as HTMLButtonElement;
 		this.convertButton = this.mustGet("convert-button") as HTMLButtonElement;
@@ -62,6 +68,8 @@ export class BakeOverlay {
 		this.tpsInput.addEventListener("keydown", saveOnEnter);
 		this.spineExportInput.addEventListener("keydown", saveOnEnter);
 		this.spineConvertedInput.addEventListener("keydown", saveOnEnter);
+		this.clearErrorsButton.addEventListener("click", () => this.clearErrors());
+		this.updateErrorsCount();
 	}
 
 	public applyConfig(config: BakerConfig): void {
@@ -128,6 +136,7 @@ export class BakeOverlay {
 		this.convertButton.disabled = busy;
 		this.allButton.disabled = busy;
 		this.savePathsButton.disabled = busy;
+		this.clearErrorsButton.disabled = busy;
 		this.spineInput.disabled = busy;
 		this.exportInput.disabled = busy;
 		this.spritesheetInput.disabled = busy;
@@ -203,10 +212,31 @@ export class BakeOverlay {
 		line.textContent = message;
 		this.logEl.appendChild(line);
 		this.logEl.scrollTop = this.logEl.scrollHeight;
+		if (kind === "error") {
+			this.appendError(message);
+		}
 	}
 
 	public clearLog(): void {
 		this.logEl.textContent = "";
+	}
+
+	public clearErrors(): void {
+		this.errorLogEl.textContent = "";
+		this.updateErrorsCount();
+	}
+
+	private appendError(message: string): void {
+		const line = document.createElement("div");
+		line.textContent = message;
+		this.errorLogEl.appendChild(line);
+		this.errorLogEl.scrollTop = this.errorLogEl.scrollHeight;
+		this.updateErrorsCount();
+	}
+
+	private updateErrorsCount(): void {
+		const count = this.errorLogEl.childElementCount;
+		this.errorsCount.textContent = "(" + count + ")";
 	}
 
 	private mustGet(id: string): HTMLElement {

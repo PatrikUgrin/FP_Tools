@@ -235,6 +235,7 @@ function startAll(): void {
 
 async function runAllPipeline(): Promise<void> {
 	overlay.clearLog();
+	overlay.clearErrors();
 	overlay.log("Run all: bake, then pack, then convert.");
 	overlay.setStatus("baking", "Running all — bake");
 	const baked = await runBake(app, overlay, { manageBusy: false });
@@ -265,8 +266,9 @@ async function runAllPipeline(): Promise<void> {
 }
 
 function layoutCanvas(): void {
-	const width = Math.max(window.innerWidth - SIDEBAR_WIDTH, 320);
-	const height = Math.max(window.innerHeight, 320);
+	const stage = document.getElementById("stage-wrap");
+	const width = Math.max(stage ? stage.clientWidth : window.innerWidth - SIDEBAR_WIDTH, 320);
+	const height = Math.max(stage ? stage.clientHeight : window.innerHeight, 200);
 	app.renderer.resize(width, height);
 }
 
