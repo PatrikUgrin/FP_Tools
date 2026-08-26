@@ -34,6 +34,7 @@ export class BakeOverlay {
 	private readonly sharedRun: HTMLElement;
 	private localBusy = false;
 	private remoteBlocked = false;
+	private mirroringRemote = false;
 	private bakeAllowed = true;
 	private crashAckHandler: (() => void) | null = null;
 
@@ -178,8 +179,8 @@ export class BakeOverlay {
 		if (status.durationHintMs) {
 			etaBits.push("last similar ≈ " + formatMs(status.durationHintMs));
 		} else if (!status.busy) {
-			const last = status.lastAllDurationMs || status.lastBakeDurationMs;
-			etaBits.push(last ? "last full ≈ " + formatMs(last) : "no prior timing");
+			const last = status.lastAllDurationMs || status.lastBakeDurationMs || status.lastPackDurationMs;
+			etaBits.push(last ? "last similar ≈ " + formatMs(last) : "no prior timing");
 		}
 		this.etaLabel.textContent = etaBits.join(" · ");
 
@@ -196,7 +197,9 @@ export class BakeOverlay {
 			return;
 		}
 
-		if (status.blocked) {
+		const watchingRemote = status.blocked || (status.busy && !localOwning);
+		if (watchingRemote) {
+			this.mirroringRemote = true;
 			const progress = status.total > 0
 				? status.current + " / " + status.total
 				: "in progress";
@@ -213,23 +216,46 @@ export class BakeOverlay {
 			return;
 		}
 
-		if (status.busy && !localOwning) {
-			this.sharedRun.className = "blocked";
-			this.sharedRun.textContent = "Shared run active (" + status.phase + ").";
-			return;
-		}
-
 		if (status.busy && localOwning) {
+			this.mirroringRemote = false;
 			this.sharedRun.className = "meta";
 			this.sharedRun.textContent = "You own the shared run lock (" + status.phase + ").\n"
 				+ (status.etaLabel || "unknown estimate");
 			return;
 		}
 
+		if (this.mirroringRemote) {
+			this.clearRemoteMirror(status);
+		}
+
 		this.sharedRun.className = "meta";
 		this.sharedRun.textContent = status.phase === "done" || status.phase === "error"
 			? "Last shared result: " + status.phase + (status.message ? " — " + status.message : "")
 			: "No shared run — ready for a new step.";
+	}
+
+	private clearRemoteMirror(status: RunStatus): void {
+		this.mirroringRemote = false;
+		if (this.localBusy) {
+			return;
+		}
+		if (status.phase === "done") {
+			const total = Math.max(status.total || 0, status.current || 0);
+			if (total > 0) {
+				this.setProgress(total, total);
+			}
+			this.setHud(status.label || status.message || "Remote run finished");
+			this.setStatus("done", "Done — remote finished");
+			return;
+		}
+		if (status.phase === "error") {
+			this.setHud(status.label || status.message || "Remote run failed");
+			this.setStatus("error", "Remote failed");
+			return;
+		}
+		this.setProgress(0, 0);
+		this.setHud("Idle");
+		this.setStatus("idle", "Idle — pick a step");
 	}
 
 	private applyActionLock(): void {
