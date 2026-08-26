@@ -186,7 +186,9 @@ export function buildBakeJobs(): BakeJob[] {
 		}));
 	}
 
-	const appearSymbols = BONUS_SPINE.concat([LARGEWILD, SMALLWILD], CARDS);
+	// Bonus symbols (c, cb, ds, fs, ctr, sp, bo, lb, ob) no longer bake *_appear —
+	// setPreviewSprite already poses static_spin, so those files were duplicates of c.png etc.
+	const appearSymbols = [LARGEWILD, SMALLWILD].concat(CARDS);
 	for (const libsym of appearSymbols) {
 		if (libsym === LARGEWILD) {
 			jobs.push(job({
@@ -210,23 +212,11 @@ export function buildBakeJobs(): BakeJob[] {
 			}));
 			continue;
 		}
-		if (CARDS.indexOf(libsym) >= 0) {
-			jobs.push(job({
-				libsym,
-				spine: "hilo_sym",
-				skin: libsym,
-				animation: "static_appear",
-				texName: libsym + "_appear",
-				blur: false
-			}));
-			continue;
-		}
-		const pose = bonusPose(libsym);
 		jobs.push(job({
 			libsym,
-			spine: pose.spine,
-			skin: pose.skin,
-			animation: pose.animation,
+			spine: "hilo_sym",
+			skin: libsym,
+			animation: "static_appear",
 			texName: libsym + "_appear",
 			blur: false
 		}));
