@@ -14,6 +14,7 @@ export class BakeOverlay {
 	private readonly bakeButton: HTMLButtonElement;
 	private readonly packButton: HTMLButtonElement;
 	private readonly convertButton: HTMLButtonElement;
+	private readonly allButton: HTMLButtonElement;
 	private readonly savePathsButton: HTMLButtonElement;
 	private readonly exportPath: HTMLElement;
 	private readonly spineInput: HTMLInputElement;
@@ -37,6 +38,7 @@ export class BakeOverlay {
 		this.bakeButton = this.mustGet("bake-button") as HTMLButtonElement;
 		this.packButton = this.mustGet("pack-button") as HTMLButtonElement;
 		this.convertButton = this.mustGet("convert-button") as HTMLButtonElement;
+		this.allButton = this.mustGet("all-button") as HTMLButtonElement;
 		this.savePathsButton = this.mustGet("save-paths-button") as HTMLButtonElement;
 		this.exportPath = this.mustGet("export-path");
 		this.spineInput = this.mustGet("spine-folder") as HTMLInputElement;
@@ -120,10 +122,11 @@ export class BakeOverlay {
 		this.statusPill.textContent = "Status: " + label;
 	}
 
-	public setBusy(busy: boolean, kind: "bake" | "pack" | "convert" = "bake"): void {
+	public setBusy(busy: boolean, kind: "bake" | "pack" | "convert" | "all" = "bake"): void {
 		this.bakeButton.disabled = busy;
 		this.packButton.disabled = busy;
 		this.convertButton.disabled = busy;
+		this.allButton.disabled = busy;
 		this.savePathsButton.disabled = busy;
 		this.spineInput.disabled = busy;
 		this.exportInput.disabled = busy;
@@ -134,13 +137,18 @@ export class BakeOverlay {
 		this.bakeButton.textContent = busy && kind === "bake" ? "Baking…" : "Bake PNGs";
 		this.packButton.textContent = busy && kind === "pack" ? "Packing…" : "Pack spritesheets";
 		this.convertButton.textContent = busy && kind === "convert" ? "Converting…" : "Convert spine PNGs";
+		this.allButton.textContent = busy && kind === "all" ? "Running all…" : "Run all — bake, pack, convert";
 		if (busy && kind === "bake") {
 			this.setStatus("baking", "Baking");
+		}
+		if (busy && kind === "all") {
+			this.setStatus("baking", "Running all");
 		}
 	}
 
 	public setBakeEnabled(enabled: boolean): void {
 		this.bakeButton.disabled = !enabled;
+		this.allButton.disabled = !enabled;
 	}
 
 	public setSaveBusy(busy: boolean): void {
@@ -158,6 +166,10 @@ export class BakeOverlay {
 
 	public onConvert(handler: () => void): void {
 		this.convertButton.addEventListener("click", handler);
+	}
+
+	public onRunAll(handler: () => void): void {
+		this.allButton.addEventListener("click", handler);
 	}
 
 	public onSavePaths(handler: () => void): void {

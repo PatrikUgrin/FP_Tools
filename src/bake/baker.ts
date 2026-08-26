@@ -4,8 +4,6 @@ import { MotionBlurFilter } from "pixi-filters";
 import { BakeJob, buildBakeJobs } from "./catalog";
 import { loadConfig, resetExport, saveManifest, savePng } from "./exportClient";
 import { BakeOverlay } from "./overlay";
-import { runPack } from "./packer";
-import { runConvert } from "./convert";
 
 const SYM_X = 252;
 const SYM_Y = 168;
@@ -16,9 +14,16 @@ const LOAD_TIMEOUT_MS = 45000;
 
 let sharedMotionBlur: MotionBlurFilter | null = null;
 
-export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Promise<void> {
-	overlay.setBusy(true);
-	overlay.clearLog();
+export async function runBake(
+	app: PIXI.Application,
+	overlay: BakeOverlay,
+	options?: { manageBusy?: boolean }
+): Promise<number> {
+	const manageBusy = !options || options.manageBusy !== false;
+	if (manageBusy) {
+		overlay.setBusy(true);
+		overlay.clearLog();
+	}
 	overlay.setHud("Building bake list…");
 
 	const config = await loadConfig();
@@ -93,38 +98,18 @@ export async function runBake(app: PIXI.Application, overlay: BakeOverlay): Prom
 
 		await saveManifest(saved);
 		overlay.log("Wrote manifest.json in " + reset.exportRoot + " (" + saved.length + " file(s)).", "ok");
-		overlay.setBusy(true, "pack");
-		overlay.setStatus("packing", "Packing");
-		const pack = await runPack(overlay, false);
-		if (pack.skipped) {
+		if (manageBusy) {
 			overlay.setHud("Done — " + saved.length + " PNG(s)");
 			overlay.setStatus("done", "Done — " + saved.length + " PNG(s)");
-		} else if (!pack.ok) {
-			overlay.log("Packed " + pack.packed + ", failed " + pack.failed + ".", "error");
-			overlay.setHud("Packed " + pack.packed + ", failed " + pack.failed);
-			overlay.setStatus("error", "Pack failed");
 		} else {
-			overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
-			overlay.setHud("Done — " + saved.length + " PNG(s), " + pack.packed + " packed");
-			overlay.setStatus("done", "Done — baked and packed");
+			overlay.log("Bake finished — " + saved.length + " PNG(s).", "ok");
 		}
-		overlay.setBusy(true, "convert");
-		overlay.setStatus("converting", "Converting");
-		const converted = await runConvert(overlay, false);
-		if (converted.skipped) {
-			// keep the bake/pack status already set
-		} else if (!converted.ok) {
-			overlay.log("Converted " + converted.converted + ", failed " + converted.failed + ".", "error");
-			overlay.setHud("Converted " + converted.converted + ", failed " + converted.failed);
-			overlay.setStatus("error", "Convert failed");
-		} else {
-			overlay.log("Converted " + converted.converted + " PNG(s) to RGBA5555.", "ok");
-			overlay.setHud("Done — baked, packed, converted " + converted.converted);
-			overlay.setStatus("done", "Done — baked, packed, converted");
-		}
+		return saved.length;
 	} finally {
 		resetLoader();
-		overlay.setBusy(false);
+		if (manageBusy) {
+			overlay.setBusy(false);
+		}
 	}
 }
 

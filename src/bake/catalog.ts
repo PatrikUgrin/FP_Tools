@@ -71,16 +71,29 @@ function job(partial: Omit<BakeJob, "url" | "group" | "spriteSheet" | "spriteFra
 	spriteSheet?: string | null;
 	spriteFrame?: string | null;
 }): BakeJob {
-	const group = partial.blur
-		? (partial.texName.indexOf("_green") >= 0 ? "blur_green" : "blur")
-		: partial.animation;
 	return {
 		spriteSheet: null,
 		spriteFrame: null,
 		...partial,
-		group,
+		group: folderFor(partial),
 		url: partial.spine ? spineUrl(partial.spine) : ""
 	};
+}
+
+function folderFor(partial: { blur: boolean; texName: string; animation: string }): string {
+	if (partial.blur) {
+		return partial.texName.indexOf("_green") >= 0 ? "blur_green" : "blur";
+	}
+	if (partial.texName.indexOf("_deactivated") >= 0) {
+		return "static_deactivated";
+	}
+	if (partial.texName.length >= 7 && partial.texName.substring(partial.texName.length - 7) === "_appear") {
+		return "static_appear";
+	}
+	if (partial.texName.length >= 6 && partial.texName.substring(partial.texName.length - 6) === "_green") {
+		return "static_appear_green";
+	}
+	return partial.animation;
 }
 
 function bonusPose(libsym: string): { spine: string; skin: string | null; animation: string } {
@@ -186,8 +199,8 @@ export function buildBakeJobs(): BakeJob[] {
 		}));
 	}
 
-	// Bonus symbols (c, cb, ds, fs, ctr, sp, bo, lb, ob) no longer bake *_appear —
-	// setPreviewSprite already poses static_spin, so those files were duplicates of c.png etc.
+	// Bonus symbols (c, cb, ds, fs, ctr, sp, bo, lb, ob) do not bake *_appear.
+	// Hi-lo cards still bake l1_appear…h4_appear, plus lw_appear and sw_appear.
 	const appearSymbols = [LARGEWILD, SMALLWILD].concat(CARDS);
 	for (const libsym of appearSymbols) {
 		if (libsym === LARGEWILD) {

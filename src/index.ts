@@ -91,14 +91,15 @@ async function boot(): Promise<void> {
 	}
 	overlay.log("Using " + rendererType + ". " + (autobake && configOk
 		? "Autobake requested — starting now."
-		: "Baker is idle until you press Bake PNGs."));
+		: "Baker is idle until you pick a step or press Run all."));
 	overlay.setHud(autobake && configOk ? "Starting bake…" : "Idle");
-	overlay.setStatus("idle", autobake && configOk ? "Idle — autobake" : "Idle — press Bake PNGs");
+	overlay.setStatus("idle", autobake && configOk ? "Idle — autobake" : "Idle — pick a step");
 	layoutCanvas();
 	window.addEventListener("resize", layoutCanvas);
 	overlay.onBake(startBake);
 	overlay.onPack(startPack);
 	overlay.onConvert(startConvert);
+	overlay.onRunAll(startAll);
 	if (autobake && configOk) {
 		startBake();
 	}
@@ -214,6 +215,53 @@ function startConvert(): void {
 		overlay.setBusy(false);
 		bakeInFlight = false;
 	});
+}
+
+function startAll(): void {
+	if (bakeInFlight) {
+		return;
+	}
+	bakeInFlight = true;
+	overlay.setBusy(true, "all");
+	void runAllPipeline().catch((err) => {
+		const message = err instanceof Error ? err.message : String(err);
+		overlay.log(message, "error");
+		overlay.setStatus("error", "Failed");
+	}).finally(() => {
+		overlay.setBusy(false);
+		bakeInFlight = false;
+	});
+}
+
+async function runAllPipeline(): Promise<void> {
+	overlay.clearLog();
+	overlay.log("Run all: bake, then pack, then convert.");
+	overlay.setStatus("baking", "Running all — bake");
+	const baked = await runBake(app, overlay, { manageBusy: false });
+	overlay.setBusy(true, "all");
+	overlay.setStatus("packing", "Running all — pack");
+	const pack = await runPack(overlay, false);
+	if (!pack.ok) {
+		overlay.setStatus("error", "Pack failed");
+		overlay.setHud("Packed " + pack.packed + ", failed " + pack.failed);
+		return;
+	}
+	if (!pack.skipped) {
+		overlay.log("Packed " + pack.packed + " spritesheet(s).", "ok");
+	}
+	overlay.setBusy(true, "all");
+	overlay.setStatus("converting", "Running all — convert");
+	const converted = await runConvert(overlay, false);
+	if (!converted.ok) {
+		overlay.setStatus("error", "Convert failed");
+		overlay.setHud("Converted " + converted.converted + ", failed " + converted.failed);
+		return;
+	}
+	if (!converted.skipped) {
+		overlay.log("Converted " + converted.converted + " PNG(s) to RGBA5555.", "ok");
+	}
+	overlay.setHud("Done — baked " + baked + ", packed, converted");
+	overlay.setStatus("done", "Done — all steps");
 }
 
 function layoutCanvas(): void {

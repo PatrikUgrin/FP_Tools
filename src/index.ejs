@@ -185,6 +185,13 @@
 			background: #6b4aa0;
 		}
 
+		#all-button {
+			background: #1f7a4c;
+			font-size: 15px;
+			font-weight: 700;
+			padding: 12px;
+		}
+
 		.action-row {
 			display: flex;
 			gap: 8px;
@@ -400,11 +407,12 @@
 				<div class="meta" id="path-file-label">Project defaults. Save writes to your user folder.</div>
 				<div id="path-error"></div>
 			</div>
+			<button id="all-button" type="button">Run all — bake, pack, convert</button>
 			<div class="action-row">
 				<button id="bake-button" type="button">Bake PNGs</button>
 				<button id="pack-button" type="button">Pack spritesheets</button>
+				<button id="convert-button" type="button">Convert spine PNGs</button>
 			</div>
-			<button id="convert-button" type="button">Convert spine PNGs</button>
 			<div class="meta" id="export-path">Writing to export/png/&lt;animation or blur&gt;/</div>
 			<div id="preview-wrap">
 				<img id="preview-img" alt="Last exported PNG">
